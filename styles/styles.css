@@ -1,4 +1,12 @@
 /* -------------------------
+TYPOGRAPHY
+-------------------------- */
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+/* -------------------------
+COLORS
+-------------------------- */
+/* -------------------------
 TAGS
 -------------------------- */
 section, div {
@@ -68,16 +76,23 @@ CLASSES
 
 .property-cell span {
   display: block; }
+  .property-cell span.name {
+    font-family: "Slabo 27px", serif;
+    font-size: 18px;
+    margin: 0; }
+  .property-cell span.city {
+    font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin: 0 0 5px 0; }
+  .property-cell span.value {
+    font-family: "Raleway", sans-serif;
+    font-size: 13px; }
 .property-cell img {
-  height: 50px;
-  width: 50px;
-  display: block; }
-.property-cell:before {
-  content: '';
-  width: 100%;
-  height: 20px;
-  background: #000;
-  display: block; }
+  height: 65px;
+  width: 65px;
+  display: block;
+  margin: 5px auto 0; }
 
 /* ------ END CELLS  ------ */
 

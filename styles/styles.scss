@@ -1,4 +1,28 @@
 /* -------------------------
+TYPOGRAPHY
+-------------------------- */
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+$raleway: 'Raleway', sans-serif;
+$slabo: 'Slabo 27px', serif;
+
+/* -------------------------
+COLORS
+-------------------------- */
+$voltorb: #e48f89;
+$charizard: #f1a563;
+$pikachu: #f4d77c;
+$bulbasaur: #8abd8a;
+$squirtle: #8fc4d1;
+$haunter: #534a58;
+$hitmonlee: #c7b7a7;
+$magnemite: #a1c1cb;
+$mewtwo: #ca9ecb;
+$mew: #e9c1cc;
+$articuno: #76b8e1;
+$zapdos: #ffe081;
+
+/* -------------------------
 TAGS
 -------------------------- */
 
@@ -101,26 +125,44 @@ CLASSES
 /* ------ CELLS ------ */
 .property-cell, .utility-cell, .ball-cell, .attack-cell {
   text-align: center;
+
 }
 
 .property-cell {
   span {
     display: block;
+
+    &.name {
+      font-family: $slabo;
+      font-size: 18px;
+      margin: 0;
+    }
+    &.city {
+      font-family: $raleway;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin: 0 0 5px 0;
+    }
+    &.value {
+      font-family: $raleway;
+      font-size: 13px
+    }
   }
 
   img {
-    height: 50px;
-    width: 50px;
+    height: 65px;
+    width: 65px;
     display: block;
+    margin: 5px auto 0;
   }
 
-  &:before {
-    content: '';
-    width: 100%;
-    height: 20px;
-    background: #000;
-    display: block;
-  }
+  // &:before {
+  //   content: '';
+  //   width: 100%;
+  //   height: 15px;
+  //   background: #000;
+  //   display: block;
+  // }
 }
 /* ------ END CELLS  ------ */
 
