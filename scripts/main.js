@@ -5,7 +5,7 @@ var Main = (function() {
   */
   function populateCells() {
     var $cell;
-    $cells.each(function(cell) {
+    $cells.each(function(index) {
       switch(this.type.toLowerCase()) { /* create different cell based on type */
         case 'go':
           break;
@@ -23,7 +23,11 @@ var Main = (function() {
           $cell = buildPropertyCell(this);
           break;
       }
-
+      //also add cell to board array
+      //column 1: 0-7 index (left)
+      //column 2: top row: 0-5 indx (top l-> r)
+      //column 3: 0-7 index (right)
+      //column 2: bottom 5-0 (bottom r->l)
       $('.column-1 div:first-child').append($cell);
       addPropertyOwner('player', $cell);
     });
