@@ -1,6 +1,6 @@
 var $cells = $([
   { //COLUMN 1 (LEFT)-------------------
-      boardIndex: 0
+      boardIndex: 0,
       column: 1,
       index: 0,
       name: 'Go',
@@ -73,7 +73,7 @@ var $cells = $([
   },
   {
       boardIndex: 7,
-      column: ,
+      column: 1,
       index: 7,
       name: 'Jail',
       type: 'Jail',
@@ -82,7 +82,7 @@ var $cells = $([
   { //COLUMN 2 (TOP)-------------------
       boardIndex: 8,
       column: 2,
-      row: top,
+      row: 'top',
       index: 0,
       name: 'Charmander',
       city: 'Pewter City',
@@ -94,7 +94,7 @@ var $cells = $([
   {
       boardIndex: 9,
       column: 2,
-      row: top,
+      row: 'top',
       index: 1,
       name: 'Charizard',
       city: 'Pewter City',
@@ -106,7 +106,7 @@ var $cells = $([
   {
       boardIndex: 10,
       column: 2,
-      row: top,
+      row: 'top',
       index: 2,
       name: 'Great ball',
       value: 200,
@@ -117,7 +117,7 @@ var $cells = $([
   {
       boardIndex: 11,
       column: 2,
-      row: top,
+      row: 'top',
       index: 3,
       name: 'Attack',
       value: 200,
@@ -128,7 +128,7 @@ var $cells = $([
   {
       boardIndex: 12,
       column: 2,
-      row: top,
+      row: 'top',
       index: 4,
       name: 'Squirtle',
       city: 'Cerulean City',
@@ -140,7 +140,7 @@ var $cells = $([
   {
       boardIndex: 13,
       column: 2,
-      row: top,
+      row: 'top',
       index: 5,
       name: 'Blastoise',
       city: 'Cerulean City',
@@ -232,7 +232,7 @@ var $cells = $([
   { //COLUMN 2 (BOTTOM)-------------------
       boardIndex: 27,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 0,
       name: 'Hitmonchan',
       city: 'Lavender Town',
@@ -244,7 +244,7 @@ var $cells = $([
   {
       boardIndex: 26,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 1,
       name: 'HitmonLee',
       city: 'Lavender Town',
@@ -256,7 +256,7 @@ var $cells = $([
   {
       boardIndex: 25,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 2,
       name: 'Master ball',
       value: 200,
@@ -267,7 +267,7 @@ var $cells = $([
   {
       boardIndex: 24,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 3,
       name: 'Magnemite',
       city: 'Celadon City',
@@ -279,7 +279,7 @@ var $cells = $([
   {
       boardIndex: 23,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 4,
       name: 'Magneton',
       city: 'Celadon City',
@@ -291,7 +291,7 @@ var $cells = $([
   {
       boardIndex: 22,
       column: 2,
-      row: bottom,
+      row: 'bottom',
       index: 5,
       name: 'Articuno',
       value: 150,
