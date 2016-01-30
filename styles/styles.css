@@ -72,7 +72,8 @@ CLASSES
 
 /* ------ CELLS ------ */
 .property-cell, .utility-cell, .ball-cell, .attack-cell {
-  text-align: center; }
+  text-align: center;
+  position: relative; }
 
 .property-cell span {
   display: block; }
@@ -88,6 +89,13 @@ CLASSES
   .property-cell span.value {
     font-family: "Raleway", sans-serif;
     font-size: 13px; }
+  .property-cell span.owner {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    border: 1px solid; }
 .property-cell img {
   height: 65px;
   width: 65px;
