@@ -4,54 +4,56 @@ var Main = (function() {
      Parse xml file to get data to populate cells
   */
   function populateCells() {
-    var $cell;
+    var $cell, $cellElement;
     $cells.each(function(index) {
+      $cellElement = $('.column-' + this.column + ' div')[this.index];
+      console.log('.column-' + this.column + ' div');
+
       switch(this.type.toLowerCase()) { /* create different cell based on type */
         case 'go':
-          $cell = buildGoCell(this);
+          buildGoCell(this, $cellElement);
           break;
         case 'jail':
-          $cell = buildJailCell(this);
+          buildJailCell(this, $cellElement);
           break;
-        case 'free parking':
+        case 'parking':
           break;
-        case 'go to jail':
+        case 'gotojail':
           break;
         case 'attack':
           break;
+        case 'legendary':
+          break;
         case 'ball':
-          $cell = buildBallCell(this);
+          buildBallCell(this, $cellElement);
           break;
         default:
-          $cell = buildPropertyCell(this);
+          // $cell = buildPropertyCell(this, $cellElement);
+          buildPropertyCell(this, $cellElement);
           break;
       }
       //also add cell to board array
       board[this.boardIndex] = this;
 
       //column 1: 0-7 index (left)
-      switch(this.column) {
-        case 2:
-          if(this.row === 'top') {
-            $column2Top[this.index] = $cell;
-          }
-          if(this.row === 'bottom') {
-            $column2Bottom[this.index] = $cell;
-          }
-          break;
-        default:
-          console.log('column: ' + this.column + ' cell: ' + this.index + ' text: ' + this.name );
-          console.log($('.column-' + this.column + ' div')[this.index]);
-          $($('.column-' + this.column + ' div')[this.index]).append($cell);
+      // switch(this.column) {
+      //   case 2:
+      //     if(this.row === 'top') {
+      //       $column2Top[this.index] = $cell;
+      //     }
+      //     if(this.row === 'bottom') {
+      //       $column2Bottom[this.index] = $cell;
+      //     }
+      //     break;
+      //   default:
+      //     console.log('column: ' + this.column + ' cell: ' + this.index + ' text: ' + this.name );
+      //     console.log($('.column-' + this.column + ' div')[this.index]);
+      //     $($('.column-' + this.column + ' div')[this.index]).append($cell);
 
-          break;
-      }
+      //     break;
+      // }
 
-      //column 2: top row: 0-5 indx (top l-> r)
-      //column 3: 0-7 index (right)
-      //column 2: bottom 5-0 (bottom r->l)
-      // $('.column-1 div:first-child').append($cell);
-      addPropertyOwner('player', $cell);
+      // addPropertyOwner('player', $cell);
     });
     // console.log(board);
   }
@@ -59,35 +61,32 @@ var Main = (function() {
   /* BUILD CELL TYPES ------------------
      Build cell based on cell type
   */
-    function buildPropertyCell(cell) {
+    function buildPropertyCell(cell, element) {
       var $propertyCell, $name, $city, $image, $value;
-      $propertyCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell', css: { 'border-top': '15px solid ' + cell.color } });
+      $propertyCell = $(element);
+      $propertyCell.addClass(cell.type.toLowerCase() + '-cell');
+      $propertyCell.css('border-top', '15px solid ' + cell.color);
       $name = $('<span />', { 'class': 'name', text: cell.name });
       $city = $('<span />', { 'class': 'city', text: cell.city });
       $image = $('<img />', { src: 'images/' + cell.image });
       $value = $('<span />', { 'class': 'value', text: '$' +cell.value });
       $propertyCell.append($image).append($name).append($city).append($value);
-
-      return $propertyCell;
     }
 
-    function buildGoCell(cell) {
+    function buildGoCell(cell, element) {
       var $goCell, $title;
-      $goCell= $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $goCell = $(element);
+      $goCell.addClass(cell.type.toLowerCase() + '-cell');
       $title = $('<span />', { text: cell.text });
       $goCell.append($title);
-      console.log("GO CELL: " + cell.text);
-      console.log($goCell);
-      return $goCell;
     }
 
-    function buildJailCell(cell) {
+    function buildJailCell(cell, element) {
       var $jailCell, $title;
-      $jailCell= $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $jailCell = $(element);
+      $jailCell.addClass(cell.type.toLowerCase() + '-cell');
       $title = $('<span />', { text: cell.text });
       $jailCell.append($title);
-
-      return $jailCell;
     }
 
     function buildFreeParkingCell(cell) {
@@ -102,13 +101,13 @@ var Main = (function() {
 
     }
 
-    function buildBallCell(cell) {
+    function buildBallCell(cell, element) {
       var $ballCell, $title;
-      $ballCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $ballCell = $(element);
+      $ballCell.addClass(cell.type.toLowerCase() + '-cell');
       $title = $('<span />', { text: cell.name });
+      console.log($ballCell);
       $ballCell.append($title);
-
-      return $ballCell;
     }
 
   // END BUILD CELL TYPES ------------------

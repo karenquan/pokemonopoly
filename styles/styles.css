@@ -25,14 +25,15 @@ IDs
 /* -------------------------
 CLASSES
 -------------------------- */
-.column-1 > div, .column-2 > div > div, .column-3 > div {
+.column-1 > div, .column-2 > div, .column-3 > div, .column-4 > div {
   width: 150px;
   height: 150px; }
 
 .column- {
   /* end of column-1 */
   /* end of column-2 */
-  /* end of column-3 */ }
+  /* end of column-3 */
+  /* end of column-4 */ }
   .column-1 > div {
     border: 1px solid;
     border-right: none;
@@ -46,28 +47,33 @@ CLASSES
       border-left: none; }
     .column-1 > div:last-child {
       border-right: 1px solid; }
-  .column-2 > div > div {
+  .column-2 > div {
     border: 1px solid;
-    display: inline-block; }
-  .column-2 .top-row > div {
-    border-right: none; }
-    .column-2 .top-row > div.rotate {
-      transform: rotateZ(180deg); }
-    .column-2 .top-row > div:first-child {
-      border-left: none; }
-  .column-2 .bottom-row > div {
-    border-right: none; }
-    .column-2 .bottom-row > div:first-child {
+    border-right: none;
+    display: inline-block;
+    -webkit-transform: rotateZ(180deg);
+    -moz-transform: rotateZ(180deg);
+    transform: rotateZ(180deg); }
+    .column-2 > div:last-child {
       border-left: none; }
   .column-3 > div {
     border: 1px solid;
-    border-bottom: none; }
+    border-right: none;
+    -webkit-transform: rotateZ(270deg);
+    -moz-transform: rotateZ(270deg);
+    transform: rotateZ(270deg); }
     .column-3 > div:first-child {
       border-bottom: 1px solid; }
-    .column-3 > div:nth-child(2) {
-      border-top: none; }
+    .column-3 > div:nth-last-child(2) {
+      border-left: none; }
     .column-3 > div:last-child {
-      border-bottom: 1px solid; }
+      border-right: 1px solid; }
+  .column-4 > div {
+    border: 1px solid;
+    border-right: none;
+    display: inline-block; }
+    .column-4 > div:first-child {
+      border-left: none; }
 
 /* end of column- */
 .center-cell {
