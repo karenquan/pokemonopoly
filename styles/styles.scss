@@ -132,11 +132,11 @@ CLASSES
 }
 
 /* ------ CELLS ------ */
-.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell {
+.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
   text-align: center;
   position: relative;
 
-  span {
+  span, img {
     display: block;
   }
 }
@@ -171,7 +171,6 @@ CLASSES
   img {
     height: 65px;
     width: 65px;
-    display: block;
     margin: 5px auto 0;
   }
 }
@@ -201,6 +200,29 @@ CLASSES
     img {
       margin: 0 auto;
     }
+  }
+}
+
+.go-cell {
+  padding: 10px 35px 40px;
+  -webkit-transform: rotateZ(-45deg);
+    -moz-transform: rotateZ(-45deg);
+    transform: rotateZ(-45deg);
+  overflow: hidden;
+
+  span {
+    &.title {
+      font-family: $slabo;
+      color: #0d4da4;
+      font-weight: bold;
+      font-size: 15px;
+      margin: 0 0 10px 4px;
+    }
+  }
+  img {
+    width: 110px;
+    position: relative;
+    left: -15px;
   }
 }
 

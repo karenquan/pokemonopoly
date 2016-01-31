@@ -82,10 +82,10 @@ CLASSES
   height: 900px; }
 
 /* ------ CELLS ------ */
-.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell {
+.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
   text-align: center;
   position: relative; }
-  .property-cell span, .utility-cell span, .ball-cell span, .attack-cell span, .legendary-cell span {
+  .property-cell span, .property-cell img, .utility-cell span, .utility-cell img, .ball-cell span, .ball-cell img, .attack-cell span, .attack-cell img, .legendary-cell span, .legendary-cell img, .go-cell span, .go-cell img, .jail-cell span, .jail-cell img, .gotojail-cell span, .gotojail-cell img {
     display: block; }
 
 .property-cell span.name, .ball-cell span.name, .attack-cell span.name, .legendary-cell span.name {
@@ -110,7 +110,6 @@ CLASSES
 .property-cell img, .ball-cell img, .attack-cell img, .legendary-cell img {
   height: 65px;
   width: 65px;
-  display: block;
   margin: 5px auto 0; }
 
 .ball-cell span.name {
@@ -125,6 +124,23 @@ CLASSES
 
 .legendary-cell.zapdos img {
   margin: 0 auto; }
+
+.go-cell {
+  padding: 10px 35px 40px;
+  -webkit-transform: rotateZ(-45deg);
+  -moz-transform: rotateZ(-45deg);
+  transform: rotateZ(-45deg);
+  overflow: hidden; }
+  .go-cell span.title {
+    font-family: "Slabo 27px", serif;
+    color: #0d4da4;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0 0 10px 4px; }
+  .go-cell img {
+    width: 110px;
+    position: relative;
+    left: -15px; }
 
 /* ------ END CELLS  ------ */
 

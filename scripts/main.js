@@ -57,18 +57,19 @@ var Main = (function() {
     }
 
     function buildGoCell(cell, element) {
-      var $goCell, $title;
-      $goCell = $(element);
-      $goCell.addClass(cell.type.toLowerCase() + '-cell');
-      $title = $('<span />', { text: cell.text });
-      $goCell.append($title);
+      var $goCell, $title, $image;
+      $goCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $title = $('<span />', { 'class': 'title', text: cell.text });
+      $image = $('<img />', { src: 'images/' + cell.image });
+      $goCell.append($title).append($image);
+      $(element).append($goCell);
     }
 
     function buildJailCell(cell, element) {
       var $jailCell, $title;
       $jailCell = $(element);
       $jailCell.addClass(cell.type.toLowerCase() + '-cell');
-      $title = $('<span />', { text: cell.text });
+      $title = $('<span />', { 'class': 'title', text: cell.text });
       $jailCell.append($title);
     }
 
