@@ -63,7 +63,8 @@ CLASSES
     -moz-transform: rotateZ(270deg);
     transform: rotateZ(270deg); }
     .column-3 > div:first-child {
-      border-bottom: 1px solid; }
+      border-bottom: 1px solid;
+      border-right: 1px solid; }
     .column-3 > div:nth-last-child(2) {
       border-left: none; }
     .column-3 > div:last-child {
@@ -81,36 +82,49 @@ CLASSES
   height: 900px; }
 
 /* ------ CELLS ------ */
-.property-cell, .utility-cell, .ball-cell, .attack-cell {
+.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell {
   text-align: center;
   position: relative; }
-  .property-cell span, .utility-cell span, .ball-cell span, .attack-cell span {
+  .property-cell span, .utility-cell span, .ball-cell span, .attack-cell span, .legendary-cell span {
     display: block; }
 
-.property-cell span.name {
+.property-cell span.name, .ball-cell span.name, .attack-cell span.name, .legendary-cell span.name {
   font-family: "Slabo 27px", serif;
   font-size: 18px;
   margin: 0; }
-.property-cell span.city {
+.property-cell span.city, .ball-cell span.city, .attack-cell span.city, .legendary-cell span.city {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 10px;
   margin: 0 0 5px 0; }
-.property-cell span.value {
+.property-cell span.value, .ball-cell span.value, .attack-cell span.value, .legendary-cell span.value {
   font-family: "Raleway", sans-serif;
   font-size: 13px; }
-.property-cell span.owner {
+.property-cell span.owner, .ball-cell span.owner, .attack-cell span.owner, .legendary-cell span.owner {
   width: 15px;
   height: 15px;
   position: absolute;
-  bottom: 0px;
+  bottom: 8px;
   right: 10px;
   border: 1px solid; }
-.property-cell img {
+.property-cell img, .ball-cell img, .attack-cell img, .legendary-cell img {
   height: 65px;
   width: 65px;
   display: block;
   margin: 5px auto 0; }
+
+.ball-cell span.name {
+  margin: 0 0 3px 0; }
+.ball-cell img {
+  margin: 10px auto 5px; }
+
+.attack-cell img, .legendary-cell img {
+  margin: 10px auto 0;
+  height: 75px;
+  width: 75px; }
+
+.legendary-cell.zapdos img {
+  margin: 0 auto; }
 
 /* ------ END CELLS  ------ */
 

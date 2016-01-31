@@ -5,44 +5,55 @@ var $cells = $([
       index: 7,
       name: 'Go',
       type: 'Go',
-      text: 'Go'
+      text: 'Go',
+      image: 'go.png'
   },
   {
       boardIndex: 1,
       column: 1,
       index: 6,
-      name: 'Pikachu',
+      name: 'Voltorb',
       city: 'Pallet Town',
       value: 60,
-      color: '#f4d77c',
+      color: '#e48f89',
       type: 'Property',
-      image: 'pikachu.png'
+      image: 'voltorb.png'
   },
   {
       boardIndex: 2,
       column: 1,
       index: 5,
-      name: 'Raichu',
+      name: 'Electrode',
       city: 'Pallet Town',
       value: 60,
-      color: '#f4d77c',
+      color: '#e48f89',
       type: 'Property',
-      image: 'raichu.png'
+      image: 'electrode.png'
   },
   {
       boardIndex: 3,
       column: 1,
       index: 4,
-      name: 'Poke ball',
-      value: 200,
-      type: 'Ball',
-      color: '#a1c1cb',
-      image: 'pokeball.png'
+      name: 'Articuno',
+      value: 150,
+      type: 'legendary',
+      color: '#76b8e1',
+      image: 'articuno.png'
   },
   {
       boardIndex: 4,
       column: 1,
       index: 3,
+      name: 'Poke Ball',
+      value: 200,
+      type: 'Ball',
+      color: '#f18e38',
+      image: 'pokeball.png'
+  },
+  {
+      boardIndex: 5,
+      column: 1,
+      index: 2,
       name: 'Bulbasaur',
       city: 'Viridian City',
       value: 100,
@@ -51,9 +62,9 @@ var $cells = $([
       image: 'bulbasaur.png'
   },
   {
-      boardIndex: 5,
+      boardIndex: 6,
       column: 1,
-      index: 2,
+      index: 1,
       name: 'Venusaur',
       city: 'Viridian City',
       value: 120,
@@ -62,27 +73,17 @@ var $cells = $([
       image: 'venusaur.png'
   },
   {
-      boardIndex: 6,
-      column: 1,
-      index: 1,
-      name: 'Zapdos',
-      value: 150,
-      type: 'Legendary',
-      color: '#ffe081',
-      image: 'zapdos.png'
-  },
-  {
       boardIndex: 7,
       column: 1,
       index: 0,
       name: 'Jail',
       type: 'Jail',
-      text: 'Jail'
+      text: 'Jail',
+      image: 'jail.png'
   },
   { //COLUMN 2 (TOP)-------------------
       boardIndex: 8,
       column: 2,
-      row: 'top',
       index: 0,
       name: 'Charmander',
       city: 'Pewter City',
@@ -94,7 +95,6 @@ var $cells = $([
   {
       boardIndex: 9,
       column: 2,
-      row: 'top',
       index: 1,
       name: 'Charizard',
       city: 'Pewter City',
@@ -106,29 +106,26 @@ var $cells = $([
   {
       boardIndex: 10,
       column: 2,
-      row: 'top',
       index: 2,
-      name: 'Great ball',
+      name: 'Ultra Ball',
       value: 200,
       type: 'Ball',
-      color: '#a1c1cb',
-      image: 'greatball.png'
+      color: '#677280',
+      image: 'ultraball.png'
   },
   {
       boardIndex: 11,
       column: 2,
-      row: 'top',
       index: 3,
       name: 'Attack',
       value: 200,
       type: 'Attack',
-      color: '#76b8e1',
+      color: '#cc0000',
       image: 'attack.png'
   },
   {
       boardIndex: 12,
       column: 2,
-      row: 'top',
       index: 4,
       name: 'Squirtle',
       city: 'Cerulean City',
@@ -140,7 +137,6 @@ var $cells = $([
   {
       boardIndex: 13,
       column: 2,
-      row: 'top',
       index: 5,
       name: 'Blastoise',
       city: 'Cerulean City',
@@ -155,44 +151,55 @@ var $cells = $([
       index: 0,
       name: 'Free Parking',
       type: 'Parking',
-      text: 'Free Parking'
+      text: 'Free Parking',
+      image: 'freeparking.png'
   },
   {
       boardIndex: 15,
       column: 3,
       index: 1,
-      name: 'Voltorb',
+      name: 'Pikachu',
       city: 'Vermilion City',
       value: 220,
-      color: '#e48f89',
+      color: '#f4d77c',
       type: 'Property',
-      image: 'voltorb.png'
+      image: 'pikachu.png'
   },
   {
-      boardIndex: 16,
+      boardIndex: 15,
       column: 3,
       index: 2,
-      name: 'Electrode',
+      name: 'Raichu',
       city: 'Vermilion City',
       value: 240,
-      color: '#e48f89',
+      color: '#f4d77c',
       type: 'Property',
-      image: 'electrode.png'
+      image: 'raichu.png'
   },
   {
       boardIndex: 17,
       column: 3,
       index: 3,
-      name: 'Ultra ball',
+      name: 'Great Ball',
       value: 200,
       type: 'Ball',
-      color: '#a1c1cb',
-      image: 'ultraball.png'
+      color: '#3b82c4',
+      image: 'greatball.png'
   },
   {
       boardIndex: 18,
       column: 3,
       index: 4,
+      name: 'Attack',
+      value: 200,
+      type: 'Attack',
+      color: '#cc0000',
+      image: 'attacktwo.png'
+  },
+  {
+      boardIndex: 19,
+      column: 3,
+      index: 5,
       name: 'Haunter',
       city: 'Lavender Town',
       value: 260,
@@ -201,9 +208,9 @@ var $cells = $([
       image: 'haunter.png'
   },
   {
-      boardIndex: 19,
+      boardIndex: 20,
       column: 3,
-      index: 5,
+      index: 6,
       name: 'Gengar',
       city: 'Lavender Town',
       value: 280,
@@ -212,28 +219,18 @@ var $cells = $([
       image: 'gengar.png'
   },
   {
-      boardIndex: 20,
-      column: 3,
-      index: 6,
-      name: 'Attack',
-      value: 200,
-      type: 'Attack',
-      color: '#ffe081',
-      image: 'attack.png'
-  },
-  {
       boardIndex: 21,
       column: 3,
       index: 7,
       name: 'Go To Jail',
       type: 'GoToJail',
-      text: 'Go To Jail'
+      text: 'Go To Jail',
+      image: 'gotojail.png'
   },
   //COLUMN 4 (BOTTOM)-------------------
   {
       boardIndex: 22,
       column: 4,
-      row: 'bottom',
       index: 0,
       name: 'Magneton',
       city: 'Celadon City',
@@ -245,7 +242,6 @@ var $cells = $([
   {
       boardIndex: 23,
       column: 4,
-      row: 'bottom',
       index: 1,
       name: 'Magnemite',
       city: 'Celadon City',
@@ -257,20 +253,28 @@ var $cells = $([
   {
       boardIndex: 24,
       column: 4,
-      row: 'bottom',
       index: 2,
-      name: 'Master ball',
+      name: 'Master Ball',
       value: 200,
       type: 'ball',
-      color: '#a1c1cb',
+      color: '#7e308e',
       image: 'masterball.png'
   },
   {
       boardIndex: 25,
       column: 4,
-      row: 'bottom',
       index: 3,
-      name: 'HitmonLee',
+      name: 'Zapdos',
+      value: 150,
+      type: 'Legendary',
+      color: '#ffe081',
+      image: 'zapdos.png'
+  },
+  {
+      boardIndex: 26,
+      column: 4,
+      index: 4,
+      name: 'Hitmonlee',
       city: 'Fuchsia City',
       value: 320,
       color: '#c7b7a7',
@@ -278,26 +282,14 @@ var $cells = $([
       image: 'hitmonlee.png'
   },
   {
-      boardIndex: 26,
+      boardIndex: 27,
       column: 4,
-      row: 'bottom',
-      index: 4,
+      index: 5,
       name: 'Hitmonchan',
       city: 'Fuchsia City',
       value: 300,
       color: '#c7b7a7',
       type: 'Property',
       image: 'hitmonchan.png'
-  },
-  {
-      boardIndex: 27,
-      column: 4,
-      row: 'bottom',
-      index: 5,
-      name: 'Articuno',
-      value: 150,
-      type: 'legendary',
-      color: '#76b8e1',
-      image: 'articuno.png'
   }
 ]);
