@@ -35,13 +35,17 @@ CLASSES
   /* end of column-3 */ }
   .column-1 > div {
     border: 1px solid;
-    border-top: none; }
+    border-right: none;
+    -webkit-transform: rotateZ(90deg);
+    -moz-transform: rotateZ(90deg);
+    transform: rotateZ(90deg); }
     .column-1 > div:first-child {
-      border-top: 1px solid; }
-    .column-1 > div:nth-last-child(2) {
-      border-bottom: none; }
+      border-top: 1px solid;
+      border-right: 1px solid; }
+    .column-1 > div:nth-child(2) {
+      border-left: none; }
     .column-1 > div:last-child {
-      border-top: 1px solid; }
+      border-right: 1px solid; }
   .column-2 > div > div {
     border: 1px solid;
     display: inline-block; }
@@ -74,28 +78,28 @@ CLASSES
 .property-cell, .utility-cell, .ball-cell, .attack-cell {
   text-align: center;
   position: relative; }
+  .property-cell span, .utility-cell span, .ball-cell span, .attack-cell span {
+    display: block; }
 
-.property-cell span {
-  display: block; }
-  .property-cell span.name {
-    font-family: "Slabo 27px", serif;
-    font-size: 18px;
-    margin: 0; }
-  .property-cell span.city {
-    font-family: "Raleway", sans-serif;
-    text-transform: uppercase;
-    font-size: 10px;
-    margin: 0 0 5px 0; }
-  .property-cell span.value {
-    font-family: "Raleway", sans-serif;
-    font-size: 13px; }
-  .property-cell span.owner {
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    bottom: 0px;
-    right: 10px;
-    border: 1px solid; }
+.property-cell span.name {
+  font-family: "Slabo 27px", serif;
+  font-size: 18px;
+  margin: 0; }
+.property-cell span.city {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 10px;
+  margin: 0 0 5px 0; }
+.property-cell span.value {
+  font-family: "Raleway", sans-serif;
+  font-size: 13px; }
+.property-cell span.owner {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  border: 1px solid; }
 .property-cell img {
   height: 65px;
   width: 65px;

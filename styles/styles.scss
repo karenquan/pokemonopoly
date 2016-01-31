@@ -58,16 +58,20 @@ CLASSES
   &1 {
     > div {
       border: 1px solid;
-      border-top: none;
+      border-right: none;
+      -webkit-transform: rotateZ(90deg);
+      -moz-transform: rotateZ(90deg);
+      transform: rotateZ(90deg);
 
       &:first-child {
         border-top: 1px solid;
+        border-right: 1px solid;
       }
-      &:nth-last-child(2) {
-        border-bottom: none;
+      &:nth-child(2) {
+        border-left: none;
       }
       &:last-child {
-        border-top: 1px solid;
+        border-right: 1px solid;
       }
     }
   } /* end of column-1 */
@@ -126,12 +130,14 @@ CLASSES
 .property-cell, .utility-cell, .ball-cell, .attack-cell {
   text-align: center;
   position: relative;
+
+  span {
+    display: block;
+  }
 }
 
 .property-cell {
   span {
-    display: block;
-
     &.name {
       font-family: $slabo;
       font-size: 18px;

@@ -8,8 +8,10 @@ var Main = (function() {
     $cells.each(function(index) {
       switch(this.type.toLowerCase()) { /* create different cell based on type */
         case 'go':
+          $cell = buildGoCell(this);
           break;
         case 'jail':
+          $cell = buildJailCell(this);
           break;
         case 'free parking':
           break;
@@ -18,42 +20,74 @@ var Main = (function() {
         case 'attack':
           break;
         case 'ball':
+          $cell = buildBallCell(this);
           break;
         default:
           $cell = buildPropertyCell(this);
           break;
       }
       //also add cell to board array
+      board[this.boardIndex] = this;
+
       //column 1: 0-7 index (left)
+      switch(this.column) {
+        case 2:
+          if(this.row === 'top') {
+            $column2Top[this.index] = $cell;
+          }
+          if(this.row === 'bottom') {
+            $column2Bottom[this.index] = $cell;
+          }
+          break;
+        default:
+          console.log('column: ' + this.column + ' cell: ' + this.index + ' text: ' + this.name );
+          console.log($('.column-' + this.column + ' div')[this.index]);
+          $($('.column-' + this.column + ' div')[this.index]).append($cell);
+
+          break;
+      }
+
       //column 2: top row: 0-5 indx (top l-> r)
       //column 3: 0-7 index (right)
       //column 2: bottom 5-0 (bottom r->l)
-      $('.column-1 div:first-child').append($cell);
+      // $('.column-1 div:first-child').append($cell);
       addPropertyOwner('player', $cell);
     });
+    // console.log(board);
   }
 
   /* BUILD CELL TYPES ------------------
      Build cell based on cell type
   */
     function buildPropertyCell(cell) {
-      var $cell, $name, $city, $image, $value;
-      $cell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell', css: { 'border-top': '15px solid ' + cell.color } });
+      var $propertyCell, $name, $city, $image, $value;
+      $propertyCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell', css: { 'border-top': '15px solid ' + cell.color } });
       $name = $('<span />', { 'class': 'name', text: cell.name });
       $city = $('<span />', { 'class': 'city', text: cell.city });
       $image = $('<img />', { src: 'images/' + cell.image });
       $value = $('<span />', { 'class': 'value', text: '$' +cell.value });
-      $cell.append($image).append($name).append($city).append($value);
+      $propertyCell.append($image).append($name).append($city).append($value);
 
-      return $cell;
+      return $propertyCell;
     }
 
     function buildGoCell(cell) {
-
+      var $goCell, $title;
+      $goCell= $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $title = $('<span />', { text: cell.text });
+      $goCell.append($title);
+      console.log("GO CELL: " + cell.text);
+      console.log($goCell);
+      return $goCell;
     }
 
     function buildJailCell(cell) {
+      var $jailCell, $title;
+      $jailCell= $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $title = $('<span />', { text: cell.text });
+      $jailCell.append($title);
 
+      return $jailCell;
     }
 
     function buildFreeParkingCell(cell) {
@@ -69,7 +103,12 @@ var Main = (function() {
     }
 
     function buildBallCell(cell) {
+      var $ballCell, $title;
+      $ballCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $title = $('<span />', { text: cell.name });
+      $ballCell.append($title);
 
+      return $ballCell;
     }
 
   // END BUILD CELL TYPES ------------------
@@ -111,9 +150,11 @@ var Main = (function() {
 
   */
   var $board = $('#board');
-  var $column1 = $('.column-1');
-  var $column2 = $('.column-2');
-  var $column3 = $('.column-3');
+  var $column1 = $('.column-1 > div');
+  var $column2Top = $('.column-2 > div.top-row');
+  var $column2Bottom = $('.column-2 > div.bottom-row');
+  var $column3 = $('.column-3 > div');
+  var board = [];
 
   return {
     init: _init
