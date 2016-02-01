@@ -73,7 +73,6 @@ var Main = (function() {
       }
 
       function activateStartButtonEvents() {
-        console.log('activatestartbutton event');
         var $player1Name = $('.player-1-name').val();
         var $player2Name = $('.player-2-name').val();
         $('input[type="text"]').on('keypress keyup', function() {
@@ -137,8 +136,8 @@ var Main = (function() {
     }
   // END DATA RETRIEVAL ------------------
 
-  /* BUILD CELL TYPES ------------------
-     Build cell based on cell type.
+  /* BUILD DYNAMIC ELEMENTS ------------------
+
   */
     function buildCell(cell, element) {
       var $cell, $name, $image, $value;
@@ -185,7 +184,26 @@ var Main = (function() {
 
     function buildGoToJailCell(cell, element) {
     }
-  // END BUILD CELL TYPES ------------------
+
+    function buildPlayerInfoSections() {
+      var $playerInfo, $player1Info, $player2Info, $name, $property, $money;
+      $playerInfoSection = $('<div />', { 'class': 'player-info' });
+      for(var i = 1; i < 3; i++) {
+          var player = i == 1 ? player1 : player2;
+          var $playerInfo = $('<div />', { 'class': 'player-' + i + '-info' });
+          $name = $('<h1 />', { text: 'Player ' + i + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
+          $property = $('<div />', { 'class': 'property' }).append($('<h2 />', { text: 'Property' })).append('<ul>');
+          $money = $('<h2 />', { text: '$' + player.money });
+          $playerInfo.append($name).append($property).append($money);
+          if(i == 1) {
+            $playerInfoSection.append($playerInfo).append(' '); //need to add space for justify effect
+          } else {
+            $playerInfoSection.append($playerInfo);
+          }
+      }
+      $('.board-center').append($playerInfoSection);
+    }
+  // END BUILD DYNAMIC ELEMENTS ------------------
 
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
      Update board center content for every turn.
@@ -197,8 +215,7 @@ var Main = (function() {
     }
 
     function initializePlayerInfoSection() {
-      $('.player-1-info .name').text(player1.name);
-      $('.player-2-info .name').text(player2.name);
+      buildPlayerInfoSections();
     }
 
     function updatePlayerInfoSection() {
@@ -246,7 +263,7 @@ var Main = (function() {
   var $boardBottom = $('.column-2 > div.bottom-row');
   var $startModal;
   var $turnSection = $('.turn-info');
-  var $playerInfoSection = $('.player-info');
+  // var $playerInfoSection = $('.player-info');
   var board = [];
   var boardElements = [];
   var player1;
