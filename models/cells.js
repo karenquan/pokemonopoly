@@ -227,8 +227,7 @@ var $cells = $([
       text: 'Go To Jail',
       image: 'gotojail.png'
   },
-  //COLUMN 4 (BOTTOM)-------------------
-  {
+  { //COLUMN 4 (BOTTOM)-------------------
       boardIndex: 22,
       column: 4,
       index: 0,

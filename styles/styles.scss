@@ -57,7 +57,7 @@ IDs
   width: 1200px;
   margin: 0 auto;
 
-  section {
+  > section {
     display: inline-block;
   }
 }
@@ -65,6 +65,8 @@ IDs
 /* -------------------------
 CLASSES
 -------------------------- */
+
+/* ------ BOARD STRUCTURE ------ */
 .column-1 > div, .column-2 > div, .column-3 > div, .column-4 > div {
   width: 150px;
   height: 150px;
@@ -141,10 +143,13 @@ CLASSES
   } /* end of column-4 */
 } /* end of column- */
 
-.center-cell {
-  width: 900px;
-  height: 900px;
+.board-center {
+  > section {
+    display: block;
+  }
 }
+
+/* ------ END BOARD STRUCTURE ------ */
 
 /* ------ CELL TYPES ------ */
 .property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
@@ -241,9 +246,81 @@ CLASSES
       left: -15px;
     }
   }
-
 }
+
 /* ------ END CELL TYPES  ------ */
+
+/* ------ MAIN CENTER CONTENT  ------ */
+.board-center {
+  width: 900px;
+  height: 900px;
+  padding: 40px;
+  text-align: center;
+
+  h1, h2 {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: left;
+    font-size: 19px;
+  }
+}
+
+.player-info {
+  text-align: justify;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+
+  > div {
+    border: 1px solid;
+    height: 400px;
+    width: 49%;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .property {
+    border: 1px solid $player1;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 100px;
+      overflow: auto;
+
+      li {
+        .bullet {
+          color: $pikachu;
+          font-size: 20px;
+        }
+      }
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+} /*  end of player-info */
+
+.turn-info {
+  border: 1px solid;
+  height: 200px;
+} /* end turn-info */
+
+/* ------ END MAIN CENTER CONTENT  ------ */
 
 /* ------ WELCOME MODAL  ------ */
 
@@ -262,45 +339,45 @@ CLASSES
     height: 100%;
     vertical-align: middle;
   }
-}
 
-.content {
-  width: 900px;
-  border: 2px solid #ffcb05;
-  box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
-  padding: 40px;
-  text-align: center;
-  background-color: #FFF;
-  vertical-align: middle;
-  display: inline-block;
+  .modal-content {
+    width: 900px;
+    border: 2px solid #ffcb05;
+    box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+    padding: 40px;
+    text-align: center;
+    background-color: #FFF;
+    vertical-align: middle;
+    display: inline-block;
 
-  img {
-    &.logo {
-      width: 600px;
-      display: block;
-      margin: 0 auto;
+    img {
+      &.logo {
+        width: 600px;
+        display: block;
+        margin: 0 auto;
+      }
     }
+
+    a {
+      color: #FFF;
+      display: block;
+      background-color: #009933;
+      padding: 20px 0;
+      margin: 0 auto;
+      width: 300px;
+      @include transition(0.5s);
+
+        &:hover {
+          cursor: pointer;
+          background: #00802b;
+        }
+
+        &.disabled {
+          background-color: #bfbfbf;
+          cursor: default;
+        }
+     }
   }
-
-  a {
-    color: #FFF;
-    display: block;
-    background-color: #009933;
-    padding: 20px 0;
-    margin: 0 auto;
-    width: 300px;
-    @include transition(0.5s);
-
-      &:hover {
-        cursor: pointer;
-        background: #00802b;
-      }
-
-      &.disabled {
-        background-color: #bfbfbf;
-        cursor: default;
-      }
-   }
 }
 
 .players {

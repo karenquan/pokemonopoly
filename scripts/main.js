@@ -1,9 +1,6 @@
 var Main = (function() {
 
   /* START GAME ------------------
-     -display welcome modal
-     -display player input (within welcome modal)
-     -remove modal when players are done inputting their info
      -player 1 starts, they have to click roll button
      -move player x amount of spaces
       - if they land on a vacant space:
@@ -20,8 +17,6 @@ var Main = (function() {
   */
 
   /* UTILITIES ------------------
-     //create modal
-     //remove modal
      //update player location
       //adding color to a cell
       //removing a color from a cell
@@ -30,7 +25,7 @@ var Main = (function() {
   function createStartModal() {
     var $modal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
     $modal = $('<div />', { 'class': 'start-modal'} );
-    $content = $('<div />', { 'class': 'content' });
+    $content = $('<div />', { 'class': 'modal-content' });
     $players = $('<div />', { 'class': 'players' });
     $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
     $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
@@ -66,11 +61,7 @@ var Main = (function() {
     function activateStartButtonEvents() {
       var $player1Name = $('.player-1-name').val();
       var $player2Name = $('.player-2-name').val();
-      $('input[type="text"]').on('keypress', function() {
-        checkPlayerInput();
-      });
-      $('input[type="text"]').on('keyup', function() {
-        console.log('focus check');
+      $('input[type="text"]').on('keypress keyup', function() {
         checkPlayerInput();
       });
 
@@ -87,6 +78,7 @@ var Main = (function() {
       function attachStartButtonClick () {
         $startButton.on('click', function() {
           $modal.remove();
+          //initialize board with new player info
         });
       }
 
@@ -101,7 +93,7 @@ var Main = (function() {
   }
 
   /* DATA RETRIEVAL ------------------
-     Parse xml file to get data to populate cells
+     Read cells.js file to get data to populate cells
   */
   function populateCells() {
     var $cell, $cellElement;
@@ -216,7 +208,7 @@ var Main = (function() {
   function _init() {
     console.log("herro from main");
     populateCells();
-    createStartModal();
+    // createStartModal();
   }
 
   /* GLOBAL VARIABLES ------------------
