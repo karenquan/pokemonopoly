@@ -1,7 +1,7 @@
 var Player = function(num, name) {
   this.name = name;
   // this.character = character;
-  this.image = 'images/';
+  // this.image = 'images/';
   // switch(this.character) {
   //   case 'ash':
   //     this.color = 'rgb(248,9,26)';
@@ -16,12 +16,14 @@ var Player = function(num, name) {
   //     this.image += 'brock.png';
   //     break;
   // };
-  switch(this.num) {
+  switch(num) {
     case 2:
       this.color = '#de756e';
+      this.currentTurn = false;
       break;
     default:
       this.color = '#58a8da';
+      this.currentTurn = true;
       break;
   }
   this.pokemon = [];
