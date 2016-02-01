@@ -28,38 +28,76 @@ var Main = (function() {
      //roll die
   */
   function createStartModal() {
-    var $modal, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
+    var $modal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
     $modal = $('<div />', { 'class': 'start-modal'} );
+    $content = $('<div />', { 'class': 'content' });
     $players = $('<div />', { 'class': 'players' });
     $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
-    $nameText = $('<span />', { 'class': 'name', text: 'Name:'});
-    $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character:'});
+    $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
+    // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
     $nameTextBox = $('<input />', { type: 'text' });
     $player1 = $('<div />', { 'class': 'player-1' });
       $player1Title = $('<h3 />', { text: 'Player 1' });
-      $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name')).append($characterText.clone());
-      addCharacterIcons($player1);
+      $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
+      // addCharacterIcons($player1, 1);
     $player2 = $('<div />', { 'class': 'player-2' });
       $player2Title = $('<h3 />', { text: 'Player 2' });
-      $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name')).append($characterText.clone());
-      addCharacterIcons($player2);
-    $players.append($player1).append(" ").append($player2);
-    $startButton = $('<a />', { text: 'START GAME' });
-    $modal.append($logo).append($players).append($startButton);
+      $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
+      // addCharacterIcons($player2, 2);
+    $players.append($player1).append(' ').append($player2);
+    $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
+    $content.append($logo).append($players).append($startButton);
+    $modal.append($content);
 
-    function addCharacterIcons(player) {
-      var $ash = $('<img />', { 'class': 'ash', src: 'images/ash_gray.png', alt: 'Ash'});
-      var $misty = $('<img />', { 'class': 'misty', src: 'images/misty_gray.png', alt: 'Misty'});
-      var $brock = $('<img />', { 'class': 'brock', src: 'images/brock_gray.png', alt: 'Brock'});
-      player.append($ash).append($misty).append($brock);
+    function addCharacterIcons(player, playerNumber) {
+      var ashId = 'ash-' + playerNumber;
+      var mistyId = 'misty-' + playerNumber;
+      var brockId = 'brock-' + playerNumber;
+      var radioName = playerNumber + ' character';
+      var $ash = $('<input />', { type: 'radio', name: 'ash', value: 'ash', id: ashId });
+      var $ashLabel = $('<label />', { 'class': ashId, 'for': ashId });
+      var $misty = $('<input />', { type: 'radio', name: 'misty', value: 'misty', id: mistyId });
+      var $mistyLabel = $('<label />', { 'class': mistyId, 'for': mistyId });
+      var $brock = $('<input />', { type: 'radio', name: 'brock', value: 'brock', id: brockId });
+      var $brockLabel = $('<label />', { 'class': brockId, 'for': brockId });
+      player.append($ash).append($ashLabel).append($misty).append($mistyLabel).append($brock).append($brockLabel);
     }
 
-    console.log($modal);
+    function activateStartButtonEvents() {
+      var $player1Name = $('.player-1-name').val();
+      var $player2Name = $('.player-2-name').val();
+      $('input[type="text"]').on('keypress', function() {
+        checkPlayerInput();
+      });
+      $('input[type="text"]').on('keyup', function() {
+        console.log('focus check');
+        checkPlayerInput();
+      });
+
+      function checkPlayerInput() { //only allow start button the clicked when both players have typed their name
+        if($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) {
+          $startButton.removeClass('disabled');
+          attachStartButtonClick();
+        } else {
+          $startButton.addClass('disabled');
+          removeStartButtonClick();
+        }
+      }
+
+      function attachStartButtonClick () {
+        $startButton.on('click', function() {
+          $modal.remove();
+        });
+      }
+
+      function removeStartButtonClick() {
+        $startButton.unbind('click');
+      }
+    }
+
+    // console.log($modal);
     $('body').append($modal);
-
-    // function playerActions() {
-
-    // }
+    activateStartButtonEvents();
   }
 
   /* DATA RETRIEVAL ------------------

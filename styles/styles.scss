@@ -25,6 +25,8 @@ $pokeball: #f18e38;
 $greatball: #3b82c4;
 $ultraball: #677280;
 $masterball: #7e308e;
+$player1: #58a8da;
+$player2: #de756e;
 
 /* -------------------------
 MIXINS
@@ -40,6 +42,7 @@ TAGS
 -------------------------- */
 body {
   font-family: $slabo;
+  position: relative;
 }
 
 section, div {
@@ -242,11 +245,34 @@ CLASSES
 }
 /* ------ END CELL TYPES  ------ */
 
+/* ------ WELCOME MODAL  ------ */
+
 .start-modal {
-  width: 900px;
-  border: 1px solid;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.8);
   text-align: center;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
+.content {
+  width: 900px;
+  border: 2px solid #ffcb05;
+  box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+  padding: 40px;
+  text-align: center;
+  background-color: #FFF;
+  vertical-align: middle;
+  display: inline-block;
 
   img {
     &.logo {
@@ -269,14 +295,25 @@ CLASSES
         cursor: pointer;
         background: #00802b;
       }
+
+      &.disabled {
+        background-color: #bfbfbf;
+        cursor: default;
+      }
    }
 }
 
 .players {
     text-align: justify;
+    margin: 20px 0 0 0;
+
+  &:after {
+      content: '';
+      width: 100%;
+      display: inline-block;
+    }
 
   > div {
-    border: 1px solid red;
     width: 49%;
     display: inline-block;
     padding: 20px;
@@ -292,14 +329,97 @@ CLASSES
   }
 
   h3 {
+    color: #000;
     text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 22px;
   }
 
-  &:after {
-      content: '';
-      width: 100%;
+  input[type="text"] {
+    font-family: $slabo;
+    padding: 8px;
+    outline: none;
+    margin: 0 10px;
+    font-size: 15px;
+    width: 250px;
+  }
+
+  input[type="radio"] {
+    display: none;
+
+    &+ label {
       display: inline-block;
+      width: 70px;
+      height: 75px;
+
+
+      &.ash-1 , &.ash-2{
+        background: url('../images/ash_gray_70.png') no-repeat;
+      }
+      &.misty-1, &.misty-2 {
+        background: url('../images/misty_gray_70.png') no-repeat;
+      }
+      &.brock-1, &.brock-2 {
+        background: url('../images/brock_gray_70.png') no-repeat;
+      }
     }
+
+    &:checked {
+      &+ label {
+        display: inline-block;
+        width: 60px;
+        height: 70px;
+
+        &.ash-1, &.ash-2 {
+          background: url('../images/ash_70.png');
+        }
+        &.misty-1, &.misty-2 {
+          background: url('../images/misty_70.png');
+        }
+        &.brock-1, &.brock-2 {
+          background: url('../images/brock_70.png');
+        }
+      }
+    }
+  }
+
+
+  .player-1 {
+    background-color: rgba(118, 184, 225, 0.3);
+    border: 1px solid $articuno;
+
+    h3 {
+      color: $player1;
+    }
+
+    input[type="text"] {
+      border: 1px solid $player1;
+
+      &:focus {
+        border: 1px solid $articuno;
+        box-shadow: 0 0 10px rgb(118, 184, 225);
+      }
+    }
+  }
+
+  .player-2 {
+    background-color: rgba(228, 143, 137, 0.3);
+    border: 1px solid $voltorb;
+
+    h3  {
+      color: $player2;
+    }
+
+    input[type="text"] {
+      border: 1px solid $player2;
+
+      &:focus {
+        border: 1px solid $voltorb;
+        box-shadow: 0 0 10px rgb(228, 143, 137);
+      }
+    }
+  }
 }
+/* ------ END WELCOME MODAL  ------ */
 
 

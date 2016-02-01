@@ -13,7 +13,8 @@ MIXINS
 TAGS
 -------------------------- */
 body {
-  font-family: "Slabo 27px", serif; }
+  font-family: "Slabo 27px", serif;
+  position: relative; }
 
 section, div {
   box-sizing: border-box;
@@ -149,16 +150,35 @@ CLASSES
     left: -15px; }
 
 /* ------ END CELL TYPES  ------ */
+/* ------ WELCOME MODAL  ------ */
 .start-modal {
-  width: 900px;
-  border: 1px solid;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
   text-align: center; }
-  .start-modal img.logo {
+  .start-modal:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle; }
+
+.content {
+  width: 900px;
+  border: 2px solid #ffcb05;
+  box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+  padding: 40px;
+  text-align: center;
+  background-color: #FFF;
+  vertical-align: middle;
+  display: inline-block; }
+  .content img.logo {
     width: 600px;
     display: block;
     margin: 0 auto; }
-  .start-modal a {
+  .content a {
     color: #FFF;
     display: block;
     background-color: #009933;
@@ -168,14 +188,21 @@ CLASSES
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s; }
-    .start-modal a:hover {
+    .content a:hover {
       cursor: pointer;
       background: #00802b; }
+    .content a.disabled {
+      background-color: #bfbfbf;
+      cursor: default; }
 
 .players {
-  text-align: justify; }
+  text-align: justify;
+  margin: 20px 0 0 0; }
+  .players:after {
+    content: '';
+    width: 100%;
+    display: inline-block; }
   .players > div {
-    border: 1px solid red;
     width: 49%;
     display: inline-block;
     padding: 20px; }
@@ -185,10 +212,60 @@ CLASSES
     .players > div span {
       display: inline-block; }
   .players h3 {
-    text-align: center; }
-  .players:after {
-    content: '';
-    width: 100%;
-    display: inline-block; }
+    color: #000;
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 22px; }
+  .players input[type="text"] {
+    font-family: "Slabo 27px", serif;
+    padding: 8px;
+    outline: none;
+    margin: 0 10px;
+    font-size: 15px;
+    width: 250px; }
+  .players input[type="radio"] {
+    display: none; }
+    .players input[type="radio"] + label {
+      display: inline-block;
+      width: 70px;
+      height: 75px; }
+      .players input[type="radio"] + label.ash-1, .players input[type="radio"] + label.ash-2 {
+        background: url("../images/ash_gray_70.png") no-repeat; }
+      .players input[type="radio"] + label.misty-1, .players input[type="radio"] + label.misty-2 {
+        background: url("../images/misty_gray_70.png") no-repeat; }
+      .players input[type="radio"] + label.brock-1, .players input[type="radio"] + label.brock-2 {
+        background: url("../images/brock_gray_70.png") no-repeat; }
+    .players input[type="radio"]:checked + label {
+      display: inline-block;
+      width: 60px;
+      height: 70px; }
+      .players input[type="radio"]:checked + label.ash-1, .players input[type="radio"]:checked + label.ash-2 {
+        background: url("../images/ash_70.png"); }
+      .players input[type="radio"]:checked + label.misty-1, .players input[type="radio"]:checked + label.misty-2 {
+        background: url("../images/misty_70.png"); }
+      .players input[type="radio"]:checked + label.brock-1, .players input[type="radio"]:checked + label.brock-2 {
+        background: url("../images/brock_70.png"); }
+  .players .player-1 {
+    background-color: rgba(118, 184, 225, 0.3);
+    border: 1px solid #76b8e1; }
+    .players .player-1 h3 {
+      color: #58a8da; }
+    .players .player-1 input[type="text"] {
+      border: 1px solid #58a8da; }
+      .players .player-1 input[type="text"]:focus {
+        border: 1px solid #76b8e1;
+        box-shadow: 0 0 10px #76b8e1; }
+  .players .player-2 {
+    background-color: rgba(228, 143, 137, 0.3);
+    border: 1px solid #e48f89; }
+    .players .player-2 h3 {
+      color: #de756e; }
+    .players .player-2 input[type="text"] {
+      border: 1px solid #de756e; }
+      .players .player-2 input[type="text"]:focus {
+        border: 1px solid #e48f89;
+        box-shadow: 0 0 10px #e48f89; }
+
+/* ------ END WELCOME MODAL  ------ */
 
 /*# sourceMappingURL=styles.css.map */
