@@ -1,37 +1,97 @@
 var Main = (function() {
 
+  /* START GAME ------------------
+     -display welcome modal
+     -display player input (within welcome modal)
+     -remove modal when players are done inputting their info
+     -player 1 starts, they have to click roll button
+     -move player x amount of spaces
+      - if they land on a vacant space:
+        - update center of board asking if they wanat to purchase - end turn by clicking "YEs" or "No"
+      - if they land on their own space:
+        - update center of board saying they landed on their own property - end turn by clicking "OK"
+      - if they land on other player's property:
+        -update center of board saying they landed on other player's property & owe money - end turn by clicking "ok"
+      - if they land on GO space, update center of board saying they get $200, & update player's money
+      - if they land on jail space, update center of board saying they're just visiting
+      - if they land on free parking, check if there's money in jackpot & add money if there is, reduce jackpot to 0, player hits "ok" to continue
+      - if they land on go to jail, update player's location to jail - ask user if they want to pay, or else keep track of # of turns to roll values
+
+  */
+
+  /* UTILITIES ------------------
+     //create modal
+     //remove modal
+     //update player location
+      //adding color to a cell
+      //removing a color from a cell
+     //roll die
+  */
+  function createStartModal() {
+    var $modal, $logo, $player1, $player2, $nameText, $characterText, $nameTextBox, $start;
+    $modal = $('<div />', { 'class': 'start-modal'} );
+    $logo = $('<img />', { src: 'images/pokemonopoly.png' });
+    $nameText = $('<span />', { 'class': 'name', text: 'Name:'});
+    $characterText = $('<span />', { 'class': 'character', text: 'Character:'});
+    $nameTextBox = $('<input />', { type: 'text' });
+    $player1 = $('<div />', { 'class': 'player-1' });
+      $player1.append($nameText).append($nameTextBox.clone().addClass('player-1-name')).append($characterText);
+      addCharacterIcons($player1);
+    $player2 = $('<div />', { 'class': 'player-2' });
+      $player2.append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name')).append($characterText.clone());
+      addCharacterIcons($player2);
+    $modal.append($logo).append($player1).append($player2).append($start);
+
+    function addCharacterIcons(player) {
+      var $ash = $('<img />', { 'class': 'ash', src: 'images/ash_gray.png', alt: 'Ash'});
+      var $misty = $('<img />', { 'class': 'misty', src: 'images/misty_gray.png', alt: 'Misty'});
+      var $brock = $('<img />', { 'class': 'brock', src: 'images/brock_gray.png', alt: 'Brock'});
+      player.append($ash).append($misty).append($brock);
+    }
+
+    console.log($modal);
+    $('body').append($modal);
+
+    // function playerActions() {
+
+    // }
+  }
+
   /* DATA RETRIEVAL ------------------
      Parse xml file to get data to populate cells
   */
   function populateCells() {
     var $cell, $cellElement;
     $cells.each(function(index) {
-      $cellElement = $('.column-' + this.column + ' div')[this.index];
+      cellElement = $('.column-' + this.column + ' div')[this.index];
 
       switch(this.type.toLowerCase()) { /* create cells based on type */
         case 'go':
-          buildGoCell(this, $cellElement);
+          buildGoCell(this, cellElement);
+          cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         case 'jail':
-          buildJailCell(this, $cellElement);
+          buildJailCell(this, cellElement);
+          cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         case 'parking':
           break;
         case 'gotojail':
           break;
         default:
-          buildCell(this, $cellElement);
+          buildCell(this, cellElement);
           break;
       }
-
+      boardElements.push(cellElement);
       board[this.boardIndex] = this; //also add cell to board array
       // console.log(board);
        // addPropertyOwner('player', $cellElement);
     });
+    console.log(boardElements);
   }
 
   /* BUILD CELL TYPES ------------------
-     Build cell based on cell type
+     Build cell based on cell type.
   */
     function buildCell(cell, element) {
       var $cell, $name, $image, $value;
@@ -58,7 +118,7 @@ var Main = (function() {
 
     function buildGoCell(cell, element) {
       var $goCell, $title, $image;
-      $goCell = $('<div />', { 'class': cell.type.toLowerCase() + '-cell' });
+      $goCell = $('<div />');
       $title = $('<span />', { 'class': 'title', text: cell.text });
       $image = $('<img />', { src: 'images/' + cell.image });
       $goCell.append($title).append($image);
@@ -80,7 +140,6 @@ var Main = (function() {
     function buildGoToJailCell(cell, element) {
 
     }
-
   // END BUILD CELL TYPES ------------------
 
   /* UPDATE CELL STATE ------------------
@@ -114,6 +173,7 @@ var Main = (function() {
   function _init() {
     console.log("herro from main");
     populateCells();
+    createStartModal();
   }
 
   /* GLOBAL VARIABLES ------------------
@@ -124,6 +184,7 @@ var Main = (function() {
   var $column2Top = $('.column-2 > div.top-row');
   var $column2Bottom = $('.column-2 > div.bottom-row');
   var $column3 = $('.column-3 > div');
+  var boardElements = [];
   var board = [];
 
   return {

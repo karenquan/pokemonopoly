@@ -125,19 +125,19 @@ CLASSES
 .legendary-cell.zapdos img {
   margin: 0 auto; }
 
-.go-cell {
+.go-cell > div {
   padding: 10px 35px 40px;
   -webkit-transform: rotateZ(-45deg);
   -moz-transform: rotateZ(-45deg);
   transform: rotateZ(-45deg);
   overflow: hidden; }
-  .go-cell span.title {
+  .go-cell > div span.title {
     font-family: "Slabo 27px", serif;
     color: #0d4da4;
     font-weight: bold;
     font-size: 15px;
     margin: 0 0 10px 4px; }
-  .go-cell img {
+  .go-cell > div img {
     width: 110px;
     position: relative;
     left: -15px; }

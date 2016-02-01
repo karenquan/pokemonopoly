@@ -204,26 +204,29 @@ CLASSES
 }
 
 .go-cell {
-  padding: 10px 35px 40px;
-  -webkit-transform: rotateZ(-45deg);
-    -moz-transform: rotateZ(-45deg);
-    transform: rotateZ(-45deg);
-  overflow: hidden;
+  > div {
+    padding: 10px 35px 40px;
+    -webkit-transform: rotateZ(-45deg);
+      -moz-transform: rotateZ(-45deg);
+      transform: rotateZ(-45deg);
+    overflow: hidden;
 
-  span {
-    &.title {
-      font-family: $slabo;
-      color: #0d4da4;
-      font-weight: bold;
-      font-size: 15px;
-      margin: 0 0 10px 4px;
+    span {
+      &.title {
+        font-family: $slabo;
+        color: #0d4da4;
+        font-weight: bold;
+        font-size: 15px;
+        margin: 0 0 10px 4px;
+      }
+    }
+    img {
+      width: 110px;
+      position: relative;
+      left: -15px;
     }
   }
-  img {
-    width: 110px;
-    position: relative;
-    left: -15px;
-  }
+
 }
 
 /* ------ END CELLS  ------ */
