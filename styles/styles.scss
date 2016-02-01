@@ -27,8 +27,20 @@ $ultraball: #677280;
 $masterball: #7e308e;
 
 /* -------------------------
+MIXINS
+-------------------------- */
+@mixin transition($duration) {
+  -webkit-transition: $duration;
+  -moz-transition: $duration;
+  transition: $duration;
+}
+
+/* -------------------------
 TAGS
 -------------------------- */
+body {
+  font-family: $slabo;
+}
 
 section, div {
   box-sizing: border-box;
@@ -131,7 +143,7 @@ CLASSES
   height: 900px;
 }
 
-/* ------ CELLS ------ */
+/* ------ CELL TYPES ------ */
 .property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
   text-align: center;
   position: relative;
@@ -228,7 +240,66 @@ CLASSES
   }
 
 }
+/* ------ END CELL TYPES  ------ */
 
-/* ------ END CELLS  ------ */
+.start-modal {
+  width: 900px;
+  border: 1px solid;
+  padding: 20px;
+  text-align: center;
+
+  img {
+    &.logo {
+      width: 600px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  a {
+    color: #FFF;
+    display: block;
+    background-color: #009933;
+    padding: 20px 0;
+    margin: 0 auto;
+    width: 300px;
+    @include transition(0.5s);
+
+      &:hover {
+        cursor: pointer;
+        background: #00802b;
+      }
+   }
+}
+
+.players {
+    text-align: justify;
+
+  > div {
+    border: 1px solid red;
+    width: 49%;
+    display: inline-block;
+    padding: 20px;
+
+    img {
+      width: 60px;
+      vertical-align: bottom;
+    }
+
+    span {
+        display: inline-block;
+    }
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  &:after {
+      content: '';
+      width: 100%;
+      display: inline-block;
+    }
+}
 
 

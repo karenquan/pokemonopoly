@@ -7,8 +7,14 @@ TYPOGRAPHY
 COLORS
 -------------------------- */
 /* -------------------------
+MIXINS
+-------------------------- */
+/* -------------------------
 TAGS
 -------------------------- */
+body {
+  font-family: "Slabo 27px", serif; }
+
 section, div {
   box-sizing: border-box;
   vertical-align: top; }
@@ -81,7 +87,7 @@ CLASSES
   width: 900px;
   height: 900px; }
 
-/* ------ CELLS ------ */
+/* ------ CELL TYPES ------ */
 .property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
   text-align: center;
   position: relative; }
@@ -142,6 +148,47 @@ CLASSES
     position: relative;
     left: -15px; }
 
-/* ------ END CELLS  ------ */
+/* ------ END CELL TYPES  ------ */
+.start-modal {
+  width: 900px;
+  border: 1px solid;
+  padding: 20px;
+  text-align: center; }
+  .start-modal img.logo {
+    width: 600px;
+    display: block;
+    margin: 0 auto; }
+  .start-modal a {
+    color: #FFF;
+    display: block;
+    background-color: #009933;
+    padding: 20px 0;
+    margin: 0 auto;
+    width: 300px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s; }
+    .start-modal a:hover {
+      cursor: pointer;
+      background: #00802b; }
+
+.players {
+  text-align: justify; }
+  .players > div {
+    border: 1px solid red;
+    width: 49%;
+    display: inline-block;
+    padding: 20px; }
+    .players > div img {
+      width: 60px;
+      vertical-align: bottom; }
+    .players > div span {
+      display: inline-block; }
+  .players h3 {
+    text-align: center; }
+  .players:after {
+    content: '';
+    width: 100%;
+    display: inline-block; }
 
 /*# sourceMappingURL=styles.css.map */

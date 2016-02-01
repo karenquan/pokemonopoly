@@ -28,19 +28,24 @@ var Main = (function() {
      //roll die
   */
   function createStartModal() {
-    var $modal, $logo, $player1, $player2, $nameText, $characterText, $nameTextBox, $start;
+    var $modal, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
     $modal = $('<div />', { 'class': 'start-modal'} );
-    $logo = $('<img />', { src: 'images/pokemonopoly.png' });
+    $players = $('<div />', { 'class': 'players' });
+    $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
     $nameText = $('<span />', { 'class': 'name', text: 'Name:'});
-    $characterText = $('<span />', { 'class': 'character', text: 'Character:'});
+    $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character:'});
     $nameTextBox = $('<input />', { type: 'text' });
     $player1 = $('<div />', { 'class': 'player-1' });
-      $player1.append($nameText).append($nameTextBox.clone().addClass('player-1-name')).append($characterText);
+      $player1Title = $('<h3 />', { text: 'Player 1' });
+      $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name')).append($characterText.clone());
       addCharacterIcons($player1);
     $player2 = $('<div />', { 'class': 'player-2' });
-      $player2.append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name')).append($characterText.clone());
+      $player2Title = $('<h3 />', { text: 'Player 2' });
+      $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name')).append($characterText.clone());
       addCharacterIcons($player2);
-    $modal.append($logo).append($player1).append($player2).append($start);
+    $players.append($player1).append(" ").append($player2);
+    $startButton = $('<a />', { text: 'START GAME' });
+    $modal.append($logo).append($players).append($startButton);
 
     function addCharacterIcons(player) {
       var $ash = $('<img />', { 'class': 'ash', src: 'images/ash_gray.png', alt: 'Ash'});
