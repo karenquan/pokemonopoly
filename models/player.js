@@ -28,6 +28,7 @@ var Player = function(num, name) {
       break;
   }
   this.property = [];
+  this.turnCount = 0;
   this.money = 2000;
   this.location = 0; //board array index
   this.jail = false;
@@ -40,6 +41,7 @@ Player.prototype.addProperty = function(property) {
 Player.prototype.rollDie = function() {
   //generate random number 1-6
   var roll = generateRandomInt(1,7);
+  this.turnCount += 1;
 
   return roll;
 

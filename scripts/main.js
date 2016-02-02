@@ -18,20 +18,22 @@ var Main = (function() {
       //grab player names before removing modal
       player1 = new Player(1, $('.player-1-name').val());
       player2 = new Player(2, $('.player-2-name').val());
+      players = [player1, player2];
       currentPlayer = player1;
-      count = 0;
+      turnCount = 0;
       $('.start-modal').remove();
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 1 on 'Go' space
-      buildInitializeTurnSection();
-      buildInitializePlayerInfoSections();
+      buildTurnSection();
+      buildPlayerInfoSections();
       attachRollEvent();
     }
 
     function switchTurns() {
       currentPlayer.currentTurn = false;
-      count += 1;
-      currentPlayer = (count % 2 == 0) ? player1 : player2;
+      // turnCount += 1;
+      // currentPlayer = (turnCount % 2 == 0) ? player1 : player2;
+      currentPlayer = (currentPlayer === player1) ? player2 : player1;
       currentPlayer.currentTurn = true;
       updateTurnSection();
     }
@@ -43,6 +45,7 @@ var Main = (function() {
         //updateBoard();
       });
     }
+
   // END GAME PLAY ------------------
 
 
@@ -234,7 +237,7 @@ var Main = (function() {
     function buildGoToJailCell(cell, element) {
     }
 
-    function buildInitializePlayerInfoSections() {
+    function buildPlayerInfoSections() {
       var $playerInfo, $player1Info, $player2Info, $name, $property, $money;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
       for(var i = 1; i < 3; i++) {
@@ -253,7 +256,7 @@ var Main = (function() {
       $('.board-center').append($playerInfoSection);
     }
 
-    function buildInitializeTurnSection() {
+    function buildTurnSection() {
       // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
@@ -284,11 +287,13 @@ var Main = (function() {
       //update money if they purchase
     }
 
-    function addPropertyOwner(player, cell) {
+    function addPropertyOwner(cell, index) {
       //color will be player.color
-      var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': player.color } });
+      console.log('got into property owner function');
+      var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': currentPlayer.color } });
       $(cell).append($owner);
-      //player.addProperty(cell); ?//update player's property array
+      currentPlayer.addProperty(board[index]); //update player's property array
+      board[index].owner = currentPlayer.name; //update owner property of cell
     }
 
     function removePropertyOwner(cell) { //if user sells property
@@ -308,13 +313,33 @@ var Main = (function() {
         player.location = extra - 1; //subtract one since array is base 0
       }
       boardElements[player.location].classList.add(className);
+
       //check if cell is vacant/owned by other player/go cell/go to jail cell
-      switchTurns();
+      checkCellVacancy(player.location);
+
+      switchTurns(); //switch turns after current player is done (i.e. after purchasing property)
     }
 
-    function updateCellState(cell) {
-      //change background color back to white default background
-      //if no player is on it
+    function checkCellVacancy(cellIndex) {
+      var $currentCell = board[cellIndex];
+      var $currentCellElement = boardElements[cellIndex];
+      //don't need to check for cell vacancy on go/jail/free parking/go to jail
+      if($currentCell.type.toLowerCase() === 'property' || $currentCell.type.toLowerCase() === 'legendary' || $currentCell.type.toLowerCase() === 'ball') {
+        if($currentCell.owner === '') {
+          console.log('type: ' + $currentCell.type + ': vacant');
+          //add property if user clicks 'yes' button
+          addPropertyOwner($currentCellElement, cellIndex);
+          //if no, just exit function
+        } else {
+          //if owner is not '', check if current player is owner, or other player
+          var currentOwner = ($currentCell.owner === currentPlayer.name) ? true : false;
+          if(!currentOwner) {
+            //deduct property value worth from current player's money, and add to other player's money
+            console.log('you are not current owner');
+          }
+        }
+      }
+
     }
 
     function printCellState(cell) {
@@ -346,8 +371,9 @@ $(document).ready(function() {
   var $boardBottom = $('.column-2 > div.bottom-row');
   var board = [];
   var boardElements = [];
+  var players;
   var player1;
   var player2;
   var currentPlayer;
-  var count;
+  var turnCount;
 
