@@ -350,12 +350,14 @@ CLASSES
     border: 1px solid;
     font-size: 14px;
     text-align: center;
+    vertical-align: top;
   }
 
   h2 {
     font-size: 25px;
     margin: 0 auto;
     text-align: center;
+    color: $success;
   }
 
   &:after {
@@ -365,10 +367,6 @@ CLASSES
   }
 
   .roll {
-
-    h2 {
-      color: $success;
-    }
 
     .roll-value {
       font-size: 20px;
@@ -397,7 +395,43 @@ CLASSES
   }
 
   .cell-info {
+    margin: 0 auto;
+    padding: 0 40px;
+    text-align: justify;
 
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+    }
+
+    h2, h3 {
+      margin: 0;
+      color: $squirtle;
+    }
+
+    > * {
+      vertical-align: top;
+    }
+
+    > div {
+      border: 1px solid;
+      display: inline-block;
+
+      &.image {
+        width: 65px;
+        height: 65px;
+        border: 1px solid;
+      }
+    }
+
+    img {
+      display: inline-block;
+    }
+
+    .cell-details {
+      width: 70%;
+    }
   }
 } /* end turn-info */
 

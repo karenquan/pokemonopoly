@@ -26,10 +26,10 @@ var Main = (function() {
       movePlayer(player2, 0); //start player 1 on 'Go' space
       buildTurnSection();
       buildPlayerInfoSections();
-      attachRollEvent();
     }
 
     function switchTurns() {
+      $('.roll-button').attr('disabled', false); //re-enable roll button
       currentPlayer.currentTurn = false;
       // turnCount += 1;
       // currentPlayer = (turnCount % 2 == 0) ? player1 : player2;
@@ -38,14 +38,15 @@ var Main = (function() {
       updateTurnSection();
     }
 
-    function attachRollEvent() {
-      $('.roll-button').on('click', function() {
-        roll = currentPlayer.rollDie();
-        movePlayer(currentPlayer, roll);
-        render();
-        //updateBoard();
-      });
-    }
+    // function attachRollEvent() {
+    //   $rollButton.on('click', function() {
+    //     $rollButton.attr('disabled', true);
+    //     roll = currentPlayer.rollDie();
+    //     movePlayer(currentPlayer, roll);
+    //     render();
+    //     //updateBoard();
+    //   });
+    // }
 
     function render() {
       //update turn section (roll #, roll imaage(s))
@@ -257,15 +258,38 @@ var Main = (function() {
       // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
+
       var $roll = $('<div />', { 'class': 'roll' });
-      var $rollTitle = $('<h2 />', { text: 'Roll' });
-      var $rollValue = $('<span />', { 'class': 'roll-value' });
-      var $rollImage = $('<img />', { src: 'images/dice.gif' } );
-      var $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
-      $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
+        var $rollTitle = $('<h2 />', { text: 'Roll' });
+        var $rollValue = $('<span />', { 'class': 'roll-value', text: ' ' });
+        var $rollImage = $('<img />', { src: 'images/dice.gif' } );
+        $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
+        // $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
+        $roll.append($rollTitle).append($rollValue).append($rollButton);
+
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
+        var $cellTitle = $('<h2 />', { text: 'Current Space' });
+        var $cellDetails = $('<div />', { 'class': 'cell-details' });
+        var $cellName = $('<h3 />', { text: 'Name: ' }).append($('<span />', { 'class': 'name' }));
+        var $cellValue = $('<h3 />', { text: 'Value: ' }).append($('<span />', { 'class': 'value' }));;
+        var $cellImage = $('<div />', { 'class': 'image' });
+        $cellDetails.append($cellName).append($cellValue);
+        $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);
+
       $turnInfo.append($title).append($roll).append($cellInfo);
       $('.board-center').append($turnInfo);
+      attachRollEvent();
+
+      $rollButton = $('.roll-button');//update rollButton value to newly added dom element
+
+      function attachRollEvent() {
+        $rollButton.on('click', function() {
+          $rollButton.attr('disabled', true);
+          roll = currentPlayer.rollDie();
+          movePlayer(currentPlayer, roll);
+          render();
+        });
+      }
     }
   // END BUILD DYNAMIC ELEMENTS ------------------
 
@@ -374,6 +398,7 @@ $(document).ready(function() {
   var $boardTop = $('.column-2 > div.top-row');
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
+  var $rollButton;
   var board = [];
   var boardElements = [];
   var players;

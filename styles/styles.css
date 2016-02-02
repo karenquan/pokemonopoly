@@ -225,17 +225,17 @@ CLASSES
     display: inline-block;
     border: 1px solid;
     font-size: 14px;
-    text-align: center; }
+    text-align: center;
+    vertical-align: top; }
   .turn-info h2 {
     font-size: 25px;
     margin: 0 auto;
-    text-align: center; }
+    text-align: center;
+    color: #009933; }
   .turn-info:after {
     content: '';
     display: inline-block;
     width: 100%; }
-  .turn-info .roll h2 {
-    color: #009933; }
   .turn-info .roll .roll-value {
     font-size: 20px;
     color: #009933; }
@@ -257,6 +257,30 @@ CLASSES
       cursor: pointer;
       background: #00802b;
       border: 1px solid #00802b; }
+  .turn-info .cell-info {
+    margin: 0 auto;
+    padding: 0 40px;
+    text-align: justify; }
+    .turn-info .cell-info:after {
+      content: '';
+      display: inline-block;
+      width: 100%; }
+    .turn-info .cell-info h2, .turn-info .cell-info h3 {
+      margin: 0;
+      color: #8fc4d1; }
+    .turn-info .cell-info > * {
+      vertical-align: top; }
+    .turn-info .cell-info > div {
+      border: 1px solid;
+      display: inline-block; }
+      .turn-info .cell-info > div.image {
+        width: 65px;
+        height: 65px;
+        border: 1px solid; }
+    .turn-info .cell-info img {
+      display: inline-block; }
+    .turn-info .cell-info .cell-details {
+      width: 70%; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
