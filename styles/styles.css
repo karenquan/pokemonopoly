@@ -257,20 +257,25 @@ CLASSES
       width: 600px;
       display: block;
       margin: 0 auto; }
-    .start-modal .modal-content a {
+    .start-modal .modal-content button {
+      font-family: "Slabo 27px", serif;
       color: #FFF;
       display: block;
       background-color: #009933;
+      border: 1px solid #009933;
       padding: 20px 0;
       margin: 0 auto;
       width: 300px;
+      outline: none;
       -webkit-transition: 0.5s;
       -moz-transition: 0.5s;
       transition: 0.5s; }
-      .start-modal .modal-content a:hover {
+      .start-modal .modal-content button:hover {
         cursor: pointer;
+        border: 1px solid #00802b;
         background: #00802b; }
-      .start-modal .modal-content a.disabled {
+      .start-modal .modal-content button.disabled {
+        border: 1px solid #bfbfbf;
         background-color: #bfbfbf;
         cursor: default; }
 

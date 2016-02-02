@@ -394,21 +394,26 @@ CLASSES
       }
     }
 
-    a {
+    button {
+      font-family: $slabo;
       color: #FFF;
       display: block;
       background-color: $success;
+      border: 1px solid $success;
       padding: 20px 0;
       margin: 0 auto;
       width: 300px;
+      outline: none;
       @include transition(0.5s);
 
         &:hover {
           cursor: pointer;
+          border: 1px solid $successHover;
           background: $successHover;
         }
 
         &.disabled {
+          border: 1px solid #bfbfbf;
           background-color: #bfbfbf;
           cursor: default;
         }

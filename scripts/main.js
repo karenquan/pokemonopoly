@@ -72,7 +72,8 @@ var Main = (function() {
           $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
           // addCharacterIcons($player2, 2);
         $players.append($player1).append(' ').append($player2);
-        $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
+        // $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
+        $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
         $content.append($logo).append($players).append($startButton);
         $startModal.append($content);
         // console.log($startModal);
@@ -99,20 +100,24 @@ var Main = (function() {
         var $player2Name = $('.player-2-name').val();
 
         // $('input[type="text"]').on('change', function() {
-        //   if(!checkPlayerInput()) {
+        //   if(checkPlayerInput()) {
         //     attachStartButtonClick();
         //   } else {
         //     removeStartButtonClick();
         //   }
         // });
+
         attachStartButtonClick();
+        $startButton.attr('disabled', true);
 
         //only allow start button to be clicked when both players have typed their name
         $('input[type="text"]').on('keypress keyup', function() {
           if(checkPlayerInput()) {
             $startButton.removeClass('disabled');
+            $startButton.attr('disabled', false);
           } else {
             $startButton.addClass('disabled');
+            $startButton.attr('disabled', true);
           }
         });
       }
