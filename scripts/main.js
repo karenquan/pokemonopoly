@@ -21,6 +21,8 @@ var Main = (function() {
       currentPlayer = player1;
       count = 0;
       $('.start-modal').remove();
+      movePlayer(player1, 0); //start player 1 on 'Go' space
+      movePlayer(player2, 0); //start player 1 on 'Go' space
       buildInitializeTurnSection();
       buildInitializePlayerInfoSections();
       attachRollEvent();
@@ -31,6 +33,7 @@ var Main = (function() {
       count += 1;
       currentPlayer = (count % 2 == 0) ? player1 : player2;
       currentPlayer.currentTurn = true;
+      updateTurnSection();
     }
 
     function attachRollEvent() {
@@ -285,24 +288,19 @@ var Main = (function() {
 
     function movePlayer(player, numSpaces) {
       //get current location of player (board array index)
-      //update location (board: 0-27)
       var className = 'player-' + player.num;
-      console.log('old location: ' + player.location);
       //remove class on old space (make background default color)
       boardElements[player.location].classList.remove(className);
 
       //update player's location & change background of new location
       player.location += numSpaces;
-      if(this.location > 27) {
-        var extra = thiplayers.location - 27;
+      if(player.location > 27) {
+        var extra = player.location - 27;
         player.location = extra - 1; //subtract one since array is base 0
       }
-      console.log('new location: ' + player.location);
       boardElements[player.location].classList.add(className);
-      console.log(boardElements[player.location]);
-      //change background of cell to player color
-      //if two players on cell, gradient of two colors
-      //if one player, only one background color
+      //check if cell is vacant/owned by other player/go cell/go to jail cell
+      switchTurns();
     }
 
     function updateCellState(cell) {
