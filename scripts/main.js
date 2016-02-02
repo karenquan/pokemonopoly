@@ -40,10 +40,17 @@ var Main = (function() {
 
     function attachRollEvent() {
       $('.roll-button').on('click', function() {
-        var numSpaces = currentPlayer.rollDie();
-        movePlayer(currentPlayer, numSpaces);
+        roll = currentPlayer.rollDie();
+        movePlayer(currentPlayer, roll);
+        render();
         //updateBoard();
       });
+    }
+
+    function render() {
+      //update turn section (roll #, roll imaage(s))
+      //update player info
+      $('.roll-value').text(roll);
     }
 
   // END GAME PLAY ------------------
@@ -101,14 +108,6 @@ var Main = (function() {
       function activateStartButtonEvents() {
         var $player1Name = $('.player-1-name').val();
         var $player2Name = $('.player-2-name').val();
-
-        // $('input[type="text"]').on('change', function() {
-        //   if(checkPlayerInput()) {
-        //     attachStartButtonClick();
-        //   } else {
-        //     removeStartButtonClick();
-        //   }
-        // });
 
         attachStartButtonClick();
         $startButton.attr('disabled', true);
@@ -168,7 +167,6 @@ var Main = (function() {
       }
       boardElements.push(cellElement);
       board[this.boardIndex] = this; //also add cell to board array
-      // addPropertyOwner('player', $cellElement);
     });
 
     /*
@@ -189,7 +187,6 @@ var Main = (function() {
   // END DATA RETRIEVAL ------------------
 
   /* BUILD DYNAMIC ELEMENTS ------------------
-
   */
     function buildCell(cell, element) {
       var $cell, $name, $image, $value;
@@ -260,11 +257,16 @@ var Main = (function() {
       // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
-      var $rollButton = $('<a />', { 'class': 'roll-button', text: 'ROLL' });
-      $turnInfo.append($title).append($rollButton);
+      var $roll = $('<div />', { 'class': 'roll' });
+      var $rollTitle = $('<h2 />', { text: 'Roll' });
+      var $rollValue = $('<span />', { 'class': 'roll-value' });
+      var $rollImage = $('<img />', { src: 'images/dice.gif' } );
+      var $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
+      $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
+      var $cellInfo = $('<div />', { 'class': 'cell-info' });
+      $turnInfo.append($title).append($roll).append($cellInfo);
       $('.board-center').append($turnInfo);
     }
-
   // END BUILD DYNAMIC ELEMENTS ------------------
 
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
@@ -326,9 +328,12 @@ var Main = (function() {
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
       if($currentCell.type.toLowerCase() === 'property' || $currentCell.type.toLowerCase() === 'legendary' || $currentCell.type.toLowerCase() === 'ball') {
         if($currentCell.owner === '') {
-          console.log('type: ' + $currentCell.type + ': vacant');
-          //add property if user clicks 'yes' button
-          addPropertyOwner($currentCellElement, cellIndex);
+          //add property if user has enough money & user clicks 'yes' button
+          if(currentPlayer.money - $currentCell.value >= 0) {
+            currentPlayer.money -= $currentCell.value; //deduct value of property from user's money
+            addPropertyOwner($currentCellElement, cellIndex);
+          }
+
           //if no, just exit function
         } else {
           //if owner is not '', check if current player is owner, or other player
@@ -376,4 +381,5 @@ $(document).ready(function() {
   var player2;
   var currentPlayer;
   var turnCount;
+  var roll = '';
 

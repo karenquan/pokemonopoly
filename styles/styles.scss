@@ -341,18 +341,63 @@ CLASSES
 .turn-info {
   border: 1px solid;
   height: 200px;
+  text-align: justify;
+  font-size: 0;
 
-  .roll-button {
+  > div {
+    width: 49%;
     display: inline-block;
-    background: $success;
-    color: #FFF;
-    padding: 15px;
-    width: 200px;
+    border: 1px solid;
+    font-size: 14px;
+    text-align: center;
+  }
 
-    &:hover {
-      cursor: pointer;
-      background: $successHover;
+  h2 {
+    font-size: 25px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+
+  .roll {
+
+    h2 {
+      color: $success;
     }
+
+    .roll-value {
+      font-size: 20px;
+      color: $success;
+    }
+
+    .roll-button {
+      background: $success;
+      border: 1px solid $success;
+      color: #FFF;
+      padding: 15px;
+      width: 200px;
+      @include transition(0.5s);
+      font-family: $slabo;
+      outline: none;
+      display: block;
+      margin: 0 auto;
+      font-size: 15px;
+
+      &:hover {
+        cursor: pointer;
+        background: $successHover;
+        border: 1px solid $successHover;
+      }
+    }
+  }
+
+  .cell-info {
+
   }
 } /* end turn-info */
 

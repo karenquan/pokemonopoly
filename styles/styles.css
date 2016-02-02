@@ -217,16 +217,46 @@ CLASSES
 /*  end of player-info */
 .turn-info {
   border: 1px solid;
-  height: 200px; }
-  .turn-info .roll-button {
+  height: 200px;
+  text-align: justify;
+  font-size: 0; }
+  .turn-info > div {
+    width: 49%;
     display: inline-block;
+    border: 1px solid;
+    font-size: 14px;
+    text-align: center; }
+  .turn-info h2 {
+    font-size: 25px;
+    margin: 0 auto;
+    text-align: center; }
+  .turn-info:after {
+    content: '';
+    display: inline-block;
+    width: 100%; }
+  .turn-info .roll h2 {
+    color: #009933; }
+  .turn-info .roll .roll-value {
+    font-size: 20px;
+    color: #009933; }
+  .turn-info .roll .roll-button {
     background: #009933;
+    border: 1px solid #009933;
     color: #FFF;
     padding: 15px;
-    width: 200px; }
-    .turn-info .roll-button:hover {
+    width: 200px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    font-family: "Slabo 27px", serif;
+    outline: none;
+    display: block;
+    margin: 0 auto;
+    font-size: 15px; }
+    .turn-info .roll .roll-button:hover {
       cursor: pointer;
-      background: #00802b; }
+      background: #00802b;
+      border: 1px solid #00802b; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
