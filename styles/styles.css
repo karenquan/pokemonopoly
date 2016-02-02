@@ -286,6 +286,8 @@ CLASSES
       display: inline-block; }
     .turn-info .cell-info .cell-details {
       width: 70%; }
+      .turn-info .cell-info .cell-details h3 {
+        font-size: 20px; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
@@ -411,6 +413,12 @@ CLASSES
 
 /* ------ END WELCOME MODAL  ------ */
 /* ------ OTHER  ------ */
+.hide {
+  display: none; }
+
+.show {
+  display: block; }
+
 /* ------ END OTHER  ------ */
 
 /*# sourceMappingURL=styles.css.map */

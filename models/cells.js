@@ -8,7 +8,7 @@ var $cells = $([
       text: 'Collect $200 as you pass',
       image: 'go.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   {
       boardIndex: 1,
@@ -21,7 +21,7 @@ var $cells = $([
       type: 'Property',
       image: 'voltorb.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 2,
@@ -34,7 +34,7 @@ var $cells = $([
       type: 'Property',
       image: 'electrode.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 3,
@@ -46,7 +46,7 @@ var $cells = $([
       color: '#76b8e1',
       image: 'articuno.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 4,
@@ -58,7 +58,7 @@ var $cells = $([
       color: '#f18e38',
       image: 'pokeball.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 5,
@@ -71,7 +71,7 @@ var $cells = $([
       type: 'Property',
       image: 'bulbasaur.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 6,
@@ -84,7 +84,7 @@ var $cells = $([
       type: 'Property',
       image: 'venusaur.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 7,
@@ -95,7 +95,7 @@ var $cells = $([
       text: 'Jail',
       image: 'jail.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   { //COLUMN 2 (TOP)-------------------
       boardIndex: 8,
@@ -108,7 +108,7 @@ var $cells = $([
       type: 'Property',
       image: 'charmander.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 9,
@@ -121,7 +121,7 @@ var $cells = $([
       type: 'Property',
       image: 'charizard.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 10,
@@ -133,7 +133,7 @@ var $cells = $([
       color: '#677280',
       image: 'ultraball.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 11,
@@ -145,7 +145,7 @@ var $cells = $([
       color: '#cc0000',
       image: 'attack.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   {
       boardIndex: 12,
@@ -158,7 +158,7 @@ var $cells = $([
       type: 'Property',
       image: 'squirtle.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 13,
@@ -171,7 +171,7 @@ var $cells = $([
       type: 'Property',
       image: 'blastoise.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   { //COLUMN 3 (RIGHT)-------------------
       boardIndex: 14,
@@ -182,7 +182,7 @@ var $cells = $([
       text: 'Free Parking',
       image: 'freeparking.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   {
       boardIndex: 15,
@@ -195,7 +195,7 @@ var $cells = $([
       type: 'Property',
       image: 'pikachu.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 16,
@@ -208,7 +208,7 @@ var $cells = $([
       type: 'Property',
       image: 'raichu.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 17,
@@ -220,7 +220,7 @@ var $cells = $([
       color: '#3b82c4',
       image: 'greatball.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 18,
@@ -232,7 +232,7 @@ var $cells = $([
       color: '#cc0000',
       image: 'attacktwo.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   {
       boardIndex: 19,
@@ -245,7 +245,7 @@ var $cells = $([
       type: 'Property',
       image: 'haunter.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 20,
@@ -258,7 +258,7 @@ var $cells = $([
       type: 'Property',
       image: 'gengar.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 21,
@@ -269,7 +269,7 @@ var $cells = $([
       text: 'Go To Jail',
       image: 'gotojail.png',
       owner: '',
-      occupants: []
+      canPurchase: false
   },
   { //COLUMN 4 (BOTTOM)-------------------
       boardIndex: 27,
@@ -282,7 +282,7 @@ var $cells = $([
       type: 'Property',
       image: 'magneton.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 26,
@@ -295,7 +295,7 @@ var $cells = $([
       type: 'Property',
       image: 'magnemite.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 25,
@@ -307,7 +307,7 @@ var $cells = $([
       color: '#7e308e',
       image: 'masterball.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 24,
@@ -319,7 +319,7 @@ var $cells = $([
       color: '#ffe081',
       image: 'zapdos.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 23,
@@ -332,7 +332,7 @@ var $cells = $([
       type: 'Property',
       image: 'hitmonlee.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   },
   {
       boardIndex: 22,
@@ -345,6 +345,6 @@ var $cells = $([
       type: 'Property',
       image: 'hitmonchan.png',
       owner: '',
-      occupants: []
+      canPurchase: true
   }
 ]);

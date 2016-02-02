@@ -257,7 +257,8 @@ var Main = (function() {
     function buildTurnSection() {
       // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
-      var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
+      var $title = $('<h1 />', { 'class': 'turn-title', text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
+      $title.css('color', currentPlayer.color);
 
       var $roll = $('<div />', { 'class': 'roll' });
         var $rollTitle = $('<h2 />', { text: 'Roll' });
@@ -271,7 +272,7 @@ var Main = (function() {
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
         var $cellDetails = $('<div />', { 'class': 'cell-details' });
         var $cellName = $('<h3 />', { text: 'Name: ' }).append($('<span />', { 'class': 'name', text: 'Go' }));
-        var $cellValue = $('<h3 />', { text: 'Value: ' }).append($('<span />', { 'class': 'value' }));;
+        var $cellValue = $('<h3 />', { 'class': 'value' });
         var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
         $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);
@@ -306,9 +307,18 @@ var Main = (function() {
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       var currentCell = board[currentPlayer.location];
+      $('h1.turn-title').css('color', currentPlayer.color);
       $('.turn-info .player-turn-name').text(currentPlayer.name);
       $('.cell-details .name').text(currentCell.name);
-      $('.cell-details .value').text(currentCell.value);
+      $('.cell-details .value').removeClass('hide').removeClass('show');//clear show/hide classes
+
+      if(currentCell.canPurchase) {
+        $('.cell-details .value').text('Value: $' + currentCell.value);
+        $('.cell-details .value').addClass('show');
+      } else {
+        //hide value section if not a property space
+        $('.cell-details .value').addClass('hide');
+      }
       $('.cell-info img').attr('src', 'images/' + currentCell.image);
     }
 
@@ -354,7 +364,7 @@ var Main = (function() {
       var $currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
-      if($currentCell.type.toLowerCase() === 'property' || $currentCell.type.toLowerCase() === 'legendary' || $currentCell.type.toLowerCase() === 'ball') {
+      if($currentCell.canPurchase) {
         if($currentCell.owner === '') {
           //add property if user has enough money & user clicks 'yes' button
           if(currentPlayer.money - $currentCell.value >= 0) {

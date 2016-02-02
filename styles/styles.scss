@@ -444,6 +444,10 @@ CLASSES
 
     .cell-details {
       width: 70%;
+
+      h3 {
+        font-size: 20px;
+      }
     }
   }
 } /* end turn-info */
@@ -633,6 +637,12 @@ CLASSES
 /* ------ END WELCOME MODAL  ------ */
 
 /* ------ OTHER  ------ */
+.hide {
+  display: none;
+}
 
+.show {
+  display: block;
+}
 /* ------ END OTHER  ------ */
 

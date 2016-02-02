@@ -19,11 +19,11 @@ var Player = function(num, name) {
   // };
   switch(num) {
     case 2:
-      this.color = '#de756e';
+      this.color = '#cc0000';
       this.currentTurn = false;
       break;
     default:
-      this.color = '#58a8da';
+      this.color = '#3b82c4';
       this.currentTurn = true;
       break;
   }
