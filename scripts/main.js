@@ -21,7 +21,6 @@ var Main = (function() {
       $('.start-modal').remove();
       updateTurnSection();
       initializePlayerInfoSection();
-      //have function to dynamically build player info sections
     }
   // END GAME PLAY ------------------
 
@@ -75,19 +74,27 @@ var Main = (function() {
       function activateStartButtonEvents() {
         var $player1Name = $('.player-1-name').val();
         var $player2Name = $('.player-2-name').val();
+        var valid = false;
+        $('input[type="text"]').on('change', function() {
+          if(checkPlayerInput()) {
+            attachStartButtonClick();
+          } else {
+            removeStartButtonClick();
+          }
+        });
+
+        //only allow start button to be clicked when both players have typed their name
         $('input[type="text"]').on('keypress keyup', function() {
-          checkPlayerInput();
+          if(checkPlayerInput()) {
+            $startButton.removeClass('disabled');
+          } else {
+            $startButton.addClass('disabled');
+          }
         });
       }
 
-      function checkPlayerInput() { //only allow start button the clicked when both players have typed their name
-        if($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) {
-          $startButton.removeClass('disabled');
-          attachStartButtonClick();
-        } else {
-          $startButton.addClass('disabled');
-          removeStartButtonClick();
-        }
+      function checkPlayerInput() {
+        return ($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) ? true : false;
       }
 
       function attachStartButtonClick () {
@@ -186,6 +193,7 @@ var Main = (function() {
     }
 
     function buildPlayerInfoSections() {
+      console.log('player info section function');
       var $playerInfo, $player1Info, $player2Info, $name, $property, $money;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
       for(var i = 1; i < 3; i++) {
@@ -203,6 +211,11 @@ var Main = (function() {
       }
       $('.board-center').append($playerInfoSection);
     }
+
+    function buildTurnSection() {
+
+    }
+
   // END BUILD DYNAMIC ELEMENTS ------------------
 
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
@@ -222,33 +235,34 @@ var Main = (function() {
 
     }
 
-    function printCellState(cell) {
-      //print current state of cell (i.e. owners, which players on space, name, value...)
-    }
-
     function addPropertyOwner(player, cell) {
       //color will be player.color
-      var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': 'pink' } });
+      var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': player.color } });
       $(cell).append($owner);
     }
 
-    function removePropertyOwner(cell) {
+    function removePropertyOwner(cell) { //if user sells property
       // cell.remove();
     }
 
-    function addPlayerLocationToCell(player) {
+    function movePlayer(player, numOfSpaces) {
+      //get current location of player (board array index)
       //change background of cell to player color
       //if two players on cell, gradient of two colors
       //if one player, only one background color
     }
 
-    function removePlayerLocationFromCell(player) {
+    function updateCellState(cell) {
       //change background color back to white default background
+      //if no player is on it
+    }
+
+    function printCellState(cell) {
+      //print current state of cell (i.e. owners, which players on space, name, value...)
     }
     // END UPDATE BOARD STATE ------------------
 
     function _init() {
-      // console.log("herro from main");
       populateCells();
       displayStartModal();
     }
@@ -262,7 +276,7 @@ var Main = (function() {
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
   var $startModal;
-  var $turnSection = $('.turn-info');
+  // var $turnSection = $('.turn-info');
   // var $playerInfoSection = $('.player-info');
   var board = [];
   var boardElements = [];

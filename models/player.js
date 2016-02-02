@@ -26,8 +26,12 @@ var Player = function(num, name) {
       this.currentTurn = true;
       break;
   }
-  this.pokemon = [];
+  this.property = [];
   this.money = 2000;
-  this.location = 0;
+  this.location = 0; //board array index
   this.jail = false;
 };
+
+Player.prototype.addProperty = function(property) {
+  this.property.push(property);
+}
