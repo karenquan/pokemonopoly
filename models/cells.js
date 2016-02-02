@@ -6,7 +6,9 @@ var $cells = $([
       name: 'Go',
       type: 'Go',
       text: 'Collect $200 as you pass',
-      image: 'go.png'
+      image: 'go.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 1,
@@ -17,7 +19,9 @@ var $cells = $([
       value: 60,
       color: '#e48f89',
       type: 'Property',
-      image: 'voltorb.png'
+      image: 'voltorb.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 2,
@@ -28,7 +32,9 @@ var $cells = $([
       value: 60,
       color: '#e48f89',
       type: 'Property',
-      image: 'electrode.png'
+      image: 'electrode.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 3,
@@ -38,7 +44,9 @@ var $cells = $([
       value: 150,
       type: 'legendary',
       color: '#76b8e1',
-      image: 'articuno.png'
+      image: 'articuno.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 4,
@@ -48,7 +56,9 @@ var $cells = $([
       value: 200,
       type: 'Ball',
       color: '#f18e38',
-      image: 'pokeball.png'
+      image: 'pokeball.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 5,
@@ -59,7 +69,9 @@ var $cells = $([
       value: 100,
       color: '#8abd8a',
       type: 'Property',
-      image: 'bulbasaur.png'
+      image: 'bulbasaur.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 6,
@@ -70,7 +82,9 @@ var $cells = $([
       value: 120,
       color: '#8abd8a',
       type: 'Property',
-      image: 'venusaur.png'
+      image: 'venusaur.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 7,
@@ -79,7 +93,9 @@ var $cells = $([
       name: 'Jail',
       type: 'Jail',
       text: 'Jail',
-      image: 'jail.png'
+      image: 'jail.png',
+      owner: '',
+      occupants: []
   },
   { //COLUMN 2 (TOP)-------------------
       boardIndex: 8,
@@ -90,7 +106,9 @@ var $cells = $([
       value: 140,
       color: '#f1a563',
       type: 'Property',
-      image: 'charmander.png'
+      image: 'charmander.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 9,
@@ -101,7 +119,9 @@ var $cells = $([
       value: 160,
       color: '#f1a563',
       type: 'Property',
-      image: 'charizard.png'
+      image: 'charizard.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 10,
@@ -111,7 +131,9 @@ var $cells = $([
       value: 200,
       type: 'Ball',
       color: '#677280',
-      image: 'ultraball.png'
+      image: 'ultraball.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 11,
@@ -121,7 +143,9 @@ var $cells = $([
       value: 200,
       type: 'Attack',
       color: '#cc0000',
-      image: 'attack.png'
+      image: 'attack.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 12,
@@ -132,7 +156,9 @@ var $cells = $([
       value: 180,
       color: '#8fc4d1',
       type: 'Property',
-      image: 'squirtle.png'
+      image: 'squirtle.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 13,
@@ -143,7 +169,9 @@ var $cells = $([
       value: 200,
       color: '#8fc4d1',
       type: 'Property',
-      image: 'blastoise.png'
+      image: 'blastoise.png',
+      owner: '',
+      occupants: []
   },
   { //COLUMN 3 (RIGHT)-------------------
       boardIndex: 14,
@@ -152,7 +180,9 @@ var $cells = $([
       name: 'Free Parking',
       type: 'Parking',
       text: 'Free Parking',
-      image: 'freeparking.png'
+      image: 'freeparking.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 15,
@@ -163,10 +193,12 @@ var $cells = $([
       value: 220,
       color: '#f4d77c',
       type: 'Property',
-      image: 'pikachu.png'
+      image: 'pikachu.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 15,
+      boardIndex: 16,
       column: 3,
       index: 2,
       name: 'Raichu',
@@ -174,7 +206,9 @@ var $cells = $([
       value: 240,
       color: '#f4d77c',
       type: 'Property',
-      image: 'raichu.png'
+      image: 'raichu.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 17,
@@ -184,7 +218,9 @@ var $cells = $([
       value: 200,
       type: 'Ball',
       color: '#3b82c4',
-      image: 'greatball.png'
+      image: 'greatball.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 18,
@@ -194,7 +230,9 @@ var $cells = $([
       value: 200,
       type: 'Attack',
       color: '#cc0000',
-      image: 'attacktwo.png'
+      image: 'attacktwo.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 19,
@@ -205,7 +243,9 @@ var $cells = $([
       value: 260,
       color: '#534a58',
       type: 'Property',
-      image: 'haunter.png'
+      image: 'haunter.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 20,
@@ -216,7 +256,9 @@ var $cells = $([
       value: 280,
       color: '#534a58',
       type: 'Property',
-      image: 'gengar.png'
+      image: 'gengar.png',
+      owner: '',
+      occupants: []
   },
   {
       boardIndex: 21,
@@ -225,10 +267,12 @@ var $cells = $([
       name: 'Go To Jail',
       type: 'GoToJail',
       text: 'Go To Jail',
-      image: 'gotojail.png'
+      image: 'gotojail.png',
+      owner: '',
+      occupants: []
   },
   { //COLUMN 4 (BOTTOM)-------------------
-      boardIndex: 22,
+      boardIndex: 27,
       column: 4,
       index: 0,
       name: 'Magneton',
@@ -236,10 +280,12 @@ var $cells = $([
       value: 360,
       color: '#a1c1cb',
       type: 'Property',
-      image: 'magneton.png'
+      image: 'magneton.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 23,
+      boardIndex: 26,
       column: 4,
       index: 1,
       name: 'Magnemite',
@@ -247,30 +293,36 @@ var $cells = $([
       value: 340,
       color: '#a1c1cb',
       type: 'Property',
-      image: 'magnemite.png'
+      image: 'magnemite.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 24,
+      boardIndex: 25,
       column: 4,
       index: 2,
       name: 'Master Ball',
       value: 200,
       type: 'ball',
       color: '#7e308e',
-      image: 'masterball.png'
+      image: 'masterball.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 25,
+      boardIndex: 24,
       column: 4,
       index: 3,
       name: 'Zapdos',
       value: 150,
       type: 'Legendary',
       color: '#ffe081',
-      image: 'zapdos.png'
+      image: 'zapdos.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 26,
+      boardIndex: 23,
       column: 4,
       index: 4,
       name: 'Hitmonlee',
@@ -278,10 +330,12 @@ var $cells = $([
       value: 320,
       color: '#c7b7a7',
       type: 'Property',
-      image: 'hitmonlee.png'
+      image: 'hitmonlee.png',
+      owner: '',
+      occupants: []
   },
   {
-      boardIndex: 27,
+      boardIndex: 22,
       column: 4,
       index: 5,
       name: 'Hitmonchan',
@@ -289,6 +343,8 @@ var $cells = $([
       value: 300,
       color: '#c7b7a7',
       type: 'Property',
-      image: 'hitmonchan.png'
+      image: 'hitmonchan.png',
+      owner: '',
+      occupants: []
   }
 ]);

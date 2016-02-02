@@ -18,9 +18,27 @@ var Main = (function() {
       //grab player names before removing modal
       player1 = new Player(1, $('.player-1-name').val());
       player2 = new Player(2, $('.player-2-name').val());
+      currentPlayer = player1;
+      count = 0;
       $('.start-modal').remove();
       buildInitializeTurnSection();
       buildInitializePlayerInfoSections();
+      attachRollEvent();
+    }
+
+    function switchTurns() {
+      currentPlayer.currentTurn = false;
+      count += 1;
+      currentPlayer = (count % 2 == 0) ? player1 : player2;
+      currentPlayer.currentTurn = true;
+    }
+
+    function attachRollEvent() {
+      $('.roll-button').on('click', function() {
+        var numSpaces = currentPlayer.rollDie();
+        movePlayer(currentPlayer, numSpaces);
+        //updateBoard();
+      });
     }
   // END GAME PLAY ------------------
 
@@ -31,8 +49,6 @@ var Main = (function() {
     function displayStartModal() {
       var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
 
-      // buildStartModal();
-      // $('body').append($startModal);
       $('body').append(buildStartModal());
       activateStartButtonEvents(); //activate start button after modal is added to dom
 
@@ -140,10 +156,20 @@ var Main = (function() {
       }
       boardElements.push(cellElement);
       board[this.boardIndex] = this; //also add cell to board array
-      // console.log(board);
-       // addPropertyOwner('player', $cellElement);
+      // addPropertyOwner('player', $cellElement);
     });
-    // console.log(boardElements);
+
+    //after all elements are pushed on boardElements array,
+    //need to rearrange column 4 in boardElements array
+    var lastRow = [];
+    for(var i = 1; i < 7; i++) {
+      lastRow.push(boardElements.pop());
+    }
+    lastRow.forEach(function(element) {
+      boardElements.push(element);
+    });
+    //console.log(board);
+    //console.log(boardElements);
     }
   // END DATA RETRIEVAL ------------------
 
@@ -216,10 +242,11 @@ var Main = (function() {
     }
 
     function buildInitializeTurnSection() {
-      currentPlayer = player1;
+      // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
-      $turnInfo.append($title);
+      var $rollButton = $('<a />', { 'class': 'roll-button', text: 'ROLL' });
+      $turnInfo.append($title).append($rollButton);
       $('.board-center').append($turnInfo);
     }
 
@@ -229,27 +256,50 @@ var Main = (function() {
      Update board center content for every turn.
      Update cell when player is on a cell or purchases a cell.
   */
+    function updateBoard() {
+      updateTurnSection();
+      updatePlayerInfoSection(player1);
+      updatePlayerInfoSection(player2);
+    }
+
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       $('.turn-info .player-turn-name').text(currentPlayer.name);
     }
 
-    function updatePlayerInfoSection() {
-
+    function updatePlayerInfoSection(player) {
+      //update property if they purchase
+      //update money if they purchase
     }
 
     function addPropertyOwner(player, cell) {
       //color will be player.color
       var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': player.color } });
       $(cell).append($owner);
+      //player.addProperty(cell); ?//update player's property array
     }
 
     function removePropertyOwner(cell) { //if user sells property
       // cell.remove();
     }
 
-    function movePlayer(player, numOfSpaces) {
+    function movePlayer(player, numSpaces) {
       //get current location of player (board array index)
+      //update location (board: 0-27)
+      var className = 'player-' + player.num;
+      console.log('old location: ' + player.location);
+      //remove class on old space (make background default color)
+      boardElements[player.location].classList.remove(className);
+
+      //update player's location & change background of new location
+      player.location += numSpaces;
+      if(this.location > 27) {
+        var extra = thiplayers.location - 27;
+        player.location = extra - 1; //subtract one since array is base 0
+      }
+      console.log('new location: ' + player.location);
+      boardElements[player.location].classList.add(className);
+      console.log(boardElements[player.location]);
       //change background of cell to player color
       //if two players on cell, gradient of two colors
       //if one player, only one background color
@@ -263,29 +313,12 @@ var Main = (function() {
     function printCellState(cell) {
       //print current state of cell (i.e. owners, which players on space, name, value...)
     }
-    // END UPDATE BOARD STATE ------------------
+  // END UPDATE BOARD STATE ------------------
 
     function _init() {
       populateCells();
       displayStartModal();
     }
-
-  /* GLOBAL VARIABLES ------------------
-
-  */
-  var $board = $('#board');
-  var $boardLeft = $('.column-1 > div');
-  var $boardTop = $('.column-2 > div.top-row');
-  var $boardRight = $('.column-3 > div');
-  var $boardBottom = $('.column-2 > div.bottom-row');
-  // var $startModal;
-  // var $turnSection = $('.turn-info');
-  // var $playerInfoSection = $('.player-info');
-  var board = [];
-  var boardElements = [];
-  var player1;
-  var player2;
-  var currentPlayer;
 
   return {
     init: _init
@@ -295,4 +328,23 @@ var Main = (function() {
 $(document).ready(function() {
   Main.init();
 });
+
+/* GLOBAL VARIABLES ------------------
+
+*/
+  var $board = $('#board');
+  var $boardLeft = $('.column-1 > div');
+  var $boardTop = $('.column-2 > div.top-row');
+  var $boardRight = $('.column-3 > div');
+  var $boardBottom = $('.column-2 > div.bottom-row');
+  // var $startModal;
+  // var $turnSection = $('.turn-info');
+  // var $playerInfoSection = $('.player-info');
+  var board = [];
+  // var boardElements = ['','','','','','','','','','','','','','','','','','','','','','','','','','','',''];
+  var boardElements = [];
+  var player1;
+  var player2;
+  var currentPlayer;
+  var count;
 

@@ -1,5 +1,6 @@
 var Player = function(num, name) {
   this.name = name;
+  this.num = num;
   // this.character = character;
   // this.image = 'images/';
   // switch(this.character) {
@@ -35,3 +36,16 @@ var Player = function(num, name) {
 Player.prototype.addProperty = function(property) {
   this.property.push(property);
 }
+
+Player.prototype.rollDie = function() {
+  //generate random number 1-6
+  var roll = generateRandomInt(1,7);
+  console.log(roll);
+
+  return roll;
+
+  function generateRandomInt(min, max) {
+    return Math.ceil(Math.random() * (max - min));
+  }
+}
+

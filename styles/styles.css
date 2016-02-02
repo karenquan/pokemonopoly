@@ -20,6 +20,11 @@ section, div {
   box-sizing: border-box;
   vertical-align: top; }
 
+a {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s; }
+
 /* -------------------------
 IDs
 -------------------------- */
@@ -28,6 +33,12 @@ IDs
   margin: 0 auto; }
   #board > section {
     display: inline-block; }
+  #board .player-1 {
+    background-color: rgba(88, 168, 218, 0.3); }
+  #board .player-2 {
+    background-color: rgba(222, 117, 110, 0.3); }
+  #board .player-1.player-2 {
+    background: rgba(0, 0, 0, 0.3); }
 
 /* -------------------------
 CLASSES
@@ -198,6 +209,15 @@ CLASSES
 .turn-info {
   border: 1px solid;
   height: 200px; }
+  .turn-info .roll-button {
+    display: inline-block;
+    background: #009933;
+    color: #FFF;
+    padding: 15px;
+    width: 200px; }
+    .turn-info .roll-button:hover {
+      cursor: pointer;
+      background: #00802b; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
@@ -317,5 +337,7 @@ CLASSES
         box-shadow: 0 0 10px #e48f89; }
 
 /* ------ END WELCOME MODAL  ------ */
+/* ------ OTHER  ------ */
+/* ------ END OTHER  ------ */
 
 /*# sourceMappingURL=styles.css.map */

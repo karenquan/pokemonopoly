@@ -27,6 +27,8 @@ $ultraball: #677280;
 $masterball: #7e308e;
 $player1: #58a8da;
 $player2: #de756e;
+$success: #009933;
+$successHover: #00802b;
 
 /* -------------------------
 MIXINS
@@ -36,6 +38,7 @@ MIXINS
   -moz-transition: $duration;
   transition: $duration;
 }
+
 
 /* -------------------------
 TAGS
@@ -50,6 +53,10 @@ section, div {
   vertical-align: top;
 }
 
+a {
+  @include transition(0.5s);
+}
+
 /* -------------------------
 IDs
 -------------------------- */
@@ -59,6 +66,18 @@ IDs
 
   > section {
     display: inline-block;
+  }
+
+  .player-1 {
+    background-color: rgba(88, 168, 218, 0.3);
+  }
+
+  .player-2 {
+    background-color: rgba(222, 117, 110, 0.3);
+  }
+
+  .player-1.player-2 {
+    background: rgba(0,0,0,0.3);
   }
 }
 
@@ -148,7 +167,6 @@ CLASSES
     display: block;
   }
 }
-
 /* ------ END BOARD STRUCTURE ------ */
 
 /* ------ CELL TYPES ------ */
@@ -318,6 +336,19 @@ CLASSES
 .turn-info {
   border: 1px solid;
   height: 200px;
+
+  .roll-button {
+    display: inline-block;
+    background: $success;
+    color: #FFF;
+    padding: 15px;
+    width: 200px;
+
+    &:hover {
+      cursor: pointer;
+      background: $successHover;
+    }
+  }
 } /* end turn-info */
 
 /* ------ END MAIN CENTER CONTENT  ------ */
@@ -361,7 +392,7 @@ CLASSES
     a {
       color: #FFF;
       display: block;
-      background-color: #009933;
+      background-color: $success;
       padding: 20px 0;
       margin: 0 auto;
       width: 300px;
@@ -369,7 +400,7 @@ CLASSES
 
         &:hover {
           cursor: pointer;
-          background: #00802b;
+          background: $successHover;
         }
 
         &.disabled {
@@ -499,4 +530,7 @@ CLASSES
 }
 /* ------ END WELCOME MODAL  ------ */
 
+/* ------ OTHER  ------ */
+
+/* ------ END OTHER  ------ */
 
