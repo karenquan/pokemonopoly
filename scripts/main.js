@@ -19,43 +19,47 @@ var Main = (function() {
       player1 = new Player(1, $('.player-1-name').val());
       player2 = new Player(2, $('.player-2-name').val());
       $('.start-modal').remove();
-      updateTurnSection();
-      initializePlayerInfoSection();
+      buildInitializeTurnSection();
+      buildInitializePlayerInfoSections();
     }
   // END GAME PLAY ------------------
 
 
-  /* UTILITIES ------------------
-     //update player location
-      //adding color to a cell
-      //removing a color from a cell
-     //roll die
+  /* START MODAL ------------------
+
   */
     function displayStartModal() {
-      var $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
-      $startModal = $('<div />', { 'class': 'start-modal'} );
-      $content = $('<div />', { 'class': 'modal-content' });
-      $players = $('<div />', { 'class': 'players' });
-      $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
-      $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
-      // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
-      $nameTextBox = $('<input />', { type: 'text' });
-      $player1 = $('<div />', { 'class': 'player-1' });
-        $player1Title = $('<h3 />', { text: 'Player 1' });
-        $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
-        // addCharacterIcons($player1, 1);
-      $player2 = $('<div />', { 'class': 'player-2' });
-        $player2Title = $('<h3 />', { text: 'Player 2' });
-        $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
-        // addCharacterIcons($player2, 2);
-      $players.append($player1).append(' ').append($player2);
-      $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
-      $content.append($logo).append($players).append($startButton);
-      $startModal.append($content);
-      // console.log($startModal);
+      var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
 
-      $('body').append($startModal);
+      // buildStartModal();
+      // $('body').append($startModal);
+      $('body').append(buildStartModal());
       activateStartButtonEvents(); //activate start button after modal is added to dom
+
+      function buildStartModal() {
+        $startModal = $('<div />', { 'class': 'start-modal'} );
+        $content = $('<div />', { 'class': 'modal-content' });
+        $players = $('<div />', { 'class': 'players' });
+        $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
+        $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
+        // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
+        $nameTextBox = $('<input />', { type: 'text' });
+        $player1 = $('<div />', { 'class': 'player-1' });
+          $player1Title = $('<h3 />', { text: 'Player 1' });
+          $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
+          // addCharacterIcons($player1, 1);
+        $player2 = $('<div />', { 'class': 'player-2' });
+          $player2Title = $('<h3 />', { text: 'Player 2' });
+          $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
+          // addCharacterIcons($player2, 2);
+        $players.append($player1).append(' ').append($player2);
+        $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
+        $content.append($logo).append($players).append($startButton);
+        $startModal.append($content);
+        // console.log($startModal);
+
+        return $startModal;
+      }
 
       function addCharacterIcons(player, playerNumber) {
         var ashId = 'ash-' + playerNumber;
@@ -74,7 +78,7 @@ var Main = (function() {
       function activateStartButtonEvents() {
         var $player1Name = $('.player-1-name').val();
         var $player2Name = $('.player-2-name').val();
-        var valid = false;
+
         $('input[type="text"]').on('change', function() {
           if(checkPlayerInput()) {
             attachStartButtonClick();
@@ -107,7 +111,7 @@ var Main = (function() {
         $startButton.unbind('click');
       }
   }
-  // END UTILITIES ------------------
+  // END START MODAL ------------------
 
   /* DATA RETRIEVAL ------------------
      Read cells.js file to get data to populate cells.
@@ -192,8 +196,7 @@ var Main = (function() {
     function buildGoToJailCell(cell, element) {
     }
 
-    function buildPlayerInfoSections() {
-      console.log('player info section function');
+    function buildInitializePlayerInfoSections() {
       var $playerInfo, $player1Info, $player2Info, $name, $property, $money;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
       for(var i = 1; i < 3; i++) {
@@ -212,8 +215,12 @@ var Main = (function() {
       $('.board-center').append($playerInfoSection);
     }
 
-    function buildTurnSection() {
-
+    function buildInitializeTurnSection() {
+      currentPlayer = player1;
+      var $turnInfo = $('<div />', { 'class': 'turn-info' });
+      var $title = $('<h1 />', { text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
+      $turnInfo.append($title);
+      $('.board-center').append($turnInfo);
     }
 
   // END BUILD DYNAMIC ELEMENTS ------------------
@@ -225,10 +232,6 @@ var Main = (function() {
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       $('.turn-info .player-turn-name').text(currentPlayer.name);
-    }
-
-    function initializePlayerInfoSection() {
-      buildPlayerInfoSections();
     }
 
     function updatePlayerInfoSection() {
@@ -275,7 +278,7 @@ var Main = (function() {
   var $boardTop = $('.column-2 > div.top-row');
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
-  var $startModal;
+  // var $startModal;
   // var $turnSection = $('.turn-info');
   // var $playerInfoSection = $('.player-info');
   var board = [];
