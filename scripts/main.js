@@ -270,9 +270,9 @@ var Main = (function() {
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
         var $cellDetails = $('<div />', { 'class': 'cell-details' });
-        var $cellName = $('<h3 />', { text: 'Name: ' }).append($('<span />', { 'class': 'name' }));
+        var $cellName = $('<h3 />', { text: 'Name: ' }).append($('<span />', { 'class': 'name', text: 'Go' }));
         var $cellValue = $('<h3 />', { text: 'Value: ' }).append($('<span />', { 'class': 'value' }));;
-        var $cellImage = $('<div />', { 'class': 'image' });
+        var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
         $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);
 
@@ -305,7 +305,11 @@ var Main = (function() {
 
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
+      var currentCell = board[currentPlayer.location];
       $('.turn-info .player-turn-name').text(currentPlayer.name);
+      $('.cell-details .name').text(currentCell.name);
+      $('.cell-details .value').text(currentCell.value);
+      $('.cell-info img').attr('src', 'images/' + currentCell.image);
     }
 
     function updatePlayerInfoSection(player) {

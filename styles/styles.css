@@ -180,7 +180,8 @@ CLASSES
   .board-center h1, .board-center h2 {
     margin: 0; }
   .board-center h1 {
-    font-size: 22px;
+    font-size: 28px;
+    color: #534a58;
     text-align: center; }
   .board-center h2 {
     text-align: left;
@@ -199,6 +200,12 @@ CLASSES
     padding: 10px;
     display: inline-block;
     vertical-align: top; }
+    .player-info > div h1 span {
+      display: block; }
+  .player-info .player-1-info h1 {
+    color: #3b82c4; }
+  .player-info .player-2-info h1 {
+    color: #cc0000; }
   .player-info .property {
     border: 1px solid #3b82c4; }
     .player-info .property ul {
@@ -273,11 +280,9 @@ CLASSES
     .turn-info .cell-info > div {
       border: 1px solid;
       display: inline-block; }
-      .turn-info .cell-info > div.image {
-        width: 65px;
-        height: 65px;
-        border: 1px solid; }
     .turn-info .cell-info img {
+      width: 65px;
+      border: 1px solid;
       display: inline-block; }
     .turn-info .cell-info .cell-details {
       width: 70%; }

@@ -285,7 +285,8 @@ CLASSES
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 28px;
+    color: $haunter;
     text-align: center;
   }
 
@@ -311,6 +312,22 @@ CLASSES
     padding: 10px;
     display: inline-block;
     vertical-align: top;
+
+    h1 span {
+      display: block;
+    }
+  }
+
+  .player-1-info {
+    h1 {
+      color: $player1;
+    }
+  }
+
+  .player-2-info {
+    h1 {
+      color: $player2;
+    }
   }
 
   .property {
@@ -417,17 +434,13 @@ CLASSES
     > div {
       border: 1px solid;
       display: inline-block;
-
-      &.image {
-        width: 65px;
-        height: 65px;
-        border: 1px solid;
-      }
     }
 
     img {
-      display: inline-block;
-    }
+        width: 65px;
+        border: 1px solid;
+        display: inline-block;
+      }
 
     .cell-details {
       width: 70%;
