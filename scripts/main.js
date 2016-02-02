@@ -98,13 +98,14 @@ var Main = (function() {
         var $player1Name = $('.player-1-name').val();
         var $player2Name = $('.player-2-name').val();
 
-        $('input[type="text"]').on('change', function() {
-          if(checkPlayerInput()) {
-            attachStartButtonClick();
-          } else {
-            removeStartButtonClick();
-          }
-        });
+        // $('input[type="text"]').on('change', function() {
+        //   if(!checkPlayerInput()) {
+        //     attachStartButtonClick();
+        //   } else {
+        //     removeStartButtonClick();
+        //   }
+        // });
+        attachStartButtonClick();
 
         //only allow start button to be clicked when both players have typed their name
         $('input[type="text"]').on('keypress keyup', function() {
@@ -162,8 +163,11 @@ var Main = (function() {
       // addPropertyOwner('player', $cellElement);
     });
 
-    //after all elements are pushed on boardElements array,
-    //need to rearrange column 4 in boardElements array
+    /*
+      after all elements are pushed on boardElements array,
+      need to rearrange column 4 in boardElements array since
+      they get pushed in reverse order
+    */
     var lastRow = [];
     for(var i = 1; i < 7; i++) {
       lastRow.push(boardElements.pop());
@@ -335,11 +339,7 @@ $(document).ready(function() {
   var $boardTop = $('.column-2 > div.top-row');
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
-  // var $startModal;
-  // var $turnSection = $('.turn-info');
-  // var $playerInfoSection = $('.player-info');
   var board = [];
-  // var boardElements = ['','','','','','','','','','','','','','','','','','','','','','','','','','','',''];
   var boardElements = [];
   var player1;
   var player2;

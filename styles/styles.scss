@@ -25,9 +25,10 @@ $pokeball: #f18e38;
 $greatball: #3b82c4;
 $ultraball: #677280;
 $masterball: #7e308e;
-$player1: #58a8da;
-$player2: #de756e;
+$player1: #3b82c4;
+$player2: #cc0000;
 $success: #009933;
+$attack: #cc0000;
 $successHover: #00802b;
 
 /* -------------------------
@@ -69,15 +70,19 @@ IDs
   }
 
   .player-1 {
-    background-color: rgba(88, 168, 218, 0.3);
+    background-color: rgba(59, 130, 196, 0.4);
   }
 
   .player-2 {
-    background-color: rgba(222, 117, 110, 0.3);
+    background-color: rgba(204, 0, 0, 0.4);
   }
 
   .player-1.player-2 {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.3); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%, rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%,rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(59, 130, 196, 0.4) 0%,rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#58a8da', endColorstr='#de756e',GradientType=1 ); /* IE6 */
   }
 }
 
@@ -493,7 +498,7 @@ CLASSES
 
 
   .player-1 {
-    background-color: rgba(118, 184, 225, 0.3);
+    background-color: rgba(59, 130, 196, 0.2);
     border: 1px solid $articuno;
 
     h3 {
@@ -511,7 +516,7 @@ CLASSES
   }
 
   .player-2 {
-    background-color: rgba(228, 143, 137, 0.3);
+    background-color: rgba(204, 0, 0, 0.2);
     border: 1px solid $voltorb;
 
     h3  {

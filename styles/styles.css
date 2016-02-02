@@ -34,11 +34,20 @@ IDs
   #board > section {
     display: inline-block; }
   #board .player-1 {
-    background-color: rgba(88, 168, 218, 0.3); }
+    background-color: rgba(59, 130, 196, 0.4); }
   #board .player-2 {
-    background-color: rgba(222, 117, 110, 0.3); }
+    background-color: rgba(204, 0, 0, 0.4); }
   #board .player-1.player-2 {
-    background: rgba(0, 0, 0, 0.3); }
+    background: rgba(0, 0, 0, 0.3);
+    /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%, rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%, rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(59, 130, 196, 0.4) 0%, rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#58a8da', endColorstr='#de756e',GradientType=1 );
+    /* IE6 */ }
 
 /* -------------------------
 CLASSES
@@ -191,7 +200,7 @@ CLASSES
     display: inline-block;
     vertical-align: top; }
   .player-info .property {
-    border: 1px solid #58a8da; }
+    border: 1px solid #3b82c4; }
     .player-info .property ul {
       list-style-type: none;
       margin: 0;
@@ -316,22 +325,22 @@ CLASSES
       .players input[type="radio"]:checked + label.brock-1, .players input[type="radio"]:checked + label.brock-2 {
         background: url("../images/brock_70.png"); }
   .players .player-1 {
-    background-color: rgba(118, 184, 225, 0.3);
+    background-color: rgba(59, 130, 196, 0.2);
     border: 1px solid #76b8e1; }
     .players .player-1 h3 {
-      color: #58a8da; }
+      color: #3b82c4; }
     .players .player-1 input[type="text"] {
-      border: 1px solid #58a8da; }
+      border: 1px solid #3b82c4; }
       .players .player-1 input[type="text"]:focus {
         border: 1px solid #76b8e1;
         box-shadow: 0 0 10px #76b8e1; }
   .players .player-2 {
-    background-color: rgba(228, 143, 137, 0.3);
+    background-color: rgba(204, 0, 0, 0.2);
     border: 1px solid #e48f89; }
     .players .player-2 h3 {
-      color: #de756e; }
+      color: #cc0000; }
     .players .player-2 input[type="text"] {
-      border: 1px solid #de756e; }
+      border: 1px solid #cc0000; }
       .players .player-2 input[type="text"]:focus {
         border: 1px solid #e48f89;
         box-shadow: 0 0 10px #e48f89; }

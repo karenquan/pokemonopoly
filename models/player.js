@@ -40,7 +40,6 @@ Player.prototype.addProperty = function(property) {
 Player.prototype.rollDie = function() {
   //generate random number 1-6
   var roll = generateRandomInt(1,7);
-  console.log(roll);
 
   return roll;
 
