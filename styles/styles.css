@@ -107,6 +107,10 @@ CLASSES
 /* end of column- */
 .board-center > section {
   display: block; }
+.board-center img {
+  width: 700px;
+  display: inline-block;
+  margin: 10px auto; }
 
 /* ------ END BOARD STRUCTURE ------ */
 /* ------ CELL TYPES ------ */
@@ -267,23 +271,26 @@ CLASSES
   .turn-info .cell-info {
     margin: 0 auto;
     padding: 0 40px;
-    text-align: justify; }
+    text-align: justify;
+    color: #000; }
     .turn-info .cell-info:after {
       content: '';
       display: inline-block;
       width: 100%; }
     .turn-info .cell-info h2, .turn-info .cell-info h3 {
-      margin: 0;
-      color: #8fc4d1; }
+      margin: 0; }
     .turn-info .cell-info > * {
       vertical-align: top; }
     .turn-info .cell-info > div {
       border: 1px solid;
-      display: inline-block; }
+      display: inline-block;
+      vertical-align: top; }
     .turn-info .cell-info img {
       width: 65px;
       border: 1px solid;
-      display: inline-block; }
+      display: inline-block;
+      vertical-align: top;
+      margin: 0; }
     .turn-info .cell-info .cell-details {
       width: 70%; }
       .turn-info .cell-info .cell-details h3 {

@@ -24,8 +24,8 @@ var Main = (function() {
       $('.start-modal').remove();
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 1 on 'Go' space
+      buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
       buildTurnSection();
-      buildPlayerInfoSections();
     }
 
     function switchTurns() {
@@ -38,20 +38,10 @@ var Main = (function() {
       updateTurnSection();
     }
 
-    // function attachRollEvent() {
-    //   $rollButton.on('click', function() {
-    //     $rollButton.attr('disabled', true);
-    //     roll = currentPlayer.rollDie();
-    //     movePlayer(currentPlayer, roll);
-    //     render();
-    //     //updateBoard();
-    //   });
-    // }
-
     function render() {
-      //update turn section (roll #, roll imaage(s))
+      //update turn section (roll #, roll image(s))
       //update player info
-      $('.roll-value').text(roll);
+      // $('.roll-value').text(roll);
     }
 
   // END GAME PLAY ------------------
@@ -251,7 +241,7 @@ var Main = (function() {
             $playerInfoSection.append($playerInfo);
           }
       }
-      $('.board-center').append($playerInfoSection);
+      $('.board-center').prepend($playerInfoSection);
     }
 
     function buildTurnSection() {
@@ -270,6 +260,7 @@ var Main = (function() {
 
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
+        $cellTitle.css('color', currentPlayer.color);
         var $cellDetails = $('<div />', { 'class': 'cell-details' });
         var $cellName = $('<h3 />', { text: 'Name: ' }).append($('<span />', { 'class': 'name', text: 'Go' }));
         var $cellValue = $('<h3 />', { 'class': 'value' });
@@ -277,8 +268,8 @@ var Main = (function() {
         $cellDetails.append($cellName).append($cellValue);
         $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);
 
-      $turnInfo.append($title).append($roll).append($cellInfo);
-      $('.board-center').append($turnInfo);
+      $turnInfo.append($title).append($roll).append(' ').append($cellInfo);
+      $('.board-center').prepend($turnInfo);
       attachRollEvent();
 
       $rollButton = $('.roll-button');//update rollButton value to newly added dom element
@@ -288,7 +279,7 @@ var Main = (function() {
           $rollButton.attr('disabled', true);
           roll = currentPlayer.rollDie();
           movePlayer(currentPlayer, roll);
-          render();
+          $('.roll-value').text(roll);
         });
       }
     }
@@ -307,7 +298,7 @@ var Main = (function() {
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       var currentCell = board[currentPlayer.location];
-      $('h1.turn-title').css('color', currentPlayer.color);
+      $('h1.turn-title, .cell-info h2').css('color', currentPlayer.color);
       $('.turn-info .player-turn-name').text(currentPlayer.name);
       $('.cell-details .name').text(currentCell.name);
       $('.cell-details .value').removeClass('hide').removeClass('show');//clear show/hide classes

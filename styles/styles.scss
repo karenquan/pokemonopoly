@@ -171,6 +171,12 @@ CLASSES
   > section {
     display: block;
   }
+
+  img {
+    width: 700px;
+    display: inline-block;
+    margin: 10px auto;
+  }
 }
 /* ------ END BOARD STRUCTURE ------ */
 
@@ -415,6 +421,7 @@ CLASSES
     margin: 0 auto;
     padding: 0 40px;
     text-align: justify;
+    color: #000;
 
     &:after {
       content: '';
@@ -424,7 +431,6 @@ CLASSES
 
     h2, h3 {
       margin: 0;
-      color: $squirtle;
     }
 
     > * {
@@ -434,12 +440,15 @@ CLASSES
     > div {
       border: 1px solid;
       display: inline-block;
+      vertical-align: top;
     }
 
     img {
         width: 65px;
         border: 1px solid;
         display: inline-block;
+        vertical-align: top;
+        margin: 0;
       }
 
     .cell-details {
