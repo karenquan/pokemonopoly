@@ -33,7 +33,6 @@ var Main = (function() {
       $rollButton.removeClass('disabled');
       $rollButton.attr('disabled', false);
     }
-
   // END GAME PLAY ------------------
 
 
@@ -126,16 +125,21 @@ var Main = (function() {
   */
     function populateCells() {
     var $cell, $cellElement;
+    // console.log($cells);
     $cells.each(function(index) {
       cellElement = $('.column-' + this.column + ' div')[this.index];
-
+      // console.log(cellElement);
       switch(this.type.toLowerCase()) { /* create cells based on type */
         case 'go':
         case 'jail':
-        // case 'parking':
         case 'gotojail':
+        // case 'parking':
           buildCornerCell(this, cellElement);
           cellElement.classList.add(this.type.toLowerCase() + '-cell');
+          break;
+        case 'parking':
+          // buildFreeParkingCell(this, cellElement);
+          // cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         default:
           buildPropertyCell(this, cellElement);
@@ -188,36 +192,21 @@ var Main = (function() {
     }
 
     function buildCornerCell(cell, element) {
-      var $miscCell, $title, $image;
-      $miscCell = $('<div />');
+      var $cell, $name, $image;
+      $cell = $(element);
+      $content = $('<div />');
       $title = $('<span />', { 'class': 'title', text: cell.text });
       $image = $('<img />', { src: 'images/' + cell.image });
-      $miscCell.append($title).append($image);
-      $(element).append($miscCell);
+      $content.append($title).append($image);
+      $cell.append($content);
     }
 
-    function buildGoCell(cell, element) {
-      var $goCell, $title, $image;
-      $goCell = $('<div />');
+    function buildFreeParkingCell(cell, element) { //problems with using buildCornerCell...
+      var $cell, $name, $image;
+      $cell = $(element);
       $title = $('<span />', { 'class': 'title', text: cell.text });
       $image = $('<img />', { src: 'images/' + cell.image });
-      $goCell.append($title).append($image);
-      $(element).append($goCell);
-    }
-
-    function buildJailCell(cell, element) {
-      var $jailCell, $title, $image;
-      $jailCell = $('<div />');
-      // $jailCell.addClass(cell.type.toLowerCase() + '-cell');
-      $title = $('<span />', { 'class': 'title', text: cell.text });
-      $jailCell.append($title);
-      $(element).append($jailCell);
-    }
-
-    function buildFreeParkingCell(cell, element) {
-    }
-
-    function buildGoToJailCell(cell, element) {
+      $cell.append($title).append($image);
     }
 
     function buildPlayerInfoSections() {
@@ -249,7 +238,7 @@ var Main = (function() {
       var $roll = $('<div />', { 'class': 'roll' });
         var $rollTitle = $('<h2 />', { text: 'Roll' });
         var $rollValue = $('<span />', { 'class': 'roll-value', text: ' ' });
-        var $rollImage = $('<img />', { src: 'images/dice.gif' } );
+        // var $rollImage = $('<img />', { src: 'images/dice.gif' } );
         $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
         // $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
         $roll.append($rollTitle).append($rollValue).append($rollButton);
@@ -380,7 +369,7 @@ var Main = (function() {
       $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
 
       $okButton.on('click', function() {
-          $('.notification').remove();//remove notification box
+          $notification.remove();//remove notification box
           switchTurns();
           render();
           resetRoll();
@@ -397,11 +386,6 @@ var Main = (function() {
       }
 
       function displayPropertyUserNotification() {
-        // $notification = $('<div />', { 'class': 'notification' });
-        // $notificationEl = $('.notification');
-        // $notificationEl.empty(); //clear anything inside notification section
-        // var $title, $info, $yesButton, $noButton, $okButton,infoText;
-        // $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
         if($currentCell.owner === '') { //check if cell is vacant
           if(currentPlayer.money - $currentCell.value >= 0) {
             displayAddPropertyNotification();
@@ -429,12 +413,8 @@ var Main = (function() {
           $yesButton = $('<a />', { 'class': 'property-yes', text: 'YES' });
           $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText });
-          $notification
-                      .append($title)
-                      .append($info)
-                      .append($yesButton)
-                      .append($noButton);
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($yesButton).append($noButton);
+          $notification.append($title).append($info);
           $('.cell-info').append($notification);
 
           $yesButton.on('click', function() {
