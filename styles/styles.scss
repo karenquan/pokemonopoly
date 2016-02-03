@@ -347,13 +347,12 @@ CLASSES
   }
 
   .properties {
-    border: 1px solid $player1;
 
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 300px;
+      height: 250px;
       overflow: auto;
 
       img {

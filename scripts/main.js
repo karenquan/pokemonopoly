@@ -232,7 +232,7 @@ var Main = (function() {
           var $playerInfo = $('<div />', { 'class': 'player-' + i + '-info' });
           $name = $('<h1 />', { text: 'Player ' + i + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
           $properties = $('<div />', { 'class': 'properties' }).append($('<h2 />', { text: 'Properties' })).append($('<ul />', { 'class': 'properties-list' }));
-          $money = $('<h2 />', { 'class': 'money', text: '$' + player.money });
+          $money = $('<h2 />', { 'class': 'money', text: 'Money: $' + player.money });
           $playerInfo.append($name).append($money).append($properties);
           if(i == 1) {
             $playerInfoSection.append($playerInfo).append(' '); //need to add space for justify effect
@@ -314,22 +314,19 @@ var Main = (function() {
     }
 
     function updatePlayerInfoSection() {
-      //update property if they purchase
-      //update money if they purchase
-      players.forEach(function(player, i) {
+      //update property & money
+      players.forEach(function(player) {
         var $propertyListItem, $bullet, $image, $name, $value;
         var currentPlayerInfoClass = '.player-' + player.num + '-info';
         var $propertyList = $(currentPlayerInfoClass + ' ul');
-        $(currentPlayerInfoClass + ' .money').text('$' + player.money);
+        $(currentPlayerInfoClass + ' .money').text('Money: $' + player.money);
 
-        // $propertyList.removeClass('hide').removeClass('show');//reset hide/show classes if they have been added
-        if(currentPlayer.properties.length > 1) { //loop through properties (if any) and build list
-          // $propertyList.empty().addClass('show');//clear property list & show it
+        //loop through properties (if any) and build list
+        if(player.properties.length > 1) {
           $propertyList.empty(); //empty property list each time
-          currentPlayer.properties.forEach(function(property) {
-            $propertyItem = $('<li>');
+          player.properties.forEach(function(property) {
+            $propertyItem = $('<li>').css('color', property.color);
             $bullet = $('<span />', { 'class': 'bullet', text: '▶' });
-              $bullet.css('color', property.color);
             $image = $('<img />', { src: 'images/' + property.image, alt: property.name });
             $name = $('<span />', { 'class': 'name', text: property.name });
             $value = $('<span />', { 'class': 'value', text: '$' + property.value });
@@ -337,9 +334,9 @@ var Main = (function() {
             $propertyList.append($propertyItem);
           });
 
+          console.log('player ' + player.num);
+          console.log($propertyList);
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
-        } else { //hide property ul if player has no property
-          // $(currentPlayerInfoClass + ' ul').addClass('hide');
         }
       });
     }
