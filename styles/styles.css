@@ -217,8 +217,8 @@ CLASSES
     height: 250px;
     overflow: auto; }
     .player-info .properties ul img {
-      width: 65px;
-      height: 65px; }
+      width: 45px;
+      height: 45px; }
     .player-info .properties ul li span {
       display: inline-block;
       margin: 0 5px; }
@@ -311,9 +311,9 @@ CLASSES
         padding: 5px 20px; }
         .turn-info .cell-info .notification a:hover {
           cursor: pointer; }
-      .turn-info .cell-info .notification .property-yes {
+      .turn-info .cell-info .notification .property-yes, .turn-info .cell-info .notification .property-ok {
         background-color: #009933; }
-        .turn-info .cell-info .notification .property-yes:hover {
+        .turn-info .cell-info .notification .property-yes:hover, .turn-info .cell-info .notification .property-ok:hover {
           background-color: #00802b; }
       .turn-info .cell-info .notification .property-no {
         background-color: #cc0000; }

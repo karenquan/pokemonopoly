@@ -325,16 +325,6 @@ CLASSES
     }
   }
 
-  // ul.properties-list {
-  //   list-style-type: none;
-  //   margin: 0;
-  //   padding: 0;
-
-  //   img {
-  //     width: 65px;
-  //   }
-  // }
-
   .player-1-info {
     h1 {
       color: $player1;
@@ -357,8 +347,8 @@ CLASSES
       overflow: auto;
 
       img {
-        width: 65px;
-        height: 65px;
+        width: 45px;
+        height: 45px;
       }
 
       li {
@@ -495,7 +485,7 @@ CLASSES
         }
       }
 
-      .property-yes {
+      .property-yes, .property-ok {
         background-color: $success;
 
         &:hover {
