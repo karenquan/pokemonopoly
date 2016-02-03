@@ -36,6 +36,7 @@ var Main = (function() {
       currentPlayer = (currentPlayer === player1) ? player2 : player1;
       currentPlayer.currentTurn = true;
       updateTurnSection();
+      updatePlayerInfoSection();
     }
 
     function render() {
@@ -279,7 +280,6 @@ var Main = (function() {
           roll = currentPlayer.rollDie();
           movePlayer(currentPlayer, roll);
           $('.roll-value').text(roll);
-          updatePlayerInfoSection();
         });
       }
     }
@@ -290,9 +290,6 @@ var Main = (function() {
      Update cell when player is on a cell or purchases a cell.
   */
     function updateBoard() {
-      updateTurnSection();
-      updatePlayerInfoSection(player1);
-      updatePlayerInfoSection(player2);
     }
 
     function updateTurnSection() {
@@ -314,7 +311,7 @@ var Main = (function() {
     }
 
     function updatePlayerInfoSection() {
-      //update property & money
+      //update property & money for each player
       players.forEach(function(player) {
         var $propertyListItem, $bullet, $image, $name, $value;
         var currentPlayerInfoClass = '.player-' + player.num + '-info';
@@ -322,7 +319,7 @@ var Main = (function() {
         $(currentPlayerInfoClass + ' .money').text('Money: $' + player.money);
 
         //loop through properties (if any) and build list
-        if(player.properties.length > 1) {
+        if(player.properties.length > 0) {
           $propertyList.empty(); //empty property list each time
           player.properties.forEach(function(property) {
             $propertyItem = $('<li>').css('color', property.color);
@@ -334,8 +331,6 @@ var Main = (function() {
             $propertyList.append($propertyItem);
           });
 
-          console.log('player ' + player.num);
-          console.log($propertyList);
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
         }
       });
