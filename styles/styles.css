@@ -218,12 +218,15 @@ CLASSES
     overflow: auto; }
     .player-info .properties ul img {
       width: 45px;
-      height: 45px; }
-    .player-info .properties ul li span {
-      display: inline-block;
-      margin: 0 5px; }
-    .player-info .properties ul li .bullet {
-      font-size: 20px; }
+      height: 45px;
+      vertical-align: bottom; }
+    .player-info .properties ul li {
+      margin: 10px 0 0 0; }
+      .player-info .properties ul li span {
+        display: inline-block;
+        margin: 0 5px; }
+      .player-info .properties ul li .bullet {
+        font-size: 15px; }
   .player-info .properties img {
     width: 30px;
     height: 30px; }
@@ -319,7 +322,9 @@ CLASSES
         .turn-info .cell-info .notification a:hover {
           cursor: pointer; }
       .turn-info .cell-info .notification .property-ok {
-        display: block; }
+        display: block;
+        width: 40px;
+        margin: 10px auto 0 auto; }
       .turn-info .cell-info .notification .property-yes, .turn-info .cell-info .notification .property-ok {
         background-color: #009933; }
         .turn-info .cell-info .notification .property-yes:hover, .turn-info .cell-info .notification .property-ok:hover {

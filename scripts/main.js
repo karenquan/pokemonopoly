@@ -326,7 +326,7 @@ var Main = (function() {
           $propertyList.empty(); //empty property list each time
           player.properties.forEach(function(property) {
             $propertyItem = $('<li>').css('color', property.color);
-            $bullet = $('<span />', { 'class': 'bullet', text: '▶' });
+            $bullet = $('<span />', { 'class': 'bullet', text: '◤' });
             $image = $('<img />', { src: 'images/' + property.image, alt: property.name });
             $name = $('<span />', { 'class': 'name', text: property.name });
             $value = $('<span />', { 'class': 'value', text: '$' + property.value });
@@ -375,23 +375,36 @@ var Main = (function() {
     }
 
     function checkCellVacancy(cellIndex) {
+      var $title, $info, $yesButton, $noButton, $okButton,infoText;
       var $currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
+      $notification = $('<div />', { 'class': 'notification' });
+      $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
+
+      $okButton.on('click', function() {
+          $('.notification').remove();//remove notification box
+          switchTurns();
+          render();
+          $rollButton.removeClass('disabled');
+          $rollButton.attr('disabled', false);
+        });
+
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
       if($currentCell.canPurchase) {
         displayPropertyUserNotification();
       }
       else {
-        switchTurns();
-        render();
+        displayNonPropertyNotification();
+        // switchTurns();
+        // render();
       }
 
       function displayPropertyUserNotification() {
-        $notification = $('<div />', { 'class': 'notification' });
+        // $notification = $('<div />', { 'class': 'notification' });
         // $notificationEl = $('.notification');
         // $notificationEl.empty(); //clear anything inside notification section
-        var $title, $info, $yesButton, $noButton, $okButton,infoText;
-        $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
+        // var $title, $info, $yesButton, $noButton, $okButton,infoText;
+        // $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
         if($currentCell.owner === '') { //check if cell is vacant
           displayAddPropertyNotification();
         } else if ($currentCell.owner === currentPlayer.name) { //check if current player is owner
@@ -407,13 +420,13 @@ var Main = (function() {
         $notification.append($title).append($info);
         $('.cell-info').append($notification);
 
-        $okButton.on('click', function() {
-          $('.notification').remove();//remove notification box
-          switchTurns();
-          render();
-          $rollButton.removeClass('disabled');
-          $rollButton.attr('disabled', false);
-        });
+        // $okButton.on('click', function() {
+        //   $('.notification').remove();//remove notification box
+        //   switchTurns();
+        //   render();
+        //   $rollButton.removeClass('disabled');
+        //   $rollButton.attr('disabled', false);
+        // });
       }
 
       function displayAddPropertyNotification() {
@@ -443,7 +456,34 @@ var Main = (function() {
           });
       }
 
-
+      function displayNonPropertyNotification() {
+        var currentCell = board[currentPlayer.location];
+        var type;
+        switch(currentCell.type.toLowerCase()) {
+            case 'go':
+              type = 'go';
+              break;
+            case 'jail':
+              type = 'jail';
+              break;
+            case 'parking':
+              type = 'parking';
+              break;
+            case 'gotojail':
+              type = 'gotojail';
+              break;
+            case 'attack':
+              type = 'attack';
+              break;
+            default:
+              break;
+        }
+        infoText = 'You have landed on a(n) ' + type + ' space.';
+        $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+        $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+        $notification.append($title).append($info).append($yesButton).append($noButton);
+        $('.cell-info').append($notification);
+      }
     }
 
     function printCellState(cell) {
