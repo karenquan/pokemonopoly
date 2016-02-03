@@ -107,7 +107,7 @@ CLASSES
 /* end of column- */
 .board-center > section {
   display: block; }
-.board-center img {
+.board-center img.logo {
   width: 700px;
   display: inline-block;
   margin: 10px auto; }
@@ -210,18 +210,23 @@ CLASSES
     color: #3b82c4; }
   .player-info .player-2-info h1 {
     color: #cc0000; }
-  .player-info .property {
+  .player-info .properties {
     border: 1px solid #3b82c4; }
-    .player-info .property ul {
+    .player-info .properties ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 100px;
+      height: 300px;
       overflow: auto; }
-      .player-info .property ul li .bullet {
-        color: #f4d77c;
+      .player-info .properties ul img {
+        width: 65px;
+        height: 65px; }
+      .player-info .properties ul li span {
+        display: inline-block;
+        margin: 0 5px; }
+      .player-info .properties ul li .bullet {
         font-size: 20px; }
-    .player-info .property img {
+    .player-info .properties img {
       width: 30px;
       height: 30px; }
 

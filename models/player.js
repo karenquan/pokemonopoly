@@ -27,7 +27,7 @@ var Player = function(num, name) {
       this.currentTurn = true;
       break;
   }
-  this.property = [];
+  this.properties = [];
   this.turnCount = 0;
   this.money = 2000;
   this.location = 0; //board array index
@@ -35,7 +35,7 @@ var Player = function(num, name) {
 };
 
 Player.prototype.addProperty = function(property) {
-  this.property.push(property);
+  this.properties.push(property);
 }
 
 Player.prototype.rollDie = function() {

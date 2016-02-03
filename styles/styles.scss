@@ -172,7 +172,7 @@ CLASSES
     display: block;
   }
 
-  img {
+  img.logo {
     width: 700px;
     display: inline-block;
     margin: 10px auto;
@@ -324,6 +324,16 @@ CLASSES
     }
   }
 
+  // ul.properties-list {
+  //   list-style-type: none;
+  //   margin: 0;
+  //   padding: 0;
+
+  //   img {
+  //     width: 65px;
+  //   }
+  // }
+
   .player-1-info {
     h1 {
       color: $player1;
@@ -336,19 +346,29 @@ CLASSES
     }
   }
 
-  .property {
+  .properties {
     border: 1px solid $player1;
 
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 100px;
+      height: 300px;
       overflow: auto;
 
+      img {
+        width: 65px;
+        height: 65px;
+      }
+
       li {
+
+        span {
+          display: inline-block;
+          margin: 0 5px;
+        }
+
         .bullet {
-          color: $pikachu;
           font-size: 20px;
         }
       }

@@ -41,7 +41,6 @@ var Main = (function() {
     function render() {
       //update turn section (roll #, roll image(s))
       //update player info
-      // $('.roll-value').text(roll);
     }
 
   // END GAME PLAY ------------------
@@ -226,15 +225,15 @@ var Main = (function() {
     }
 
     function buildPlayerInfoSections() {
-      var $playerInfo, $player1Info, $player2Info, $name, $property, $money;
+      var $playerInfo, $player1Info, $player2Info, $name, $properties, $money;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
       for(var i = 1; i < 3; i++) {
           var player = i == 1 ? player1 : player2;
           var $playerInfo = $('<div />', { 'class': 'player-' + i + '-info' });
           $name = $('<h1 />', { text: 'Player ' + i + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
-          $property = $('<div />', { 'class': 'property' }).append($('<h2 />', { text: 'Property' })).append('<ul>');
-          $money = $('<h2 />', { text: '$' + player.money });
-          $playerInfo.append($name).append($property).append($money);
+          $properties = $('<div />', { 'class': 'properties' }).append($('<h2 />', { text: 'Properties' })).append($('<ul />', { 'class': 'properties-list' }));
+          $money = $('<h2 />', { 'class': 'money', text: '$' + player.money });
+          $playerInfo.append($name).append($money).append($properties);
           if(i == 1) {
             $playerInfoSection.append($playerInfo).append(' '); //need to add space for justify effect
           } else {
@@ -280,6 +279,7 @@ var Main = (function() {
           roll = currentPlayer.rollDie();
           movePlayer(currentPlayer, roll);
           $('.roll-value').text(roll);
+          updatePlayerInfoSection();
         });
       }
     }
@@ -313,9 +313,35 @@ var Main = (function() {
       $('.cell-info img').attr('src', 'images/' + currentCell.image);
     }
 
-    function updatePlayerInfoSection(player) {
+    function updatePlayerInfoSection() {
       //update property if they purchase
       //update money if they purchase
+      players.forEach(function(player, i) {
+        var $propertyListItem, $bullet, $image, $name, $value;
+        var currentPlayerInfoClass = '.player-' + player.num + '-info';
+        var $propertyList = $(currentPlayerInfoClass + ' ul');
+        $(currentPlayerInfoClass + ' .money').text('$' + player.money);
+
+        // $propertyList.removeClass('hide').removeClass('show');//reset hide/show classes if they have been added
+        if(currentPlayer.properties.length > 1) { //loop through properties (if any) and build list
+          // $propertyList.empty().addClass('show');//clear property list & show it
+          $propertyList.empty(); //empty property list each time
+          currentPlayer.properties.forEach(function(property) {
+            $propertyItem = $('<li>');
+            $bullet = $('<span />', { 'class': 'bullet', text: '▶' });
+              $bullet.css('color', property.color);
+            $image = $('<img />', { src: 'images/' + property.image, alt: property.name });
+            $name = $('<span />', { 'class': 'name', text: property.name });
+            $value = $('<span />', { 'class': 'value', text: '$' + property.value });
+            $propertyItem.append($bullet).append($image).append($name).append($value);
+            $propertyList.append($propertyItem);
+          });
+
+          $(currentPlayerInfoClass + ' .properties').append($propertyList);
+        } else { //hide property ul if player has no property
+          // $(currentPlayerInfoClass + ' ul').addClass('hide');
+        }
+      });
     }
 
     function addPropertyOwner(cell, index) {
