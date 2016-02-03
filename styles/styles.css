@@ -270,6 +270,10 @@ CLASSES
       cursor: pointer;
       background: #00802b;
       border: 1px solid #00802b; }
+    .turn-info .roll .roll-button.disabled {
+      border: 1px solid #bfbfbf;
+      background-color: #bfbfbf;
+      cursor: default; }
   .turn-info .cell-info {
     margin: 0 auto;
     padding: 0 40px;
@@ -300,17 +304,22 @@ CLASSES
     .turn-info .cell-info .notification {
       text-align: center;
       width: 100%;
-      padding: 10px; }
+      padding: 10px;
+      border: 1px solid #cc0000; }
+      .turn-info .cell-info .notification h2 {
+        color: #cc0000; }
       .turn-info .cell-info .notification a {
         display: inline-block;
         color: #FFF;
         -webkit-transition: 0.5s;
         -moz-transition: 0.5s;
         transition: 0.5s;
-        margin: 0 10px;
+        margin: 10px 5px 0 5px;
         padding: 5px 20px; }
         .turn-info .cell-info .notification a:hover {
           cursor: pointer; }
+      .turn-info .cell-info .notification .property-ok {
+        display: block; }
       .turn-info .cell-info .notification .property-yes, .turn-info .cell-info .notification .property-ok {
         background-color: #009933; }
         .turn-info .cell-info .notification .property-yes:hover, .turn-info .cell-info .notification .property-ok:hover {

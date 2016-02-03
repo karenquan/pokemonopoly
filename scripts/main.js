@@ -36,12 +36,11 @@ var Main = (function() {
       currentPlayer = (currentPlayer === player1) ? player2 : player1;
       currentPlayer.currentTurn = true;
       updateTurnSection();
-      updatePlayerInfoSection();
     }
 
     function render() {
-      //update turn section (roll #, roll image(s))
-      //update player info
+      updateCurrentCellSection();
+      updatePlayerInfoSection();
     }
 
   // END GAME PLAY ------------------
@@ -245,7 +244,6 @@ var Main = (function() {
     }
 
     function buildTurnSection() {
-      // currentPlayer = player1;
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { 'class': 'turn-title', text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
       $title.css('color', currentPlayer.color);
@@ -266,8 +264,8 @@ var Main = (function() {
         var $cellValue = $('<h3 />', { 'class': 'value' });
         var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
-        var $notification = $('<div />', { 'class': 'notification' });
-        $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails).append($notification);
+        //var $notification = $('<div />', { 'class': 'notification' });
+        $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);//.append($notification);
 
       $turnInfo.append($title).append($roll).append(' ').append($cellInfo);
       $('.board-center').prepend($turnInfo);
@@ -277,10 +275,10 @@ var Main = (function() {
 
       function attachRollEvent() {
         $rollButton.on('click', function() {
-          // $rollButton.attr('disabled', true);
+          $rollButton.addClass('disabled');
+          $rollButton.attr('disabled', true);
           roll = currentPlayer.rollDie();
           movePlayer(currentPlayer, roll);
-          console.log(roll);
           $('.roll-value').text(roll);
         });
       }
@@ -291,14 +289,17 @@ var Main = (function() {
      Update board center content for every turn.
      Update cell when player is on a cell or purchases a cell.
   */
-    function updateBoard() {
-    }
 
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       var currentCell = board[currentPlayer.location];
       $('h1.turn-title, .cell-info h2').css('color', currentPlayer.color);
       $('.turn-info .player-turn-name').text(currentPlayer.name);
+    }
+
+    function updateCurrentCellSection() {
+      var currentCell = board[currentPlayer.location];
+      $('cell-info h2').css('color', currentPlayer.color);
       $('.cell-details .name').text(currentCell.name);
       $('.cell-details .value').removeClass('hide').removeClass('show');//clear show/hide classes
 
@@ -367,79 +368,82 @@ var Main = (function() {
         player.location = extra - 1; //subtract one since array is base 0
       }
       boardElements[player.location].classList.add(className);
+      render();
 
       //check if cell is vacant/owned by other player/go cell/go to jail cell
-
-      //SWITCH TURNS WITHIN CELL VACANCY CHECK (either by clicking YES, NO, or OK)
-      //DISABLE ROLL BUTTON UNTIL YES/NO/OK BUTTON CLICKED
       checkCellVacancy(player.location);
-      //switchTurns(); //switch turns after current player is done (i.e. after purchasing property)
     }
 
     function checkCellVacancy(cellIndex) {
       var $currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
-      console.log($currentCell.canPurchase + ': ' + $currentCell.canPurchase);
       if($currentCell.canPurchase) {
-        buildPropertyUserNotification();
+        displayPropertyUserNotification();
       }
       else {
         switchTurns();
+        render();
       }
 
-      function buildPropertyUserNotification() {
-        //if user owns space, display that notification
-        //else ask user if they want to purchase; add click event for YEs to addProperty() & deduct $$
-        //build area to either ask if user wants to buy or display user has to pay
-        // var $notification = $('<div />', { 'class': 'notification' });
-        $notificationEl = $('.notification');
-        $notificationEl.empty(); //clear anything inside notification section
+      function displayPropertyUserNotification() {
+        $notification = $('<div />', { 'class': 'notification' });
+        // $notificationEl = $('.notification');
+        // $notificationEl.empty(); //clear anything inside notification section
         var $title, $info, $yesButton, $noButton, $okButton,infoText;
         $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
         if($currentCell.owner === '') { //check if cell is vacant
-          buildAddPropertyNotification();
+          displayAddPropertyNotification();
         } else if ($currentCell.owner === currentPlayer.name) { //check if current player is owner
           infoText = "You already own this space.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
-        } else { //else other player probably owns space - pay other player
+        } else { //else other player owns space - pay other player
           infoText = $currentCell.owner + ' owns this space. You owe $' + $currentCell.value + '.';
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
         }
 
-        $notificationEl.append($title).append($info);
-        $('.cell-info').append($notificationEl);
+        $notification.append($title).append($info);
+        $('.cell-info').append($notification);
 
         $okButton.on('click', function() {
-          $('.notification').empty();//remove notification box
+          $('.notification').remove();//remove notification box
           switchTurns();
+          render();
+          $rollButton.removeClass('disabled');
+          $rollButton.attr('disabled', false);
         });
       }
 
-      function buildAddPropertyNotification() {
-          infoText = 'Would you like to purchase ' + $currentCell.name + '?';
+      function displayAddPropertyNotification() {
+          infoText = 'Would you like to purchase ' + $currentCell.name + ' for $' + $currentCell.value + '?';
           $yesButton = $('<a />', { 'class': 'property-yes', text: 'YES' });
           $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText });
-          $notificationEl.append($title).append($info).append($yesButton).append($noButton);
-          $('.cell-info').append($notificationEl);
-          // console.log($info);
-          //ask if user wants to purchase - if yes, run addProperty() function
+          $notification.append($title).append($info).append($yesButton).append($noButton);
+          $('.cell-info').append($notification);
+
           $yesButton.on('click', function() {
-            // console.log('yes i want to buy');
-            $('.notification').empty();
+            $notification.remove();
             addPropertyOwner($currentCellElement, cellIndex);
             switchTurns();
+            render();
+            $rollButton.removeClass('disabled');
+            $rollButton.attr('disabled', false);
           });
-          //if no, get out of function
+
           $($noButton).on('click', function() {
-            $('.notification').empty();//remove notification box
+            $notification.remove();//remove notification box
             switchTurns();
+            render();
+            $rollButton.removeClass('disabled');
+            $rollButton.attr('disabled', false);
           });
       }
+
+
     }
 
     function printCellState(cell) {
@@ -470,7 +474,7 @@ $(document).ready(function() {
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
   var $rollButton;
-  var $notificationEl;
+  var $notification;
   var board = [];
   var boardElements = [];
   var players;

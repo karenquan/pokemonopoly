@@ -423,6 +423,12 @@ CLASSES
         background: $successHover;
         border: 1px solid $successHover;
       }
+
+      &.disabled {
+          border: 1px solid #bfbfbf;
+          background-color: #bfbfbf;
+          cursor: default;
+        }
     }
   }
 
@@ -472,17 +478,26 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px;
+      border: 1px solid $attack;
+
+      h2 {
+        color: $attack;
+      }
 
       a {
         display: inline-block;
         color: #FFF;
         @include transition(0.5s);
-        margin: 0 10px;
+        margin: 10px 5px 0 5px;
         padding: 5px 20px;
 
         &:hover {
           cursor: pointer;
         }
+      }
+
+      .property-ok {
+        display: block;
       }
 
       .property-yes, .property-ok {
