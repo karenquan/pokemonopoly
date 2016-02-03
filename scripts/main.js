@@ -10,6 +10,8 @@ var Main = (function() {
       players = [player1, player2];
       currentPlayer = player1;
       $('.start-modal').remove();
+      jackpotAmount = 0;
+      turn = 0;
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 1 on 'Go' space
       buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
@@ -129,6 +131,10 @@ var Main = (function() {
     $cells.each(function(index) {
       cellElement = $('.column-' + this.column + ' div')[this.index];
       // console.log(cellElement);
+      // if(this.name === 'Free Parking') {
+      //     console.log('before');
+      //     console.log(cellElement);
+      // }
       switch(this.type.toLowerCase()) { /* create cells based on type */
         case 'go':
         case 'jail':
@@ -138,10 +144,14 @@ var Main = (function() {
           cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         case 'parking':
-          // buildFreeParkingCell(this, cellElement);
-          // cellElement.classList.add(this.type.toLowerCase() + '-cell');
+          // buildCornerCell(this, cellElement);
+          cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         default:
+          if(this.name === 'Free Parking') {
+            // console.log('after');
+            // console.log(cellElement);
+          }
           buildPropertyCell(this, cellElement);
           break;
       }
@@ -251,7 +261,7 @@ var Main = (function() {
         var $cellValue = $('<h3 />', { 'class': 'value' });
         var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
-        //var $notification = $('<div />', { 'class': 'notification' });
+
         $cellInfo.append($cellTitle).append($cellDetails).append(' ').append($cellImage);//.append($notification);
 
       $turnInfo.append($title).append($roll).append(' ').append($cellInfo);
@@ -262,6 +272,7 @@ var Main = (function() {
 
       function attachRollEvent() {
         $rollButton.on('click', function() {
+          roll += 1;
           $rollButton.addClass('disabled');
           $rollButton.attr('disabled', true);
           roll = currentPlayer.rollDie();
@@ -327,9 +338,19 @@ var Main = (function() {
       });
     }
 
+    function updatePlayersMoney() { //for when a player lands on other player's property
+      players.forEach(function(player) {
+          $('.player-' + player.num + '-info .money').text('Money: $' + player.money);
+      });
+    }
+
+    function updateCurrentPlayerMoney() { //for when a player owes money / gets jackpot
+      $('.player-' + currentPlayer.num + '-info .money').text('Money: $' + currentPlayer.money);
+    }
+
     function addPropertyOwner(cell, index) {
       var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': currentPlayer.color } });
-      console.log($owner);
+      // console.log($owner);
       $(cell).append($owner);
       currentPlayer.addProperty(board[index]); //update player's property array
       board[index].owner = currentPlayer.name; //update owner property of cell
@@ -363,7 +384,7 @@ var Main = (function() {
 
     function checkCellVacancy(cellIndex) {
       var $title, $info, $yesButton, $noButton, $okButton,infoText;
-      var $currentCell = board[cellIndex];
+      var currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
       $notification = $('<div />', { 'class': 'notification' });
       $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
@@ -376,7 +397,7 @@ var Main = (function() {
         });
 
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
-      if($currentCell.canPurchase) {
+      if(currentCell.canPurchase) {
         displayPropertyUserNotification();
       }
       else {
@@ -386,30 +407,47 @@ var Main = (function() {
       }
 
       function displayPropertyUserNotification() {
-        if($currentCell.owner === '') { //check if cell is vacant
-          if(currentPlayer.money - $currentCell.value >= 0) {
+        if(currentCell.owner === '') { //check if cell is vacant
+          if(currentPlayer.money - currentCell.value >= 0) {
             displayAddPropertyNotification();
           } else {
             infoText = "You don't have enough money to purchase this property.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
           }
-        } else if ($currentCell.owner === currentPlayer.name) { //check if current player is owner
+        } else if (currentCell.owner === currentPlayer.name) { //check if current player is owner
           infoText = "You already own this space.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
         } else { //else other player owns space - pay other player
-          infoText = $currentCell.owner + ' owns this space. You owe $' + $currentCell.value + '.';
+          infoText = currentCell.owner + ' owns this space. You owe $' + currentCell.value + '.';
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+          payPlayer();
         }
 
         $notification.append($title).append($info);
         $('.cell-info').append($notification);
+
+        function payPlayer() {
+          // var propertyOwner = board[currentPlayer.location].owner;
+          var propertyOwner = currentPlayer === player1 ? player2 : player1;
+          var propertyValue = board[currentPlayer.location].value;
+          console.log('PAY PLAYER FUNCTION:');
+          console.log(propertyOwner.name + ' OLD: $' + propertyOwner.money);
+          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
+
+          currentPlayer.money -= propertyValue;
+          propertyOwner.money += propertyValue;
+
+          console.log(propertyOwner.name + ' NEW: $' + propertyOwner.money);
+          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
+          console.log('');
+        }
       }
 
       function displayAddPropertyNotification() {
-          infoText = 'Would you like to purchase ' + $currentCell.name + ' for $' + $currentCell.value + '?';
+          infoText = 'Would you like to purchase ' + currentCell.name + ' for $' + currentCell.value + '?';
           $yesButton = $('<a />', { 'class': 'property-yes', text: 'YES' });
           $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
@@ -435,33 +473,68 @@ var Main = (function() {
 
       function displayNonPropertyNotification() {
         var currentCell = board[currentPlayer.location];
-        var type;
+        var type, info;
         switch(currentCell.type.toLowerCase()) {
             case 'go':
-              type = 'go';
+              info = 'You landed on Go! Collect $200.'
+              if(roll > 1) goSpace();
               break;
             case 'jail':
-              type = 'jail';
+              info = 'You are just visiting jail.';
               break;
             case 'parking':
-              type = 'parking';
+              info = (jackpotAmount > 0) ? 'You win the jackpot of $' + jackpotAmount + '!' : 'There is no money in the jackpot.';
+              if(jackpotAmount > 0) jackpot();
               break;
             case 'gotojail':
-              type = 'gotojail';
+              info = 'You have trespassed on private property! You have to go to jail.';
               break;
             case 'attack':
-              type = 'attack';
+              info = 'You have been attacked! You owe $200.'
+              attack();
               break;
             default:
               break;
         }
-        infoText = 'You have landed on a(n) ' + type + ' space.';
         $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-        $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+        $info = $('<p />', { 'class': 'notification-text', text: info }).append($okButton);
         $notification.append($title).append($info).append($yesButton).append($noButton);
         $('.cell-info').append($notification);
-      }
-    }
+
+        //ACTIONS
+        function attack() {
+          //add $200 to jackpot, deduct $200 from currentplayer
+          console.log('ATTACK FUNCTION');
+          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
+          jackpotAmount += 200;
+          currentPlayer.money -= 200;
+          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
+          console.log('CURRENT JACKPOT: $' + jackpotAmount);
+          console.log('');
+          // updateCurrentPlayerMoney();
+        }
+
+        function goSpace() {
+          console.log('GO FUNCTION');
+          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
+          currentPlayer.money += 200;
+          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
+          console.log(' ');
+          // updateCurrentPlayerMoney();
+        }
+
+        function jackpot() {
+          console.log('JACKPOT FUNCTION');
+          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
+          currentPlayer.money += jackpotAmount;
+          console.log(currentPlayer + ' NEW: $: ' + currentPlayer.money);
+          console.log(' ');
+          jackpotAmount = 0;//reset jackpot
+        }
+
+      } /* displayNonPropertyNotification() function  */
+
+    } /* end checkCellVacancy() function */
 
     function printCellState(cell) {
       //print current state of cell (i.e. owners, which players on space, name, value...)
@@ -498,6 +571,10 @@ $(document).ready(function() {
   var player1;
   var player2;
   var currentPlayer;
+  var currentCell;
   var turnCount;
   var roll = '';
+  var jackpotAmount;
+  var movePlayer;
+  var turn;
 

@@ -266,6 +266,7 @@ var $cells = $([
       column: 3,
       index: 7,
       name: 'Go To Jail',
+      color: '#3b82c4',
       type: 'GoToJail',
       text: 'Go To Jail',
       image: 'gotojail.png',
