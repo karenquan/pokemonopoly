@@ -306,8 +306,7 @@ CLASSES
   }
 
   h1 {
-    font-size: 28px;
-    color: $haunter;
+    font-size: 30px;
     text-align: center;
   }
 
@@ -408,6 +407,16 @@ CLASSES
     margin: 0 auto 10px auto;
     text-align: center;
     color: $success;
+  }
+
+  h3 {
+
+    &.jackpot-title {
+      color: #000;
+      margin: 0 auto;
+      font-size: 15px;
+      text-align: center;
+    }
   }
 
   &:after {

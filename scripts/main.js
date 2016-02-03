@@ -243,7 +243,9 @@ var Main = (function() {
     function buildTurnSection() {
       var $turnInfo = $('<div />', { 'class': 'turn-info' });
       var $title = $('<h1 />', { 'class': 'turn-title', text: 'Turn: ' }).append($('<span />', { 'class': 'player-turn-name', text: currentPlayer.name }));
-      $title.css('color', currentPlayer.color);
+        $title.css('color', currentPlayer.color);
+      var $jackpotTitle = $('<h3 />', { 'class': 'jackpot-title', text: 'Jackpot: $' }).append($('<span />', { 'class': 'jackpot-value', text: '0' }));
+        // $jackpotTitle.append('<span />', { 'class': 'jackpot-value', text: '0' });
 
       var $roll = $('<div />', { 'class': 'roll' });
         var $rollTitle = $('<h2 />', { text: 'Roll' });
@@ -264,8 +266,9 @@ var Main = (function() {
 
         $cellInfo.append($cellTitle).append($cellDetails).append(' ').append($cellImage);//.append($notification);
 
-      $turnInfo.append($title).append($roll).append(' ').append($cellInfo);
+      $turnInfo.append($title).append($jackpotTitle).append($roll).append(' ').append($cellInfo);
       $('.board-center').prepend($turnInfo);
+      $jackpot = $('.jackpot-value'); //set global jackpot value after element appended to dom
       attachRollEvent();
 
       $rollButton = $('.roll-button');//update rollButton value to newly added dom element
@@ -293,6 +296,10 @@ var Main = (function() {
       var currentCell = board[currentPlayer.location];
       $('h1.turn-title, .cell-info h2').css('color', currentPlayer.color);
       $('.turn-info .player-turn-name').text(currentPlayer.name);
+    }
+
+    updateJackpotValue = function() {
+      $jackpot.text(jackpotAmount);
     }
 
     function updateCurrentCellSection() {
@@ -336,16 +343,6 @@ var Main = (function() {
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
         }
       });
-    }
-
-    function updatePlayersMoney() { //for when a player lands on other player's property
-      players.forEach(function(player) {
-          $('.player-' + player.num + '-info .money').text('Money: $' + player.money);
-      });
-    }
-
-    function updateCurrentPlayerMoney() { //for when a player owes money / gets jackpot
-      $('.player-' + currentPlayer.num + '-info .money').text('Money: $' + currentPlayer.money);
     }
 
     function addPropertyOwner(cell, index) {
@@ -402,8 +399,6 @@ var Main = (function() {
       }
       else {
         displayNonPropertyNotification();
-        // switchTurns();
-        // render();
       }
 
       function displayPropertyUserNotification() {
@@ -508,11 +503,11 @@ var Main = (function() {
           console.log('ATTACK FUNCTION');
           console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
           jackpotAmount += 200;
+          updateJackpotValue(); //update jackpot text on screen
           currentPlayer.money -= 200;
           console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
           console.log('CURRENT JACKPOT: $' + jackpotAmount);
           console.log('');
-          // updateCurrentPlayerMoney();
         }
 
         function goSpace() {
@@ -521,7 +516,6 @@ var Main = (function() {
           currentPlayer.money += 200;
           console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
           console.log(' ');
-          // updateCurrentPlayerMoney();
         }
 
         function jackpot() {
@@ -531,16 +525,16 @@ var Main = (function() {
           console.log(currentPlayer.name + ' NEW: $: ' + currentPlayer.money);
           console.log(' ');
           jackpotAmount = 0;//reset jackpot
+          updateJackpotValue(); //update jackpot text on screen
         }
 
         goToJail = function() { //global function
           console.log('GO TO JAIL FUNCTION');
-          //get current location of player (board array index)
           var className = 'player-' + currentPlayer.num;
-          //remove class on old space (make background default color)
+          //remove class on current player's old space (make background default color)
           boardElements[currentPlayer.location].classList.remove(className);
 
-          //update player's location & change background of new location
+          //update player's location to jail cell & change background of jail cell
           currentPlayer.location = 7; //jail cell is index 7
           boardElements[currentPlayer.location].classList.add(className);
           render();
@@ -581,6 +575,7 @@ $(document).ready(function() {
   var $boardBottom = $('.column-2 > div.bottom-row');
   var $rollButton;
   var $notification;
+  var $jackpot;
   var board = [];
   var boardElements = [];
   var players;
@@ -594,4 +589,5 @@ $(document).ready(function() {
   var movePlayer;
   var goToJail;
   var turn;
+  var updateJackpotValue;
 

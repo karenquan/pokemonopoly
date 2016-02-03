@@ -194,8 +194,7 @@ CLASSES
   .board-center h1, .board-center h2 {
     margin: 0; }
   .board-center h1 {
-    font-size: 28px;
-    color: #534a58;
+    font-size: 30px;
     text-align: center; }
   .board-center h2 {
     text-align: left;
@@ -210,7 +209,7 @@ CLASSES
     width: 100%; }
   .player-info > div {
     border: 1px solid;
-    height: 400px;
+    height: 350px;
     width: 49%;
     padding: 10px;
     display: inline-block;
@@ -225,7 +224,7 @@ CLASSES
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 250px;
+    height: 200px;
     overflow: auto; }
     .player-info .properties ul img {
       width: 45px;
@@ -260,6 +259,11 @@ CLASSES
     margin: 0 auto 10px auto;
     text-align: center;
     color: #009933; }
+  .turn-info h3.jackpot-title {
+    color: #000;
+    margin: 0 auto;
+    font-size: 15px;
+    text-align: center; }
   .turn-info:after {
     content: '';
     display: inline-block;
