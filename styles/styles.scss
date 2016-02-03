@@ -30,6 +30,7 @@ $player2: #cc0000;
 $success: #009933;
 $attack: #cc0000;
 $successHover: #00802b;
+$attackHover: #b30000;
 
 /* -------------------------
 MIXINS
@@ -481,6 +482,33 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px;
+
+      a {
+        display: inline-block;
+        color: #FFF;
+        @include transition(0.5s);
+        margin: 0 10px;
+        padding: 5px 20px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .property-yes {
+        background-color: $success;
+
+        &:hover {
+          background-color: $successHover;
+        }
+      }
+      .property-no {
+        background-color: $attack;
+
+        &:hover {
+          background-color: $attackHover;
+        }
+      }
     }
   }
 } /* end turn-info */

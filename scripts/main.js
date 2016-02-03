@@ -374,23 +374,8 @@ var Main = (function() {
       var $currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
+      console.log($currentCell.canPurchase + ': ' + $currentCell.canPurchase);
       if($currentCell.canPurchase) {
-        // if($currentCell.owner === '') {
-        //   //add property if user has enough money & user clicks 'yes' button
-        //   if(currentPlayer.money - $currentCell.value >= 0) {
-        //     currentPlayer.money -= $currentCell.value; //deduct value of property from user's money
-        //     addPropertyOwner($currentCellElement, cellIndex);
-        //   }
-
-        //   //if no, just exit function
-        // } else {
-        //   //if owner is not '', check if current player is owner, or other player
-        //   var currentOwner = ($currentCell.owner === currentPlayer.name) ? true : false;
-        //   if(!currentOwner) {
-        //     //deduct property value worth from current player's money, and add to other player's money
-        //     console.log('you are not current owner');
-        //   }
-        // }
         buildPropertyUserNotification();
       }
 
@@ -399,13 +384,11 @@ var Main = (function() {
         //else ask user if they want to purchase; add click event for YEs to addProperty() & deduct $$
         //build area to either ask if user wants to buy or display user has to pay
         // var $notification = $('<div />', { 'class': 'notification' });
-        var $notificationEl = $('.notification');
+        $notificationEl = $('.notification');
         $notificationEl.empty(); //clear anything inside notification section
         var $title, $info, $yesButton, $noButton, infoText;
         if($currentCell.owner === '') { //check if cell is vacant
-          infoText = "You do not own this space.";
-          $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText });
+          buildAddPropertyNotification();
         } else if ($currentCell.owner === currentPlayer.name) { //check if current player is owner
           infoText = "You already own this space.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
@@ -418,6 +401,19 @@ var Main = (function() {
 
         $notificationEl.append($title).append($info);
         $('.cell-info').append($notificationEl);
+      }
+
+      function buildAddPropertyNotification() {
+          infoText = 'Would you like to purchase ' + $currentCell.name + '?';
+          $yesButton = $('<a />', { 'class': 'property-yes', text: 'YES' });
+          $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
+          $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+          $info = $('<p />', { 'class': 'notification-text', text: infoText });
+          $notificationEl.append($title).append($info).append($yesButton).append($noButton);
+          $('.cell-info').append($notificationEl);
+          // console.log($info);
+          //ask if user wants to purchase - if yes, run addProperty() function
+          //if no, get out of function
       }
     }
 
@@ -449,6 +445,7 @@ $(document).ready(function() {
   var $boardRight = $('.column-3 > div');
   var $boardBottom = $('.column-2 > div.bottom-row');
   var $rollButton;
+  var $notificationEl;
   var board = [];
   var boardElements = [];
   var players;

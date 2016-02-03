@@ -301,6 +301,24 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px; }
+      .turn-info .cell-info .notification a {
+        display: inline-block;
+        color: #FFF;
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        transition: 0.5s;
+        margin: 0 10px;
+        padding: 5px 20px; }
+        .turn-info .cell-info .notification a:hover {
+          cursor: pointer; }
+      .turn-info .cell-info .notification .property-yes {
+        background-color: #009933; }
+        .turn-info .cell-info .notification .property-yes:hover {
+          background-color: #00802b; }
+      .turn-info .cell-info .notification .property-no {
+        background-color: #cc0000; }
+        .turn-info .cell-info .notification .property-no:hover {
+          background-color: #b30000; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
