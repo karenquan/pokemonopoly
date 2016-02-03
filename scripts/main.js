@@ -363,7 +363,7 @@ var Main = (function() {
       // cell.remove();
     }
 
-    function movePlayer(player, numSpaces) {
+    movePlayer = function(player, numSpaces) { //global function
       //get current location of player (board array index)
       var className = 'player-' + player.num;
       //remove class on old space (make background default color)
@@ -488,6 +488,7 @@ var Main = (function() {
               break;
             case 'gotojail':
               info = 'You have trespassed on private property! You have to go to jail.';
+              goToJail();
               break;
             case 'attack':
               info = 'You have been attacked! You owe $200.'
@@ -527,12 +528,27 @@ var Main = (function() {
           console.log('JACKPOT FUNCTION');
           console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
           currentPlayer.money += jackpotAmount;
-          console.log(currentPlayer + ' NEW: $: ' + currentPlayer.money);
+          console.log(currentPlayer.name + ' NEW: $: ' + currentPlayer.money);
           console.log(' ');
           jackpotAmount = 0;//reset jackpot
         }
 
-      } /* displayNonPropertyNotification() function  */
+        goToJail = function() { //global function
+          console.log('GO TO JAIL FUNCTION');
+          //get current location of player (board array index)
+          var className = 'player-' + currentPlayer.num;
+          //remove class on old space (make background default color)
+          boardElements[currentPlayer.location].classList.remove(className);
+
+          //update player's location & change background of new location
+          currentPlayer.location = 7; //jail cell is index 7
+          boardElements[currentPlayer.location].classList.add(className);
+          render();
+          $rollButton.addClass('disabled');
+          $rollButton.attr('disabled', true);
+        }
+
+      } /* end displayNonPropertyNotification() function  */
 
     } /* end checkCellVacancy() function */
 
@@ -576,5 +592,6 @@ $(document).ready(function() {
   var roll = '';
   var jackpotAmount;
   var movePlayer;
+  var goToJail;
   var turn;
 
