@@ -25,6 +25,9 @@ a {
   -moz-transition: 0.5s;
   transition: 0.5s; }
 
+p {
+  margin: 5px 0; }
+
 /* -------------------------
 IDs
 -------------------------- */
@@ -105,41 +108,34 @@ CLASSES
       border-left: none; }
 
 /* end of column- */
-.board-center > section {
-  display: block; }
-.board-center img.logo {
-  width: 700px;
-  display: inline-block;
-  margin: 10px auto; }
-
 /* ------ END BOARD STRUCTURE ------ */
 /* ------ CELL TYPES ------ */
-.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
+.property-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell, .parking-cell {
   text-align: center;
   position: relative; }
-  .property-cell span, .property-cell img, .utility-cell span, .utility-cell img, .ball-cell span, .ball-cell img, .attack-cell span, .attack-cell img, .legendary-cell span, .legendary-cell img, .go-cell span, .go-cell img, .jail-cell span, .jail-cell img, .gotojail-cell span, .gotojail-cell img {
+  .property-cell span, .property-cell img, .ball-cell span, .ball-cell img, .attack-cell span, .attack-cell img, .legendary-cell span, .legendary-cell img, .go-cell span, .go-cell img, .jail-cell span, .jail-cell img, .gotojail-cell span, .gotojail-cell img, .parking-cell span, .parking-cell img {
     display: block; }
 
-.property-cell span.name, .ball-cell span.name, .attack-cell span.name, .legendary-cell span.name {
+.property-cell span.name, .ball-cell span.name, .attack-cell span.name, .legendary-cell span.name, .parking-cell span.name {
   font-family: "Slabo 27px", serif;
   font-size: 18px;
   margin: 0; }
-.property-cell span.city, .ball-cell span.city, .attack-cell span.city, .legendary-cell span.city {
+.property-cell span.city, .ball-cell span.city, .attack-cell span.city, .legendary-cell span.city, .parking-cell span.city {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-size: 10px;
   margin: 0 0 5px 0; }
-.property-cell span.value, .ball-cell span.value, .attack-cell span.value, .legendary-cell span.value {
+.property-cell span.value, .ball-cell span.value, .attack-cell span.value, .legendary-cell span.value, .parking-cell span.value {
   font-family: "Raleway", sans-serif;
   font-size: 13px; }
-.property-cell span.owner, .ball-cell span.owner, .attack-cell span.owner, .legendary-cell span.owner {
+.property-cell span.owner, .ball-cell span.owner, .attack-cell span.owner, .legendary-cell span.owner, .parking-cell span.owner {
   width: 15px;
   height: 15px;
   position: absolute;
   bottom: 8px;
   right: 10px;
   border: 1px solid; }
-.property-cell img, .ball-cell img, .attack-cell img, .legendary-cell img {
+.property-cell img, .ball-cell img, .attack-cell img, .legendary-cell img, .parking-cell img {
   height: 65px;
   width: 65px;
   margin: 5px auto 0; }
@@ -153,9 +149,6 @@ CLASSES
   margin: 10px auto 0;
   height: 75px;
   width: 75px; }
-
-.legendary-cell.zapdos img {
-  margin: 0 auto; }
 
 .go-cell > div {
   padding: 10px 35px 40px;
@@ -174,13 +167,30 @@ CLASSES
     position: relative;
     left: -15px; }
 
+.jail-cell > div, .gotojail-cell > div {
+  transform: rotateZ(45deg);
+  padding: 0 0 0 20px; }
+.jail-cell img, .gotojail-cell img {
+  width: 90px;
+  margin: 0 auto; }
+.jail-cell .title, .gotojail-cell .title {
+  font-size: 18px;
+  margin: 0 0 3px 0;
+  color: #cc0000; }
+
 /* ------ END CELL TYPES  ------ */
 /* ------ MAIN CENTER CONTENT  ------ */
 .board-center {
   width: 900px;
   height: 900px;
-  padding: 40px;
+  padding: 20px 40px;
   text-align: center; }
+  .board-center > section {
+    display: block; }
+  .board-center img.logo {
+    width: 700px;
+    display: inline-block;
+    margin: 10px auto; }
   .board-center h1, .board-center h2 {
     margin: 0; }
   .board-center h1 {
@@ -192,7 +202,8 @@ CLASSES
     font-size: 19px; }
 
 .player-info {
-  text-align: justify; }
+  text-align: justify;
+  margin: 15px 0 0 0; }
   .player-info:after {
     content: '';
     display: inline-block;
@@ -233,19 +244,20 @@ CLASSES
 
 /*  end of player-info */
 .turn-info {
-  border: 1px solid;
   text-align: justify;
   font-size: 0; }
   .turn-info > div {
     width: 49%;
     display: inline-block;
-    border: 1px solid;
     font-size: 14px;
     text-align: center;
-    vertical-align: top; }
+    vertical-align: top;
+    margin: 10px 0 0 0;
+    padding: 0 40px; }
   .turn-info h2 {
     font-size: 25px;
-    margin: 0 auto;
+    border-bottom: 1px solid;
+    margin: 0 auto 10px auto;
     text-align: center;
     color: #009933; }
   .turn-info:after {
@@ -253,13 +265,13 @@ CLASSES
     display: inline-block;
     width: 100%; }
   .turn-info .roll .roll-value {
-    font-size: 20px;
+    font-size: 25px;
     color: #009933; }
   .turn-info .roll .roll-button {
     background: #009933;
     border: 1px solid #009933;
     color: #FFF;
-    padding: 15px;
+    padding: 10px;
     width: 200px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
@@ -267,7 +279,7 @@ CLASSES
     font-family: "Slabo 27px", serif;
     outline: none;
     display: block;
-    margin: 0 auto;
+    margin: 10px auto 0;
     font-size: 15px; }
     .turn-info .roll .roll-button:hover {
       cursor: pointer;
@@ -278,39 +290,38 @@ CLASSES
       background-color: #bfbfbf;
       cursor: default; }
   .turn-info .cell-info {
-    margin: 0 auto;
-    padding: 0 40px;
     text-align: justify;
     color: #000; }
     .turn-info .cell-info:after {
       content: '';
       display: inline-block;
       width: 100%; }
-    .turn-info .cell-info h2, .turn-info .cell-info h3 {
+    .turn-info .cell-info h3 {
       margin: 0; }
     .turn-info .cell-info > * {
       vertical-align: top; }
     .turn-info .cell-info > div {
-      border: 1px solid;
       display: inline-block;
       vertical-align: top; }
     .turn-info .cell-info img {
       width: 65px;
-      border: 1px solid;
       display: inline-block;
       vertical-align: top;
       margin: 0; }
     .turn-info .cell-info .cell-details {
-      width: 70%; }
+      width: 75%; }
       .turn-info .cell-info .cell-details h3 {
         font-size: 20px; }
     .turn-info .cell-info .notification {
       text-align: center;
       width: 100%;
       padding: 10px;
-      border: 1px solid #cc0000; }
+      border: 1px solid #009933;
+      margin: 10px 0 0 0; }
       .turn-info .cell-info .notification h2 {
-        color: #cc0000; }
+        color: #009933;
+        border-bottom: none;
+        margin: 0; }
       .turn-info .cell-info .notification a {
         display: inline-block;
         color: #FFF;

@@ -1,18 +1,7 @@
 var Main = (function() {
 
   /* GAME PLAY ------------------
-     -player 1 starts, they have to click roll button
-     -move player x amount of spaces
-      - if they land on a vacant space:
-        - update center of board asking if they wanat to purchase - end turn by clicking "YEs" or "No"
-      - if they land on their own space:
-        - update center of board saying they landed on their own property - end turn by clicking "OK"
-      - if they land on other player's property:
-        -update center of board saying they landed on other player's property & owe money - end turn by clicking "ok"
-      - if they land on GO space, update center of board saying they get $200, & update player's money
-      - if they land on jail space, update center of board saying they're just visiting
-      - if they land on free parking, check if there's money in jackpot & add money if there is, reduce jackpot to 0, player hits "ok" to continue
-      - if they land on go to jail, update player's location to jail - ask user if they want to pay, or else keep track of # of turns to roll values
+
   */
     function startGame() {
       //grab player names before removing modal
@@ -20,7 +9,6 @@ var Main = (function() {
       player2 = new Player(2, $('.player-2-name').val());
       players = [player1, player2];
       currentPlayer = player1;
-      turnCount = 0;
       $('.start-modal').remove();
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 1 on 'Go' space
@@ -29,10 +17,7 @@ var Main = (function() {
     }
 
     function switchTurns() {
-      // $('.roll-button').attr('disabled', false); //re-enable roll button
       currentPlayer.currentTurn = false;
-      // turnCount += 1;
-      // currentPlayer = (turnCount % 2 == 0) ? player1 : player2;
       currentPlayer = (currentPlayer === player1) ? player2 : player1;
       currentPlayer.currentTurn = true;
       updateTurnSection();
@@ -41,6 +26,12 @@ var Main = (function() {
     function render() {
       updateCurrentCellSection();
       updatePlayerInfoSection();
+    }
+
+    function resetRoll() {
+      $('.roll-value').text(' ');
+      $rollButton.removeClass('disabled');
+      $rollButton.attr('disabled', false);
     }
 
   // END GAME PLAY ------------------
@@ -140,19 +131,14 @@ var Main = (function() {
 
       switch(this.type.toLowerCase()) { /* create cells based on type */
         case 'go':
-          buildGoCell(this, cellElement);
-          cellElement.classList.add(this.type.toLowerCase() + '-cell');
-          break;
         case 'jail':
-          buildJailCell(this, cellElement);
-          cellElement.classList.add(this.type.toLowerCase() + '-cell');
-          break;
-        case 'parking':
-          break;
+        // case 'parking':
         case 'gotojail':
+          buildCornerCell(this, cellElement);
+          cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         default:
-          buildCell(this, cellElement);
+          buildPropertyCell(this, cellElement);
           break;
       }
       boardElements.push(cellElement);
@@ -178,7 +164,7 @@ var Main = (function() {
 
   /* BUILD DYNAMIC ELEMENTS ------------------
   */
-    function buildCell(cell, element) {
+    function buildPropertyCell(cell, element) {
       var $cell, $name, $image, $value;
       $cell = $(element);
       $cell.css('border-top', '15px solid ' + cell.color);
@@ -201,6 +187,15 @@ var Main = (function() {
       }
     }
 
+    function buildCornerCell(cell, element) {
+      var $miscCell, $title, $image;
+      $miscCell = $('<div />');
+      $title = $('<span />', { 'class': 'title', text: cell.text });
+      $image = $('<img />', { src: 'images/' + cell.image });
+      $miscCell.append($title).append($image);
+      $(element).append($miscCell);
+    }
+
     function buildGoCell(cell, element) {
       var $goCell, $title, $image;
       $goCell = $('<div />');
@@ -211,11 +206,12 @@ var Main = (function() {
     }
 
     function buildJailCell(cell, element) {
-      var $jailCell, $title;
-      $jailCell = $(element);
-      $jailCell.addClass(cell.type.toLowerCase() + '-cell');
+      var $jailCell, $title, $image;
+      $jailCell = $('<div />');
+      // $jailCell.addClass(cell.type.toLowerCase() + '-cell');
       $title = $('<span />', { 'class': 'title', text: cell.text });
       $jailCell.append($title);
+      $(element).append($jailCell);
     }
 
     function buildFreeParkingCell(cell, element) {
@@ -227,19 +223,21 @@ var Main = (function() {
     function buildPlayerInfoSections() {
       var $playerInfo, $player1Info, $player2Info, $name, $properties, $money;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
-      for(var i = 1; i < 3; i++) {
-          var player = i == 1 ? player1 : player2;
-          var $playerInfo = $('<div />', { 'class': 'player-' + i + '-info' });
-          $name = $('<h1 />', { text: 'Player ' + i + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
+
+      players.forEach(function(player) {
+          var $playerInfo = $('<div />', { 'class': 'player-' + player.num + '-info' });
+          $name = $('<h1 />', { text: 'Player ' + player.num + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
           $properties = $('<div />', { 'class': 'properties' }).append($('<h2 />', { text: 'Properties' })).append($('<ul />', { 'class': 'properties-list' }));
           $money = $('<h2 />', { 'class': 'money', text: 'Money: $' + player.money });
           $playerInfo.append($name).append($money).append($properties);
-          if(i == 1) {
+          $playerInfo.css('border-color', player.color);
+          if(player.num === 1) {
             $playerInfoSection.append($playerInfo).append(' '); //need to add space for justify effect
           } else {
             $playerInfoSection.append($playerInfo);
           }
-      }
+      });
+
       $('.board-center').prepend($playerInfoSection);
     }
 
@@ -265,7 +263,7 @@ var Main = (function() {
         var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
         //var $notification = $('<div />', { 'class': 'notification' });
-        $cellInfo.append($cellTitle).append($cellImage).append(' ').append($cellDetails);//.append($notification);
+        $cellInfo.append($cellTitle).append($cellDetails).append(' ').append($cellImage);//.append($notification);
 
       $turnInfo.append($title).append($roll).append(' ').append($cellInfo);
       $('.board-center').prepend($turnInfo);
@@ -299,7 +297,8 @@ var Main = (function() {
 
     function updateCurrentCellSection() {
       var currentCell = board[currentPlayer.location];
-      $('cell-info h2').css('color', currentPlayer.color);
+      $('.cell-info h2').css('color', currentPlayer.color);
+      $('.cell-details').css('color', currentCell.color);
       $('.cell-details .name').text(currentCell.name);
       $('.cell-details .value').removeClass('hide').removeClass('show');//clear show/hide classes
 
@@ -325,12 +324,12 @@ var Main = (function() {
         if(player.properties.length > 0) {
           $propertyList.empty(); //empty property list each time
           player.properties.forEach(function(property) {
-            $propertyItem = $('<li>').css('color', property.color);
+            $propertyItem = $('<li />').css('color', property.color);
             $bullet = $('<span />', { 'class': 'bullet', text: '◤' });
             $image = $('<img />', { src: 'images/' + property.image, alt: property.name });
             $name = $('<span />', { 'class': 'name', text: property.name });
             $value = $('<span />', { 'class': 'value', text: '$' + property.value });
-            $propertyItem.append($bullet).append($image).append($name).append($value);
+            $propertyItem.append($bullet).append($image).append($name).append(' | ').append($value);
             $propertyList.append($propertyItem);
           });
 
@@ -340,15 +339,14 @@ var Main = (function() {
     }
 
     function addPropertyOwner(cell, index) {
-      //color will be player.color
-      console.log('got into property owner function');
-      console.log(cell);
       var $owner = $('<span />', { 'class': 'owner', css: { 'background-color': currentPlayer.color } });
       console.log($owner);
       $(cell).append($owner);
-      // console.log($owner);
       currentPlayer.addProperty(board[index]); //update player's property array
       board[index].owner = currentPlayer.name; //update owner property of cell
+      //deduct value of cell from player's money
+      currentPlayer.money -= board[index].value;
+      updatePlayerInfoSection();
     }
 
     function removePropertyOwner(cell) { //if user sells property
@@ -385,8 +383,7 @@ var Main = (function() {
           $('.notification').remove();//remove notification box
           switchTurns();
           render();
-          $rollButton.removeClass('disabled');
-          $rollButton.attr('disabled', false);
+          resetRoll();
         });
 
       //don't need to check for cell vacancy on go/jail/free parking/go to jail
@@ -406,7 +403,13 @@ var Main = (function() {
         // var $title, $info, $yesButton, $noButton, $okButton,infoText;
         // $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
         if($currentCell.owner === '') { //check if cell is vacant
-          displayAddPropertyNotification();
+          if(currentPlayer.money - $currentCell.value >= 0) {
+            displayAddPropertyNotification();
+          } else {
+            infoText = "You don't have enough money to purchase this property.";
+          $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+          }
         } else if ($currentCell.owner === currentPlayer.name) { //check if current player is owner
           infoText = "You already own this space.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
@@ -419,14 +422,6 @@ var Main = (function() {
 
         $notification.append($title).append($info);
         $('.cell-info').append($notification);
-
-        // $okButton.on('click', function() {
-        //   $('.notification').remove();//remove notification box
-        //   switchTurns();
-        //   render();
-        //   $rollButton.removeClass('disabled');
-        //   $rollButton.attr('disabled', false);
-        // });
       }
 
       function displayAddPropertyNotification() {
@@ -435,7 +430,11 @@ var Main = (function() {
           $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
           $info = $('<p />', { 'class': 'notification-text', text: infoText });
-          $notification.append($title).append($info).append($yesButton).append($noButton);
+          $notification
+                      .append($title)
+                      .append($info)
+                      .append($yesButton)
+                      .append($noButton);
           $('.cell-info').append($notification);
 
           $yesButton.on('click', function() {
@@ -443,16 +442,14 @@ var Main = (function() {
             addPropertyOwner($currentCellElement, cellIndex);
             switchTurns();
             render();
-            $rollButton.removeClass('disabled');
-            $rollButton.attr('disabled', false);
+            resetRoll();
           });
 
           $($noButton).on('click', function() {
             $notification.remove();//remove notification box
             switchTurns();
             render();
-            $rollButton.removeClass('disabled');
-            $rollButton.attr('disabled', false);
+            resetRoll();
           });
       }
 

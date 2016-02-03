@@ -59,6 +59,10 @@ a {
   @include transition(0.5s);
 }
 
+p {
+  margin: 5px 0;
+}
+
 /* -------------------------
 IDs
 -------------------------- */
@@ -168,21 +172,10 @@ CLASSES
   } /* end of column-4 */
 } /* end of column- */
 
-.board-center {
-  > section {
-    display: block;
-  }
-
-  img.logo {
-    width: 700px;
-    display: inline-block;
-    margin: 10px auto;
-  }
-}
 /* ------ END BOARD STRUCTURE ------ */
 
 /* ------ CELL TYPES ------ */
-.property-cell, .utility-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell {
+.property-cell, .ball-cell, .attack-cell, .legendary-cell, .go-cell, .jail-cell, .gotojail-cell, .parking-cell {
   text-align: center;
   position: relative;
 
@@ -191,7 +184,7 @@ CLASSES
   }
 }
 
-.property-cell, .ball-cell, .attack-cell, .legendary-cell {
+.property-cell, .ball-cell, .attack-cell, .legendary-cell, .parking-cell {
   span {
     &.name {
       font-family: $slabo;
@@ -245,14 +238,6 @@ CLASSES
   }
 }
 
-.legendary-cell {
-  &.zapdos {
-    img {
-      margin: 0 auto;
-    }
-  }
-}
-
 .go-cell {
   > div {
     padding: 10px 35px 40px;
@@ -278,14 +263,43 @@ CLASSES
   }
 }
 
+.jail-cell, .gotojail-cell {
+
+  > div {
+    transform: rotateZ(45deg);
+    padding: 0 0 0 20px;
+  }
+
+  img {
+    width: 90px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 18px;
+    margin: 0 0 3px 0;
+    color: $attack;
+  }
+}
+
 /* ------ END CELL TYPES  ------ */
 
 /* ------ MAIN CENTER CONTENT  ------ */
 .board-center {
   width: 900px;
   height: 900px;
-  padding: 40px;
+  padding: 20px 40px;
   text-align: center;
+
+  > section {
+    display: block;
+  }
+
+  img.logo {
+    width: 700px;
+    display: inline-block;
+    margin: 10px auto;
+  }
 
   h1, h2 {
     margin: 0;
@@ -305,6 +319,7 @@ CLASSES
 
 .player-info {
   text-align: justify;
+  margin: 15px 0 0 0;
 
   &:after {
     content: '';
@@ -374,22 +389,23 @@ CLASSES
 } /*  end of player-info */
 
 .turn-info {
-  border: 1px solid;
   text-align: justify;
   font-size: 0;
 
   > div {
     width: 49%;
     display: inline-block;
-    border: 1px solid;
     font-size: 14px;
     text-align: center;
     vertical-align: top;
+    margin: 10px 0 0 0;
+    padding: 0 40px;
   }
 
   h2 {
     font-size: 25px;
-    margin: 0 auto;
+    border-bottom: 1px solid;
+    margin: 0 auto 10px auto;
     text-align: center;
     color: $success;
   }
@@ -403,7 +419,7 @@ CLASSES
   .roll {
 
     .roll-value {
-      font-size: 20px;
+      font-size: 25px;
       color: $success;
     }
 
@@ -411,13 +427,13 @@ CLASSES
       background: $success;
       border: 1px solid $success;
       color: #FFF;
-      padding: 15px;
+      padding: 10px;
       width: 200px;
       @include transition(0.5s);
       font-family: $slabo;
       outline: none;
       display: block;
-      margin: 0 auto;
+      margin: 10px auto 0;
       font-size: 15px;
 
       &:hover {
@@ -435,8 +451,6 @@ CLASSES
   }
 
   .cell-info {
-    margin: 0 auto;
-    padding: 0 40px;
     text-align: justify;
     color: #000;
 
@@ -446,7 +460,7 @@ CLASSES
       width: 100%;
     }
 
-    h2, h3 {
+    h3 {
       margin: 0;
     }
 
@@ -455,21 +469,19 @@ CLASSES
     }
 
     > div {
-      border: 1px solid;
       display: inline-block;
       vertical-align: top;
     }
 
     img {
         width: 65px;
-        border: 1px solid;
         display: inline-block;
         vertical-align: top;
         margin: 0;
       }
 
     .cell-details {
-      width: 70%;
+      width: 75%;
 
       h3 {
         font-size: 20px;
@@ -480,10 +492,13 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px;
-      border: 1px solid $attack;
+      border: 1px solid $success;
+      margin: 10px 0 0 0;
 
       h2 {
-        color: $attack;
+        color: $success;
+        border-bottom: none;
+        margin: 0;
       }
 
       a {

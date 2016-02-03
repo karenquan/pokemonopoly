@@ -5,6 +5,7 @@ var $cells = $([
       index: 7,
       name: 'Go',
       type: 'Go',
+      color: '#000',
       text: 'Collect $200 as you pass',
       image: 'go.png',
       owner: '',
