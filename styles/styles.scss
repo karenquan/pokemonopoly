@@ -382,7 +382,6 @@ CLASSES
 
 .turn-info {
   border: 1px solid;
-  height: 200px;
   text-align: justify;
   font-size: 0;
 
@@ -476,6 +475,12 @@ CLASSES
       h3 {
         font-size: 20px;
       }
+    }
+
+    .notification {
+      text-align: center;
+      width: 100%;
+      padding: 10px;
     }
   }
 } /* end turn-info */

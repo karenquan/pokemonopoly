@@ -231,7 +231,6 @@ CLASSES
 /*  end of player-info */
 .turn-info {
   border: 1px solid;
-  height: 200px;
   text-align: justify;
   font-size: 0; }
   .turn-info > div {
@@ -298,6 +297,10 @@ CLASSES
       width: 70%; }
       .turn-info .cell-info .cell-details h3 {
         font-size: 20px; }
+    .turn-info .cell-info .notification {
+      text-align: center;
+      width: 100%;
+      padding: 10px; }
 
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
