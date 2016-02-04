@@ -420,7 +420,7 @@ var Main = (function() {
       var infoText, roll;
       $jailOk = $('<a />', { 'class': 'green', text: 'OK' });
 
-      $notification = $('<div />', { 'class': 'notification' });
+      var $jailNotification = $('<div />', { 'class': 'notification' });
       $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
 
       $jailRollButton.on('click', function() { //make this global
@@ -430,7 +430,6 @@ var Main = (function() {
         $('.roll-value').text(roll).css('color', '#CC0000'); //display roll number
 
         rollEven = (roll % 2 === 0) ? true : false;
-        // rollEven = false;
         console.log('player rolled ' + roll);
 
         if(rollEven) { //get out of jail if even roll
@@ -441,7 +440,6 @@ var Main = (function() {
         }
 
         if(!rollEven && currentPlayer.jailRollCount === 3) {
-          console.log('boooooooo');
           infoText = 'You didn\'t get an even number in 3 tries. You are now out of jail, but you had to pay $50.';
           payJailFee();
           currentPlayer.jailRollCount = 0;
@@ -449,8 +447,8 @@ var Main = (function() {
         }
 
         $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($jailOk);
-        $notification.append($title).append($info);
-        $('.cell-info').append($notification);
+        $jailNotification.append($title).append($info);
+        $('.cell-info').append($jailNotification);
 
         console.log(currentPlayer.name + ' jailrollcount: ' + currentPlayer.jailRollCount);
         console.log(currentPlayer.name + ' in jail: ' + currentPlayer.inJail);
@@ -458,17 +456,12 @@ var Main = (function() {
 
         $jailOk.on('click', function() {
           console.log('jail OK click');
-          $notification.remove();//remove notification box
+          $jailNotification.empty();
+          $jailNotification.remove(); //remove notification box
           $jailRollButton.addClass('hide');
           switchTurns();
           resetRoll();
         });
-
-        //hide jail roll button
-        // $jailRollButton.addClass('hide');
-
-        // switchTurns();
-        // resetRoll();
       });
     }
 
@@ -673,10 +666,6 @@ $(document).ready(function() {
   var player1;
   var player2;
   var currentPlayer;
-  var turnCount;
   var roll = 0;
   var jackpotAmount;
   var movePlayer;
-  var goToJail;
-  var turn;
-
