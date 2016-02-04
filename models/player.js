@@ -13,7 +13,7 @@ var Player = function(num, name) {
   }
   this.properties = [];
   this.turnCount = 0;
-  this.money = 2000;
+  this.money = 500;
   this.location = 0; //board array index
   this.inJail = false;
   this.jailRollCount = 0;

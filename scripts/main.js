@@ -215,6 +215,9 @@ var Main = (function() {
       $('.reset-button').on('click', function() {
         $('div').attr('class', '').empty();
         $('.board-center').empty();
+        board.forEach(function(cell) {
+          cell.owner = ''; //clear cell owners
+        });
         startGame();
       });
     }
@@ -632,6 +635,7 @@ var Main = (function() {
         winnerList.push(player1);
         winner = true;
       }
+
 
       if(winner) buildWinnerModal(winnerList);
     }
