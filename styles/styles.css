@@ -495,13 +495,28 @@ CLASSES
         border: 1px solid #e48f89;
         box-shadow: 0 0 10px #e48f89; }
 
-/* ------ END WELCOME MODAL  ------ */
+/* ------ END WELCOME MODAL  ------ *
+
 /* ------ OTHER  ------ */
 .hide {
   display: none !important; }
 
 .show {
   display: block; }
+
+.reset-button {
+  display: block;
+  color: #FFF;
+  background: #3b82c4;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  padding: 15px;
+  width: 200px;
+  margin: 0 auto; }
+  .reset-button:hover {
+    cursor: pointer;
+    background: #2f689d; }
 
 /* ------ END OTHER  ------ */
 

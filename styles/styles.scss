@@ -768,7 +768,7 @@ CLASSES
     }
   }
 }
-/* ------ END WELCOME MODAL  ------ */
+/* ------ END WELCOME MODAL  ------ *
 
 /* ------ OTHER  ------ */
 .hide {
@@ -777,6 +777,21 @@ CLASSES
 
 .show {
   display: block;
+}
+
+.reset-button {
+  display: block;
+  color: #FFF;
+  background: $greatball;
+  @include transition(0.5s);
+  padding: 15px;
+  width: 200px;
+  margin: 0 auto;
+
+  &:hover {
+    cursor: pointer;
+    background: #2f689d;
+  }
 }
 /* ------ END OTHER  ------ */
 

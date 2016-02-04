@@ -1,51 +1,5 @@
 var Main = (function() {
 
-  /* GAME PLAY ------------------
-
-  */
-    function startGame() {
-      //grab player names before removing modal
-      player1 = new Player(1, $('.player-1-name').val());
-      player2 = new Player(2, $('.player-2-name').val());
-      players = [player1, player2];
-      currentPlayer = player1;
-      $('.start-modal').remove();
-      jackpotAmount = 0;
-      turn = 0;
-      movePlayer(player1, 0); //start player 1 on 'Go' space
-      movePlayer(player2, 0); //start player 1 on 'Go' space
-      buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
-      buildTurnSection();
-      $('.board-center').append($('<img />', { src: 'images/pokemonopoly.png', 'class': 'logo', alt: 'Pokémonopoly' }));
-    }
-
-    function switchTurns() {
-      currentPlayer.currentTurn = false;
-      currentPlayer = (currentPlayer === player1) ? player2 : player1;
-      currentPlayer.currentTurn = true;
-      updateTurnSection();
-
-      render();//test
-
-      //need to make jail roll button click event global
-      if(currentPlayer.inJail) {
-        $('.jail-roll-button').removeClass('hide');
-      }
-    }
-
-    function render() {
-      updateCurrentCellSection();
-      updatePlayerInfoSection();
-    }
-
-    function resetRoll() {
-      $('.roll-value').text(' ');
-      $rollButton.removeClass('disabled');
-      $rollButton.attr('disabled', false);
-    }
-  // END GAME PLAY ------------------
-
-
   /* START MODAL ------------------
 
   */
@@ -119,16 +73,61 @@ var Main = (function() {
       }
 
       function attachStartButtonClick () {
-        $startButton.on('click', function() {
-          startGame();
-        });
+        $startButton.on('click', startButtonHandler);
       }
 
       function removeStartButtonClick() {
         $startButton.unbind('click');
       }
-  }
+    }
+
+     function startButtonHandler() {
+      //grab player names before removing modal
+      player1 = new Player(1, $('.player-1-name').val());
+      player2 = new Player(2, $('.player-2-name').val());
+      players = [player1, player2];
+      currentPlayer = player1;
+      $('.start-modal').remove();
+      jackpotAmount = 0;
+      turn = 0;
+      movePlayer(player1, 0); //start player 1 on 'Go' space
+      movePlayer(player2, 0); //start player 1 on 'Go' space
+      buildBoardBottom();
+      buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
+      buildTurnSection();
+    }
   // END START MODAL ------------------
+
+  /* GAME PLAY ------------------
+
+  */
+    function switchTurns() {
+      currentPlayer.currentTurn = false;
+      currentPlayer = (currentPlayer === player1) ? player2 : player1;
+      currentPlayer.currentTurn = true;
+      updateTurnSection();
+      render();
+
+      if(currentPlayer.inJail) $('.jail-roll-button').removeClass('hide');
+    }
+
+    function render() {
+      updateCurrentCellSection();
+      updatePlayerInfoSection();
+    }
+
+    function resetRoll() {
+      $('.roll-value').text(' ');
+      $rollButton.removeClass('disabled');
+      $rollButton.attr('disabled', false);
+    }
+
+    function startGame() {
+      populateCells();
+      displayStartModal();
+    }
+
+  // END GAME PLAY ------------------
 
   /* DATA RETRIEVAL ------------------
      Read cells.js file to get data to populate cells.
@@ -211,6 +210,18 @@ var Main = (function() {
       $cell.append($content);
     }
 
+    function buildBoardBottom() {
+      var $logo = $('<img />', { src: 'images/pokemonopoly.png', 'class': 'logo', alt: 'Pokémonopoly' });
+      var $resetButton = $('<a />', { 'class': 'reset-button', text: 'START A NEW GAME' });
+      $('.board-center').prepend($resetButton).prepend($logo);
+
+      $('.reset-button').on('click', function() {
+        $('div').attr('class', '').empty();
+        $('.board-center').empty();
+        startGame();
+      });
+    }
+
     function buildPlayerInfoSections() {
       var $playerInfo, $player1Info, $player2Info, $name, $properties, $money, $jailInfo;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
@@ -261,9 +272,10 @@ var Main = (function() {
 
       $turnInfo.append($title).append($jackpotTitle).append($roll).append(' ').append($cellInfo);
       $('.board-center').prepend($turnInfo);
+
       $jackpot = $('.jackpot-value'); //set global jackpot to newly added dom element
       $jailRollButton = $('.jail-roll-button'); //set global jail roll button to newly added dom element
-        attachJailRollClickEvent();
+      jailRollEvent();
 
       $rollButton = $('.roll-button');//set global rollButton value to newly added dom element
 
@@ -287,7 +299,6 @@ var Main = (function() {
 
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
-      // var currentCell = board[currentPlayer.location];
       $('h1.turn-title, .cell-info h2').css('color', currentPlayer.color);
       $('.turn-info .player-turn-name').text(currentPlayer.name);
     }
@@ -336,7 +347,8 @@ var Main = (function() {
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
         }
 
-        //update jail info section
+        //hide jail info if player is not in jail
+        console.log($(currentPlayerInfoClass + ' .jail-info'));
 
       });
     }
@@ -367,7 +379,6 @@ var Main = (function() {
 
         checkCellVacancy(player.location); //check if cell is vacant/owned by other player/go cell/go to jail cell
       } else {
-        console.log('you are in jail');
         rollToGetOutOfJail();
       }
     }
@@ -416,7 +427,7 @@ var Main = (function() {
       $jailRollButton.removeClass('hide'); //unhide jail roll button
     }
 
-    function attachJailRollClickEvent() {
+    function jailRollEvent() {
       var infoText, roll;
       $jailOk = $('<a />', { 'class': 'green', text: 'OK' });
 
@@ -455,7 +466,6 @@ var Main = (function() {
         console.log('');
 
         $jailOk.on('click', function() {
-          console.log('jail OK click');
           $jailNotification.empty();
           $jailNotification.remove(); //remove notification box
           $jailRollButton.addClass('hide');
@@ -639,8 +649,7 @@ var Main = (function() {
   // END UPDATE BOARD STATE ------------------
 
   function _init() {
-    populateCells();
-    displayStartModal();
+    startGame();
   }
 
   return {
