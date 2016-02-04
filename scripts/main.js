@@ -137,12 +137,8 @@ var Main = (function() {
     var $cell, $cellElement;
     // console.log($cells);
     $cells.each(function(index) {
-      cellElement = $('.column-' + this.column + ' div')[this.index];
-      // console.log(cellElement);
-      // if(this.name === 'Free Parking') {
-      //     console.log('before');
-      //     console.log(cellElement);
-      // }
+      cellElement = $('.column-' + this.column + '> div')[this.index];
+
       switch(this.type.toLowerCase()) { /* create cells based on type */
         case 'go':
         case 'jail':
@@ -152,14 +148,10 @@ var Main = (function() {
           cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         case 'parking':
-          // buildCornerCell(this, cellElement);
+          buildCornerCell(this, cellElement);
           cellElement.classList.add(this.type.toLowerCase() + '-cell');
           break;
         default:
-          if(this.name === 'Free Parking') {
-            // console.log('after');
-            // console.log(cellElement);
-          }
           buildPropertyCell(this, cellElement);
           break;
       }
