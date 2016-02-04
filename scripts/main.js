@@ -376,13 +376,27 @@ var Main = (function() {
     }
 
     function activateJailCell() {
-      var $title, $info, $payButton, $rollOptionButton, infoText;
+      var $title, $info, $payButton, $rollOptionButton, infoText, rollPayOptionText, rollOptionText;
+      var displayNotificationBox = true;
       $notification = $('<div />', { 'class': 'notification' });
       $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-      infoText = 'You are in jail. You can either pay $50 to get out now, or roll an even number within 3 turns (starting with your next turn).';
+      rollPayOptionText = 'You are in jail. You can either pay $50 to get out now, or roll an even number within 3 turns (starting with your next turn).';
+      rollOptionText = 'You don\'t have enough money to pay $50 to get out of jail now. You have to roll an even number within 3 turns (starting with your next turn).';
+
+      if(currentPlayer.money - 50 < 0) {
+        infoText =  rollOptionText;
+        $rollOptionButton = $('<a />', { 'class': 'jail-roll green', text: 'OK' });
+      } else { //slightly change button text if us
+        infoText = rollPayOptionText;
+        $rollOptionButton = $('<a />', { 'class': 'jail-roll red', text: 'ROLL' });
+      }
+
       $payButton = $('<a />', { 'class': 'jail-pay green', text: 'PAY' });
-      $rollOptionButton = $('<a />', { 'class': 'jail-roll red', text: 'ROLL' });
       $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($payButton).append($rollOptionButton);
+
+      //if user doesn't have enough money to get out of jail, make them roll
+      if(currentPlayer.money - 50 < 0) $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($rollOptionButton);
+        else $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($payButton).append($rollOptionButton);
 
       $notification.append($title).append($info);
       $('.cell-info').append($notification);
@@ -407,7 +421,6 @@ var Main = (function() {
     function payJailFee() {
       currentPlayer.money -= 50;
       currentPlayer.inJail = false;
-      checkForWinner();
     }
 
     function rollToGetOutOfJail() {
@@ -441,8 +454,7 @@ var Main = (function() {
         }
 
         if(!rollEven && currentPlayer.jailRollCount === 3) {
-          infoText = 'You didn\'t get an even number in 3 tries. You are now out of jail, but you had to pay $50.';
-          payJailFee();
+          infoText = 'You have rolled 3 times. You are now out of jail.';
           resetJailRollInfo();
         }
 
@@ -488,6 +500,7 @@ var Main = (function() {
 
       function displayPropertyUserNotification() {
         var propertyNotification;
+        var displayNotification = true;
 
         if(currentCell.owner === '') { //check if cell is vacant
           if(currentPlayer.money - currentCell.value >= 0) {
@@ -500,20 +513,29 @@ var Main = (function() {
           infoText = "You already own this space.";
         } else { //else other player owns space - pay other player
           infoText = currentCell.owner + ' owns this space. You owe $' + currentCell.value + '.';
-          payPlayer();
+          if(currentPlayer.money - currentCell.value < 0) {
+            displayNotification = false;
+            currentPlayer.money -= currentCell.value;
+            checkForWinner();
+          } else {
+            payPlayer();
+          }
         }
 
-        $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-        $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($okButton);
-        $notification.append($title).append($info);
-        $('.cell-info').append($notification);
+        if(displayNotification) {
+          $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($okButton);
+          $notification.append($title).append($info);
+          $('.cell-info').append($notification);
+        }
 
         function payPlayer() {
           var propertyOwner = currentPlayer === player1 ? player2 : player1;
           var propertyValue = board[currentPlayer.location].value;
-          currentPlayer.money -= propertyValue;
-          propertyOwner.money += propertyValue;
-          checkForWinner();
+
+            currentPlayer.money -= propertyValue;
+            propertyOwner.money += propertyValue;
+
         }
       }
 
@@ -542,6 +564,7 @@ var Main = (function() {
 
       function displayNonPropertyNotification() {
         var currentCell = board[currentPlayer.location];
+        var displayNotificationBox = true;
         var type, info, $jailOkButton;
         $jailOkButton = $('<a />', { 'class': 'green', text: 'OK' });
         $jailOkButton.on('click', function() {
@@ -581,14 +604,23 @@ var Main = (function() {
 
         $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
         $notification.append($title).append($info);
-        $('.cell-info').append($notification);
+
+        if(displayNotificationBox) { //only display notification box if user's money won't drop below 0
+          $('.cell-info').append($notification);
+        }
+
 
         //ACTIONS
         function attack() {
           jackpotAmount += 200;
           updateJackpotValue(); //update jackpot text on screen
-          currentPlayer.money -= 200;
-          checkForWinner();
+          if(currentPlayer.money - 200 < 0) {
+            currentPlayer.money -= 200;
+            displayNotificationBox = false;
+            checkForWinner();
+          } else {
+            currentPlayer.money -= 200;
+          }
         }
 
         function goSpace() {
@@ -624,20 +656,34 @@ var Main = (function() {
       var player1Money = player1.money;
       var player2Money = player2.money;
 
-      if(player1Money <= 0 && player2Money <= 0) {//check for tie {
+      if(player1Money < 0 && player2Money < 0) {//check for tie
         winnerList.push(player1);
         winnerList.push(player2);
         winner = true;
-      } else if(player1Money <= 0) {
+      } else if(player1Money < 0) {
         winnerList.push(player2);
         winner = true;
-      } else if(player2Money <= 0) {
+      } else if(player2Money < 0) {
         winnerList.push(player1);
         winner = true;
       }
 
+      //let user know they have run out of money before displaying modal
+      if(winner) {
+        var $winnerNotification = $('<div />', { 'class': 'notification' });
+        var $okButton = $('<a />', { 'class': 'green', text: 'OK' });
+        var $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+        var $info = $('<p />', { 'class': 'notification-text', text: 'You have run out of money! :(' }).append('<br />').append($okButton);
+        $winnerNotification.append($title).append($info);
+        $('.cell-info').append($winnerNotification);
 
-      if(winner) buildWinnerModal(winnerList);
+        $okButton.on('click', function() {
+            $winnerNotification.remove();
+            buildWinnerModal(winnerList);
+          });
+      }
+
+      // if(winner) buildWinnerModal(winnerList);
     }
 
   // END UPDATE BOARD STATE ------------------

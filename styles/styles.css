@@ -39,15 +39,15 @@ IDs
   #board .player-1 {
     background-color: rgba(79, 148, 164, 0.4); }
   #board .player-2 {
-    background-color: rgba(164, 79, 79, 0.2); }
+    background-color: rgba(164, 79, 79, 0.4); }
   #board .player-1.player-2 {
     background: rgba(0, 0, 0, 0.3);
     /* Old browsers */
-    background: -moz-linear-gradient(left, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.2) 55%, rgba(164, 79, 79, 0.2) 100%);
+    background: -moz-linear-gradient(left, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.4) 55%, rgba(164, 79, 79, 0.4) 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.2) 55%, rgba(164, 79, 79, 0.2) 100%);
+    background: -webkit-linear-gradient(left, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.4) 55%, rgba(164, 79, 79, 0.4) 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.2) 55%, rgba(164, 79, 79, 0.2) 100%);
+    background: linear-gradient(to right, rgba(79, 148, 164, 0.4) 0%, rgba(79, 148, 164, 0.4) 45%, rgba(164, 79, 79, 0.4) 55%, rgba(164, 79, 79, 0.4) 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4f94a4', endColorstr='#a44f4f',GradientType=1 );
     /* IE6 */ }
