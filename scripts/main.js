@@ -210,7 +210,8 @@ var Main = (function() {
       players.forEach(function(player) {
           var $playerInfo = $('<div />', { 'class': 'player-' + player.num + '-info' });
           $name = $('<h1 />', { text: 'Player ' + player.num + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
-          $jailInfo = $('<p />', { 'class': 'jail-info', text: 'In Jail | Turn Count: ' }).append($('<span />', { 'class': 'jail-turn-count', text: '0' }));
+          $jailInfo = $('<p />', { 'class': 'jail-info hide', text: 'In Jail' })
+            .append($('<span />', { 'class': 'jail-turn hide', text: ' | Turn: ' }).append($('<span />', { 'class': 'jail-turn-count', text: '0' })));
           $properties = $('<div />', { 'class': 'properties' }).append($('<h2 />', { text: 'Properties' })).append($('<ul />', { 'class': 'properties-list' }));
           $money = $('<h2 />', { 'class': 'money', text: 'Money: $' + player.money });
           $playerInfo.append($name).append($jailInfo).append($money).append($properties);
@@ -349,9 +350,8 @@ var Main = (function() {
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
         }
 
-        //hide jail info if player is not in jail
-        console.log($(currentPlayerInfoClass + ' .jail-info'));
-
+        //hide/show jail info if player is/is not in jail
+        $(currentPlayerInfoClass + ' .jail-info').toggleClass( 'hide', !player.inJail );
       });
     }
 
@@ -410,6 +410,7 @@ var Main = (function() {
         $rollButton.removeClass('disabled');
         $rollButton.attr('disabled', false);
         $notification.remove();
+        $('.jail-turn').removeClass('hide');//unhide span tag containing jail roll count
         switchTurns();
         resetRoll();
       });
@@ -430,6 +431,10 @@ var Main = (function() {
 
     function jailRollEvent() {
       var infoText, roll;
+      var jailRollCountClass = '.player-' + currentPlayer.num + '-info .jail-turn-count';
+      var jailRollTurnClass = '.player-' + currentPlayer.num + '-info .jail-turn';
+      var jailInfoClass = '.player-' + currentPlayer.num + '-info .jail-info';
+
       $jailOk = $('<a />', { 'class': 'green', text: 'OK' });
 
       var $jailNotification = $('<div />', { 'class': 'notification' });
@@ -437,6 +442,8 @@ var Main = (function() {
 
       $jailRollButton.on('click', function() { //make this global
         currentPlayer.jailRollCount += 1;
+
+        $(jailRollCountClass).text(currentPlayer.jailRollCount);//update display of jail roll count
         roll = (currentPlayer.rollDie());
         infoText = 'You rolled a ' + roll + '. Turn: ' + currentPlayer.jailRollCount + '.';
         $('.roll-image').attr('src', 'images/' + roll + '.png');
@@ -446,25 +453,18 @@ var Main = (function() {
 
         if(rollEven) { //get out of jail if even roll
           infoText = 'You have rolled an even number. You are now out of jail.';
-          currentPlayer.jailRollCount = 0;
-          currentPlayer.inJail = false;
-          console.log('you are now out of jail');
+          resetJailRollInfo();
         }
 
         if(!rollEven && currentPlayer.jailRollCount === 3) {
           infoText = 'You didn\'t get an even number in 3 tries. You are now out of jail, but you had to pay $50.';
           payJailFee();
-          currentPlayer.jailRollCount = 0;
-          currentPlayer.inJail = false;
+          resetJailRollInfo();
         }
 
         $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($jailOk);
         $jailNotification.append($title).append($info);
         $('.cell-info').append($jailNotification);
-
-        console.log(currentPlayer.name + ' jailrollcount: ' + currentPlayer.jailRollCount);
-        console.log(currentPlayer.name + ' in jail: ' + currentPlayer.inJail);
-        console.log('');
 
         $jailOk.on('click', function() {
           $jailNotification.empty();
@@ -473,6 +473,15 @@ var Main = (function() {
           switchTurns();
           resetRoll();
         });
+
+        function resetJailRollInfo() {
+          currentPlayer.jailRollCount = 0;
+          $(jailRollCountClass).text('0'); //count text
+          $(jailRollTurnClass).addClass('hide'); //"turn" text
+          $(jailInfoClass).addClass('hide')//"in jail" text
+          currentPlayer.inJail = false;
+        }
+
       });
     }
 

@@ -26,8 +26,10 @@ $pokeball: #f18e38;
 $greatball: #3b82c4;
 $ultraball: #677280;
 $masterball: #7e308e;
-$player1: #3b82c4;
-$player2: #cc0000;
+$player1: #677280;
+$player1rgba: rgba(103, 114, 128, 0.4);
+$player2: #e48f89;
+$player2rgba: rgba(204, 0, 0, 0.2);
 $attack: #cc0000;
 $attackHover: #b30000;
 
@@ -74,19 +76,19 @@ IDs
   }
 
   .player-1 {
-    background-color: rgba(59, 130, 196, 0.4);
+    background-color: $player1rgba;
   }
 
   .player-2 {
-    background-color: rgba(204, 0, 0, 0.4);
+    background-color: $player2rgba;
   }
 
   .player-1.player-2 {
     background: rgba(0,0,0,0.3); /* Old browsers */
-    background: -moz-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%, rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, rgba(59, 130, 196, 0.4) 0%,rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, rgba(59, 130, 196, 0.4) 0%,rgba(59, 130, 196, 0.4) 45%, rgba(204, 0, 0, 0.4) 55%, rgba(204, 0, 0, 0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#58a8da', endColorstr='#de756e',GradientType=1 ); /* IE6 */
+    background: -moz-linear-gradient(left, $player1rgba 0%, $player1rgba 45%, $player2rgba 55%, $player2rgba 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, $player1rgba 0%, $player1rgba 45%, $player2rgba 55%, $player2rgba 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, $player1rgba 0%, $player1rgba 45%, $player2rgba 55%, $player2rgba 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#677280', endColorstr='#e48f89',GradientType=1 ); /* IE6 */
   }
 }
 
@@ -757,36 +759,40 @@ CLASSES
 
 
   .player-1 {
-    background-color: rgba(59, 130, 196, 0.2);
-    border: 1px solid $articuno;
+    // background-color: rgba(206, 223, 228, 0.2);
+    color: $player1;
+    border: 1px solid $player1;
 
     h3 {
       color: $player1;
     }
 
     input[type="text"] {
+      color: $player1;
       border: 1px solid $player1;
 
       &:focus {
-        border: 1px solid $articuno;
-        box-shadow: 0 0 10px rgb(118, 184, 225);
+        border: 1px solid $player1;
+        box-shadow: 0 0 10px rgb(103, 114, 128);
       }
     }
   }
 
   .player-2 {
-    background-color: rgba(204, 0, 0, 0.2);
-    border: 1px solid $voltorb;
+    // background-color: rgba(204, 0, 0, 0.2);
+    color: $player2;
+    border: 1px solid $player2;
 
     h3  {
       color: $player2;
     }
 
     input[type="text"] {
+      color: $player2;
       border: 1px solid $player2;
 
       &:focus {
-        border: 1px solid $voltorb;
+        border: 1px solid $player2;
         box-shadow: 0 0 10px rgb(228, 143, 137);
       }
     }
