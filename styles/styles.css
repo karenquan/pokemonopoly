@@ -189,7 +189,9 @@ CLASSES
   width: 900px;
   height: 900px;
   padding: 30px 50px;
-  text-align: center; }
+  text-align: center;
+  background: url("../images/pokemonopoly.png") no-repeat center bottom;
+  background-size: 800px; }
   .board-center > section {
     display: block; }
   .board-center img.logo {
@@ -207,7 +209,9 @@ CLASSES
 
 .player-info {
   text-align: justify;
-  margin: 15px 0 0 0; }
+  margin: 40px 0 0 0;
+  background: #FFF;
+  opacity: 0.9; }
   .player-info:after {
     content: '';
     display: inline-block;
@@ -504,19 +508,23 @@ CLASSES
 .show {
   display: block; }
 
-.reset-button {
-  display: block;
-  color: #FFF;
-  background: #3b82c4;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  transition: 0.5s;
-  padding: 15px;
-  width: 200px;
-  margin: 0 auto; }
-  .reset-button:hover {
-    cursor: pointer;
-    background: #2f689d; }
+.reset {
+  background-color: #FFF;
+  opacity: 0.9; }
+  .reset .reset-button {
+    display: block;
+    color: #FFF;
+    background: #3b82c4;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    padding: 15px;
+    width: 200px;
+    margin: 0 auto;
+    text-align: center; }
+    .reset .reset-button:hover {
+      cursor: pointer;
+      background: #2f689d; }
 
 /* ------ END OTHER  ------ */
 

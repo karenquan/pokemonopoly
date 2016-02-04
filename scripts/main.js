@@ -92,7 +92,6 @@ var Main = (function() {
       turn = 0;
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 1 on 'Go' space
-      buildBoardBottom();
       buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
       buildTurnSection();
     }
@@ -117,7 +116,8 @@ var Main = (function() {
     }
 
     function resetRoll() {
-      $('.roll-value').text(' ');
+      // $('.roll-value').html($('<img />', { src: 'images/die-roll.gif' }));
+      $('.roll-image').attr('src', 'images/die-roll.gif');
       $rollButton.removeClass('disabled');
       $rollButton.attr('disabled', false);
     }
@@ -210,18 +210,6 @@ var Main = (function() {
       $cell.append($content);
     }
 
-    function buildBoardBottom() {
-      var $logo = $('<img />', { src: 'images/pokemonopoly.png', 'class': 'logo', alt: 'Pokémonopoly' });
-      var $resetButton = $('<a />', { 'class': 'reset-button', text: 'START A NEW GAME' });
-      $('.board-center').prepend($resetButton).prepend($logo);
-
-      $('.reset-button').on('click', function() {
-        $('div').attr('class', '').empty();
-        $('.board-center').empty();
-        startGame();
-      });
-    }
-
     function buildPlayerInfoSections() {
       var $playerInfo, $player1Info, $player2Info, $name, $properties, $money, $jailInfo;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
@@ -241,7 +229,17 @@ var Main = (function() {
           }
       });
 
-      $('.board-center').prepend($playerInfoSection);
+      var $reset = $('<div />', { 'class': 'reset' });
+      var $resetButton = $('<a />', { 'class': 'reset-button', text: 'START A NEW GAME' });
+      $reset.append($resetButton);
+
+      $('.board-center').prepend($playerInfoSection).append($reset);
+
+      $('.reset-button').on('click', function() {
+        $('div').attr('class', '').empty();
+        $('.board-center').empty();
+        startGame();
+      });
     }
 
     function buildTurnSection() {
@@ -253,11 +251,11 @@ var Main = (function() {
       var $roll = $('<div />', { 'class': 'roll' });
         var $rollTitle = $('<h2 />', { text: 'Roll' });
         var $rollValue = $('<span />', { 'class': 'roll-value', text: ' ' });
-        // var $rollImage = $('<img />', { src: 'images/dice.gif' } );
+        var $rollImage = $('<img />', { 'class': 'roll-image', src: 'images/die-roll.gif' } );
         $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
         $jailRollButton = $('<button />', { 'class': 'jail-roll-button hide', text: 'JAIL ROLL' });
         // $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
-        $roll.append($rollTitle).append($rollValue).append($rollButton).append($jailRollButton);
+        $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton).append($jailRollButton);
 
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
@@ -285,7 +283,7 @@ var Main = (function() {
         $rollButton.addClass('disabled');
         $rollButton.attr('disabled', true);
         roll = currentPlayer.rollDie();
-        $('.roll-value').text(roll).css('color', '#009933');
+        $('.roll-image').attr('src', 'images/' + roll + '.png');
         movePlayer(currentPlayer, roll);
       });
     }
@@ -438,7 +436,7 @@ var Main = (function() {
         currentPlayer.jailRollCount += 1;
         roll = (currentPlayer.rollDie());
         infoText = 'You rolled a ' + roll + '. Turn: ' + currentPlayer.jailRollCount + '.';
-        $('.roll-value').text(roll).css('color', '#CC0000'); //display roll number
+        $('.roll-image').attr('src', 'images/' + roll + '.png');
 
         rollEven = (roll % 2 === 0) ? true : false;
         console.log('player rolled ' + roll);
