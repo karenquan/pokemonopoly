@@ -288,7 +288,7 @@ CLASSES
 .board-center {
   width: 900px;
   height: 900px;
-  padding: 20px 40px;
+  padding: 30px 50px;
   text-align: center;
 
   > section {
@@ -329,7 +329,7 @@ CLASSES
   > div {
     border: 1px solid;
     height: 350px;
-    width: 49%;
+    width: 48%;
     padding: 10px;
     display: inline-block;
     vertical-align: top;
@@ -351,13 +351,18 @@ CLASSES
     }
   }
 
+  .jail-info {
+    color: $attack;
+    margin: 0;
+  }
+
   .properties {
 
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 200px;
+      height: 180px;
       overflow: auto;
 
       img {
@@ -392,13 +397,16 @@ CLASSES
   font-size: 0;
 
   > div {
-    width: 49%;
+    width: 48%;
     display: inline-block;
     font-size: 14px;
     text-align: center;
     vertical-align: top;
     margin: 10px 0 0 0;
-    padding: 0 40px;
+
+    &.roll {
+      position: relative;
+    }
   }
 
   h2 {
@@ -432,7 +440,7 @@ CLASSES
       color: $success;
     }
 
-    .roll-button {
+    .roll-button, .jail-roll-button {
       background: $success;
       border: 1px solid $success;
       color: #FFF;
@@ -444,6 +452,8 @@ CLASSES
       display: block;
       margin: 10px auto 0;
       font-size: 15px;
+      position: relative;
+      width: 200px;
 
       &:hover {
         cursor: pointer;
@@ -456,6 +466,20 @@ CLASSES
           background-color: #bfbfbf;
           cursor: default;
         }
+    }
+
+    .jail-roll-button {
+      background: $attack;
+      border: 1px solid $attack;
+      position: absolute;
+      bottom: 0;
+      left: 92px;
+
+      &:hover {
+        cursor: pointer;
+        background: $attackHover;
+        border: 1px solid $attackHover;
+      }
     }
   }
 
@@ -500,7 +524,7 @@ CLASSES
     .notification {
       text-align: center;
       width: 100%;
-      padding: 10px;
+      padding: 10px 20px;
       border: 1px solid $success;
       margin: 10px 0 0 0;
 
@@ -508,6 +532,10 @@ CLASSES
         color: $success;
         border-bottom: none;
         margin: 0;
+      }
+
+      p {
+        font-size: 15px;
       }
 
       a {
@@ -528,14 +556,14 @@ CLASSES
         margin: 10px auto 0 auto;
       }
 
-      .property-yes, .property-ok {
+      .green {
         background-color: $success;
 
         &:hover {
           background-color: $successHover;
         }
       }
-      .property-no {
+      .red {
         background-color: $attack;
 
         &:hover {
@@ -732,7 +760,7 @@ CLASSES
 
 /* ------ OTHER  ------ */
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .show {

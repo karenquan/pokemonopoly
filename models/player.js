@@ -31,7 +31,8 @@ var Player = function(num, name) {
   this.turnCount = 0;
   this.money = 2000;
   this.location = 0; //board array index
-  this.jail = false;
+  this.inJail = false;
+  this.jailRollCount = 0;
 };
 
 Player.prototype.addProperty = function(property) {

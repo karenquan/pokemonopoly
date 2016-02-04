@@ -16,6 +16,7 @@ var Main = (function() {
       movePlayer(player2, 0); //start player 1 on 'Go' space
       buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
       buildTurnSection();
+      $('.board-center').append($('<img />', { src: 'images/pokemonopoly.png', 'class': 'logo', alt: 'Pokémonopoly' }));
     }
 
     function switchTurns() {
@@ -23,6 +24,13 @@ var Main = (function() {
       currentPlayer = (currentPlayer === player1) ? player2 : player1;
       currentPlayer.currentTurn = true;
       updateTurnSection();
+
+      render();//test
+
+      //need to make jail roll button click event global
+      if(currentPlayer.inJail) {
+        $('.jail-roll-button').removeClass('hide');
+      }
     }
 
     function render() {
@@ -41,7 +49,7 @@ var Main = (function() {
   /* START MODAL ------------------
 
   */
-    function displayStartModal() {
+    function displayStartModal() { //starts game
       var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
 
       $('body').append(buildStartModal());
@@ -220,15 +228,16 @@ var Main = (function() {
     }
 
     function buildPlayerInfoSections() {
-      var $playerInfo, $player1Info, $player2Info, $name, $properties, $money;
+      var $playerInfo, $player1Info, $player2Info, $name, $properties, $money, $jailInfo;
       $playerInfoSection = $('<div />', { 'class': 'player-info' });
 
       players.forEach(function(player) {
           var $playerInfo = $('<div />', { 'class': 'player-' + player.num + '-info' });
           $name = $('<h1 />', { text: 'Player ' + player.num + ': ' }).append($('<span />', { 'class': 'name', text: player.name }));
+          $jailInfo = $('<p />', { 'class': 'jail-info', text: 'In Jail | Turn Count: ' }).append($('<span />', { 'class': 'jail-turn-count', text: '0' }));
           $properties = $('<div />', { 'class': 'properties' }).append($('<h2 />', { text: 'Properties' })).append($('<ul />', { 'class': 'properties-list' }));
           $money = $('<h2 />', { 'class': 'money', text: 'Money: $' + player.money });
-          $playerInfo.append($name).append($money).append($properties);
+          $playerInfo.append($name).append($jailInfo).append($money).append($properties);
           $playerInfo.css('border-color', player.color);
           if(player.num === 1) {
             $playerInfoSection.append($playerInfo).append(' '); //need to add space for justify effect
@@ -252,8 +261,9 @@ var Main = (function() {
         var $rollValue = $('<span />', { 'class': 'roll-value', text: ' ' });
         // var $rollImage = $('<img />', { src: 'images/dice.gif' } );
         $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
+        $jailRollButton = $('<button />', { 'class': 'jail-roll-button hide', text: 'JAIL ROLL' });
         // $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
-        $roll.append($rollTitle).append($rollValue).append($rollButton);
+        $roll.append($rollTitle).append($rollValue).append($rollButton).append($jailRollButton);
 
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
@@ -269,6 +279,8 @@ var Main = (function() {
       $turnInfo.append($title).append($jackpotTitle).append($roll).append(' ').append($cellInfo);
       $('.board-center').prepend($turnInfo);
       $jackpot = $('.jackpot-value'); //set global jackpot value after element appended to dom
+      $jailRollButton = $('.jail-roll-button'); //set global value of jail roll button element
+        attachJailRollClickEvent();
       attachRollEvent();
 
       $rollButton = $('.roll-button');//update rollButton value to newly added dom element
@@ -279,8 +291,8 @@ var Main = (function() {
           $rollButton.addClass('disabled');
           $rollButton.attr('disabled', true);
           roll = currentPlayer.rollDie();
-          movePlayer(currentPlayer, roll);
           $('.roll-value').text(roll);
+          movePlayer(currentPlayer, roll);
         });
       }
     }
@@ -298,7 +310,7 @@ var Main = (function() {
       $('.turn-info .player-turn-name').text(currentPlayer.name);
     }
 
-    updateJackpotValue = function() {
+    function updateJackpotValue() {
       $jackpot.text(jackpotAmount);
     }
 
@@ -322,7 +334,7 @@ var Main = (function() {
     function updatePlayerInfoSection() {
       //update property & money for each player
       players.forEach(function(player) {
-        var $propertyListItem, $bullet, $image, $name, $value;
+        var $propertyListItem, $bullet, $image, $name, $value, $jailInfo;
         var currentPlayerInfoClass = '.player-' + player.num + '-info';
         var $propertyList = $(currentPlayerInfoClass + ' ul');
         $(currentPlayerInfoClass + ' .money').text('Money: $' + player.money);
@@ -332,16 +344,18 @@ var Main = (function() {
           $propertyList.empty(); //empty property list each time
           player.properties.forEach(function(property) {
             $propertyItem = $('<li />').css('color', property.color);
-            $bullet = $('<span />', { 'class': 'bullet', text: '◤' });
+            $bullet = $('<span />', { 'class': 'bullet', html: '&#9700' });
             $image = $('<img />', { src: 'images/' + property.image, alt: property.name });
             $name = $('<span />', { 'class': 'name', text: property.name });
             $value = $('<span />', { 'class': 'value', text: '$' + property.value });
             $propertyItem.append($bullet).append($image).append($name).append(' | ').append($value);
             $propertyList.append($propertyItem);
           });
-
           $(currentPlayerInfoClass + ' .properties').append($propertyList);
         }
+
+        //update jail info section
+
       });
     }
 
@@ -357,26 +371,110 @@ var Main = (function() {
     }
 
     function removePropertyOwner(cell) { //if user sells property
-      // cell.remove();
     }
 
-    movePlayer = function(player, numSpaces) { //global function
-      //get current location of player (board array index)
+    movePlayer = function(player, numSpaces) { //global function for testing
       var className = 'player-' + player.num;
-      //remove class on old space (make background default color)
-      boardElements[player.location].classList.remove(className);
 
-      //update player's location & change background of new location
-      player.location += numSpaces;
-      if(player.location > 27) {
-        var extra = player.location - 27;
-        player.location = extra - 1; //subtract one since array is base 0
+      if(!player.inJail) { //only move player if they're not in jail
+        boardElements[player.location].classList.remove(className); //remove class on old space (make background default color)
+
+        //update player's location & change background of new location
+        player.location += numSpaces;
+        if(player.location > 27) {
+          var extra = player.location - 27;
+          player.location = extra - 1; //subtract one since array is base 0
+        }
+        boardElements[player.location].classList.add(className);
+        render();
+
+        checkCellVacancy(player.location); //check if cell is vacant/owned by other player/go cell/go to jail cell
+      } else {
+        console.log('you are in jail');
+        rollToGetOutOfJail();
       }
-      boardElements[player.location].classList.add(className);
-      render();
+    }
 
-      //check if cell is vacant/owned by other player/go cell/go to jail cell
-      checkCellVacancy(player.location);
+    function activateJailCell() {
+      console.log('got into activate jail cell');
+      var $title, $info, $payButton, $rollOptionButton, infoText;
+      $notification = $('<div />', { 'class': 'notification' });
+      $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
+      infoText = 'You are in jail. You can either pay $50 to get out now, or roll an even number within 3 turns (starting with your next turn).';
+      $payButton = $('<a />', { 'class': 'jail-pay green', text: 'PAY' });
+      $rollOptionButton = $('<a />', { 'class': 'jail-roll red', text: 'ROLL' });
+      $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($payButton).append($rollOptionButton);
+
+      $notification.append($title).append($info);
+      $('.cell-info').append($notification);
+
+      $payButton.on('click', function() {
+        $notification.remove();
+        payJailFee();
+        switchTurns();
+        resetRoll();
+      });
+
+      $rollOptionButton.on('click', function() {
+        console.log('roll option button click');
+        $rollButton.removeClass('disabled');
+        $rollButton.attr('disabled', false);
+        $notification.remove();
+        //rollToGetOutOfJail();
+        switchTurns();
+        resetRoll();
+      });
+    }
+
+    function rollToGetOutOfJail() {
+      //player has to roll an even number in 3 turns to get out of jail, or else pay $50
+      console.log('got into roll to get out of jail function.');
+
+      var rollEven;
+      // $jailRollButton = $('.jail-roll-button');
+      currentPlayer.jailRollCount += 1;
+
+      //need to have another roll button to have a separate click event from original roll button
+      $jailRollButton.removeClass('hide');//unhide jail roll button
+    }
+
+    function payJailFee() {
+      console.log('got into pay jail fee function.');
+      console.log(currentPlayer.name + ' OLD $: ' + currentPlayer.money);
+      currentPlayer.money -= 50;
+      currentPlayer.inJail = false;
+      console.log(currentPlayer.name + ' NEW $: ' + currentPlayer.money);
+      console.log('');
+    }
+
+    function attachJailRollClickEvent() {
+      $jailRollButton.on('click', function() { //make this global
+        var roll = (currentPlayer.rollDie());
+        rollEven = (roll % 2 === 0) ? true : false;
+        console.log('player rolled ' + roll);
+
+        if(rollEven) { //get out of jail if even roll
+          currentPlayer.jailRollCount = 0;
+          currentPlayer.inJail = false;
+          console.log('you are now out of jail');
+        }
+
+        if(!rollEven && currentPlayer.jailRollCount === 3) {
+          payJailFee();
+          currentPlayer.jailRollCount = 0;
+          currentPlayer.inJail = false;
+        }
+
+        console.log(currentPlayer.name + ' jailrollcount: ' + currentPlayer.jailRollCount);
+        console.log(currentPlayer.name + ' in jail: ' + currentPlayer.inJail);
+        console.log('');
+
+        //hide jail roll button
+        $jailRollButton.addClass('hide');
+
+        switchTurns();
+        resetRoll();
+      });
     }
 
     function checkCellVacancy(cellIndex) {
@@ -384,22 +482,17 @@ var Main = (function() {
       var currentCell = board[cellIndex];
       var $currentCellElement = boardElements[cellIndex];
       $notification = $('<div />', { 'class': 'notification' });
-      $okButton = $('<a />', { 'class': 'property-ok', text: 'OK' });
+      $okButton = $('<a />', { 'class': 'green', text: 'OK' });
 
       $okButton.on('click', function() {
           $notification.remove();//remove notification box
           switchTurns();
-          render();
           resetRoll();
         });
 
-      //don't need to check for cell vacancy on go/jail/free parking/go to jail
-      if(currentCell.canPurchase) {
-        displayPropertyUserNotification();
-      }
-      else {
-        displayNonPropertyNotification();
-      }
+      //check for cell vacancy on property cells
+      if(currentCell.canPurchase) displayPropertyUserNotification();
+      else displayNonPropertyNotification();
 
       function displayPropertyUserNotification() {
         if(currentCell.owner === '') { //check if cell is vacant
@@ -408,16 +501,16 @@ var Main = (function() {
           } else {
             infoText = "You don't have enough money to purchase this property.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($okButton);
           }
         } else if (currentCell.owner === currentPlayer.name) { //check if current player is owner
           infoText = "You already own this space.";
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($okButton);
         } else { //else other player owns space - pay other player
           infoText = currentCell.owner + ' owns this space. You owe $' + currentCell.value + '.';
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($okButton);
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($okButton);
           payPlayer();
         }
 
@@ -443,10 +536,10 @@ var Main = (function() {
 
       function displayAddPropertyNotification() {
           infoText = 'Would you like to purchase ' + currentCell.name + ' for $' + currentCell.value + '?';
-          $yesButton = $('<a />', { 'class': 'property-yes', text: 'YES' });
-          $noButton = $('<a />', { 'class': 'property-no', text: 'NO' });
+          $yesButton = $('<a />', { 'class': 'green', text: 'YES' });
+          $noButton = $('<a />', { 'class': 'red', text: 'NO' });
           $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append($yesButton).append($noButton);
+          $info = $('<p />', { 'class': 'notification-text', text: infoText }).append('<br />').append($yesButton).append($noButton);
           $notification.append($title).append($info);
           $('.cell-info').append($notification);
 
@@ -454,21 +547,25 @@ var Main = (function() {
             $notification.remove();
             addPropertyOwner($currentCellElement, cellIndex);
             switchTurns();
-            render();
             resetRoll();
           });
 
           $($noButton).on('click', function() {
             $notification.remove();//remove notification box
             switchTurns();
-            render();
             resetRoll();
           });
       }
 
       function displayNonPropertyNotification() {
         var currentCell = board[currentPlayer.location];
-        var type, info;
+        var type, info, $jailOkButton;
+        $jailOkButton = $('<a />', { 'class': 'green', text: 'OK' });
+        $jailOkButton.on('click', function() {
+          $notification.remove();//remove notification box
+          activateJailCell();
+        });
+
         switch(currentCell.type.toLowerCase()) {
             case 'go':
               info = 'You landed on Go! Collect $200.'
@@ -493,8 +590,14 @@ var Main = (function() {
               break;
         }
         $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
-        $info = $('<p />', { 'class': 'notification-text', text: info }).append($okButton);
-        $notification.append($title).append($info).append($yesButton).append($noButton);
+
+        if(currentCell.type.toLowerCase() === 'gotojail') {
+          $info = $('<p />', { 'class': 'notification-text', text: info }).append('<br />').append($jailOkButton);
+        } else {
+          $info = $('<p />', { 'class': 'notification-text', text: info }).append('<br />').append($okButton);
+        }
+
+        $notification.append($title).append($info);
         $('.cell-info').append($notification);
 
         //ACTIONS
@@ -536,6 +639,7 @@ var Main = (function() {
 
           //update player's location to jail cell & change background of jail cell
           currentPlayer.location = 7; //jail cell is index 7
+          currentPlayer.inJail = true;
           boardElements[currentPlayer.location].classList.add(className);
           render();
           $rollButton.addClass('disabled');
@@ -546,15 +650,12 @@ var Main = (function() {
 
     } /* end checkCellVacancy() function */
 
-    function printCellState(cell) {
-      //print current state of cell (i.e. owners, which players on space, name, value...)
-    }
   // END UPDATE BOARD STATE ------------------
 
-    function _init() {
-      populateCells();
-      displayStartModal();
-    }
+  function _init() {
+    populateCells();
+    displayStartModal();
+  }
 
   return {
     init: _init
@@ -568,13 +669,10 @@ $(document).ready(function() {
 /* GLOBAL VARIABLES ------------------
 
 */
-  var $board = $('#board');
-  var $boardLeft = $('.column-1 > div');
-  var $boardTop = $('.column-2 > div.top-row');
-  var $boardRight = $('.column-3 > div');
-  var $boardBottom = $('.column-2 > div.bottom-row');
   var $rollButton;
+  var $jailRollButton;
   var $notification;
+  var $jailInfo;
   var $jackpot;
   var board = [];
   var boardElements = [];
@@ -582,12 +680,10 @@ $(document).ready(function() {
   var player1;
   var player2;
   var currentPlayer;
-  var currentCell;
   var turnCount;
-  var roll = '';
+  var roll;
   var jackpotAmount;
   var movePlayer;
   var goToJail;
   var turn;
-  var updateJackpotValue;
 

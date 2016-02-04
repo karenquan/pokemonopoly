@@ -183,7 +183,7 @@ CLASSES
 .board-center {
   width: 900px;
   height: 900px;
-  padding: 20px 40px;
+  padding: 30px 50px;
   text-align: center; }
   .board-center > section {
     display: block; }
@@ -210,7 +210,7 @@ CLASSES
   .player-info > div {
     border: 1px solid;
     height: 350px;
-    width: 49%;
+    width: 48%;
     padding: 10px;
     display: inline-block;
     vertical-align: top; }
@@ -220,11 +220,14 @@ CLASSES
     color: #3b82c4; }
   .player-info .player-2-info h1 {
     color: #cc0000; }
+  .player-info .jail-info {
+    color: #cc0000;
+    margin: 0; }
   .player-info .properties ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 200px;
+    height: 180px;
     overflow: auto; }
     .player-info .properties ul img {
       width: 45px;
@@ -246,13 +249,14 @@ CLASSES
   text-align: justify;
   font-size: 0; }
   .turn-info > div {
-    width: 49%;
+    width: 48%;
     display: inline-block;
     font-size: 14px;
     text-align: center;
     vertical-align: top;
-    margin: 10px 0 0 0;
-    padding: 0 40px; }
+    margin: 10px 0 0 0; }
+    .turn-info > div.roll {
+      position: relative; }
   .turn-info h2 {
     font-size: 25px;
     border-bottom: 1px solid;
@@ -271,7 +275,7 @@ CLASSES
   .turn-info .roll .roll-value {
     font-size: 25px;
     color: #009933; }
-  .turn-info .roll .roll-button {
+  .turn-info .roll .roll-button, .turn-info .roll .jail-roll-button {
     background: #009933;
     border: 1px solid #009933;
     color: #FFF;
@@ -284,15 +288,27 @@ CLASSES
     outline: none;
     display: block;
     margin: 10px auto 0;
-    font-size: 15px; }
-    .turn-info .roll .roll-button:hover {
+    font-size: 15px;
+    position: relative;
+    width: 200px; }
+    .turn-info .roll .roll-button:hover, .turn-info .roll .jail-roll-button:hover {
       cursor: pointer;
       background: #00802b;
       border: 1px solid #00802b; }
-    .turn-info .roll .roll-button.disabled {
+    .turn-info .roll .roll-button.disabled, .turn-info .roll .jail-roll-button.disabled {
       border: 1px solid #bfbfbf;
       background-color: #bfbfbf;
       cursor: default; }
+  .turn-info .roll .jail-roll-button {
+    background: #cc0000;
+    border: 1px solid #cc0000;
+    position: absolute;
+    bottom: 0;
+    left: 92px; }
+    .turn-info .roll .jail-roll-button:hover {
+      cursor: pointer;
+      background: #b30000;
+      border: 1px solid #b30000; }
   .turn-info .cell-info {
     text-align: justify;
     color: #000; }
@@ -319,13 +335,15 @@ CLASSES
     .turn-info .cell-info .notification {
       text-align: center;
       width: 100%;
-      padding: 10px;
+      padding: 10px 20px;
       border: 1px solid #009933;
       margin: 10px 0 0 0; }
       .turn-info .cell-info .notification h2 {
         color: #009933;
         border-bottom: none;
         margin: 0; }
+      .turn-info .cell-info .notification p {
+        font-size: 15px; }
       .turn-info .cell-info .notification a {
         display: inline-block;
         color: #FFF;
@@ -340,13 +358,13 @@ CLASSES
         display: block;
         width: 40px;
         margin: 10px auto 0 auto; }
-      .turn-info .cell-info .notification .property-yes, .turn-info .cell-info .notification .property-ok {
+      .turn-info .cell-info .notification .green {
         background-color: #009933; }
-        .turn-info .cell-info .notification .property-yes:hover, .turn-info .cell-info .notification .property-ok:hover {
+        .turn-info .cell-info .notification .green:hover {
           background-color: #00802b; }
-      .turn-info .cell-info .notification .property-no {
+      .turn-info .cell-info .notification .red {
         background-color: #cc0000; }
-        .turn-info .cell-info .notification .property-no:hover {
+        .turn-info .cell-info .notification .red:hover {
           background-color: #b30000; }
 
 /* end turn-info */
@@ -474,7 +492,7 @@ CLASSES
 /* ------ END WELCOME MODAL  ------ */
 /* ------ OTHER  ------ */
 .hide {
-  display: none; }
+  display: none !important; }
 
 .show {
   display: block; }
