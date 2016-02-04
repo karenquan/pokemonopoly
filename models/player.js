@@ -1,29 +1,13 @@
 var Player = function(num, name) {
   this.name = name;
   this.num = num;
-  // this.character = character;
-  // this.image = 'images/';
-  // switch(this.character) {
-  //   case 'ash':
-  //     this.color = 'rgb(248,9,26)';
-  //     this.image += 'ash.png';
-  //     break;
-  //   case 'misty':
-  //     this.color = 'rgb(255,160,63)';
-  //     this.image += 'misty.png';
-  //     break;
-  //   case 'brock':
-  //     this.color = 'rgb(89,68,37)';
-  //     this.image += 'brock.png';
-  //     break;
-  // };
   switch(num) {
     case 2:
-      this.color = '#e48f89';
+      this.color = '#a44f4f';
       this.currentTurn = false;
       break;
     default:
-      this.color = '#677280';
+      this.color = '#4f94a4';
       this.currentTurn = true;
       break;
   }
@@ -40,8 +24,7 @@ Player.prototype.addProperty = function(property) {
 }
 
 Player.prototype.rollDie = function() {
-  //generate random number 1-6
-  var roll = generateRandomInt(1,7);
+  var roll = generateRandomInt(1,7); //generate random number 1-6
   this.turnCount += 1;
 
   return roll;

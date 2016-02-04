@@ -15,38 +15,19 @@ var Main = (function() {
           $players = $('<div />', { 'class': 'players' });
           $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
           $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
-          // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
           $nameTextBox = $('<input />', { type: 'text' });
           $player1 = $('<div />', { 'class': 'player-1' });
             $player1Title = $('<h3 />', { text: 'Player 1' });
             $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
-            // addCharacterIcons($player1, 1);
           $player2 = $('<div />', { 'class': 'player-2' });
             $player2Title = $('<h3 />', { text: 'Player 2' });
             $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
-            // addCharacterIcons($player2, 2);
           $players.append($player1).append(' ').append($player2);
-          // $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
           $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
           $content.append($logo).append($players).append($startButton);
           $startModal.append($content);
-          // console.log($startModal);
 
           return $startModal;
-        }
-
-        function addCharacterIcons(player, playerNumber) {
-          var ashId = 'ash-' + playerNumber;
-          var mistyId = 'misty-' + playerNumber;
-          var brockId = 'brock-' + playerNumber;
-          var radioName = playerNumber + ' character';
-          var $ash = $('<input />', { type: 'radio', name: 'ash', value: 'ash', id: ashId });
-          var $ashLabel = $('<label />', { 'class': ashId, 'for': ashId });
-          var $misty = $('<input />', { type: 'radio', name: 'misty', value: 'misty', id: mistyId });
-          var $mistyLabel = $('<label />', { 'class': mistyId, 'for': mistyId });
-          var $brock = $('<input />', { type: 'radio', name: 'brock', value: 'brock', id: brockId });
-          var $brockLabel = $('<label />', { 'class': brockId, 'for': brockId });
-          player.append($ash).append($ashLabel).append($misty).append($mistyLabel).append($brock).append($brockLabel);
         }
 
         function activateStartButtonEvents() {
@@ -115,7 +96,6 @@ var Main = (function() {
     }
 
     function resetRoll() {
-      // $('.roll-value').html($('<img />', { src: 'images/die-roll.gif' }));
       $('.roll-image').attr('src', 'images/die-roll.gif');
       $rollButton.removeClass('disabled');
       $rollButton.attr('disabled', false);
@@ -133,7 +113,6 @@ var Main = (function() {
   */
     function populateCells() {
     var $cell, $cellElement;
-    // console.log($cells);
     $cells.each(function(index) {
       cellElement = $('.column-' + this.column + '> div')[this.index];
 
@@ -262,7 +241,6 @@ var Main = (function() {
         var $cellValue = $('<h3 />', { 'class': 'value' });
         var $cellImage = $('<img />', { src: 'images/go.png' });
         $cellDetails.append($cellName).append($cellValue);
-
         $cellInfo.append($cellTitle).append($cellDetails).append(' ').append($cellImage);//.append($notification);
 
       $turnInfo.append($title).append($jackpotTitle).append($roll).append(' ').append($cellInfo);
@@ -275,7 +253,6 @@ var Main = (function() {
       $rollButton = $('.roll-button');//set global rollButton value to newly added dom element
 
       $rollButton.on('click', function() {
-        console.log('regular roll click');
         roll += 1;
         $rollButton.addClass('disabled');
         $rollButton.attr('disabled', true);
@@ -285,14 +262,25 @@ var Main = (function() {
       });
     }
 
-    buildWinnerModal = function(winner) { //global for testing
+    buildWinnerModal = function(winnerList) { //global for testing
       var $winnerModal = $('<div />', { 'class': 'modal' });
       var $winnerContent = $('<div />', { 'class': 'modal-content winner' });
-      var $winnerImage = $('<img />', { src: 'images/pikachu_large.png' });
-      var $winnerTitle = $('<h1 />', { 'class': 'winner-name', text: winner.name.toUpperCase() + ' WON!', css: { 'color': winner.color } });
-      var $winnerText = $('<p />', { 'class': 'winner-text' });
-      $winnerText.append($winnerTitle).append($resetButton);
-      $winnerContent.append($winnerImage).append($winnerText);
+      var winnerText;
+
+      if(winnerList.length > 1) { //if list is greater than 1, then all players lost
+        winnerText = 'All Players Lost.'
+        winnerImage = 'haunter_large.png';
+      } else {
+        winnerText = winnerList[0].name.toUpperCase() + ' WON!';
+        winnerImage = 'pikachu_large.png';
+      }
+
+      var $winnerImage = $('<img />', { src: 'images/' + winnerImage });
+
+      var $winnerTitle = $('<h1 />', { 'class': 'winner-name', text: winnerText, css: { 'color': winnerList[0].color } });
+      var $winner = $('<p />', { 'class': 'winner-text' });
+      $winner.append($winnerTitle).append($resetButton);
+      $winnerContent.append($winnerImage).append($winner);
       $winnerModal.append($winnerContent);
       $('body').append($winnerModal);
     }
@@ -302,7 +290,6 @@ var Main = (function() {
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
 
   */
-
     function updateTurnSection() {
       currentPlayer = player1.currentTurn === true ? player1 : player2;
       $('h1.turn-title, .cell-info h2').css('color', currentPlayer.color);
@@ -386,7 +373,6 @@ var Main = (function() {
     }
 
     function activateJailCell() {
-      console.log('got into activate jail cell');
       var $title, $info, $payButton, $rollOptionButton, infoText;
       $notification = $('<div />', { 'class': 'notification' });
       $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
@@ -406,7 +392,6 @@ var Main = (function() {
       });
 
       $rollOptionButton.on('click', function() {
-        console.log('roll option button click');
         $rollButton.removeClass('disabled');
         $rollButton.attr('disabled', false);
         $notification.remove();
@@ -417,12 +402,9 @@ var Main = (function() {
     }
 
     function payJailFee() {
-      console.log('got into pay jail fee function.');
-      console.log(currentPlayer.name + ' OLD $: ' + currentPlayer.money);
       currentPlayer.money -= 50;
       currentPlayer.inJail = false;
-      console.log(currentPlayer.name + ' NEW $: ' + currentPlayer.money);
-      console.log('');
+      checkForWinner();
     }
 
     function rollToGetOutOfJail() {
@@ -449,7 +431,6 @@ var Main = (function() {
         $('.roll-image').attr('src', 'images/' + roll + '.png');
 
         rollEven = (roll % 2 === 0) ? true : false;
-        console.log('player rolled ' + roll);
 
         if(rollEven) { //get out of jail if even roll
           infoText = 'You have rolled an even number. You are now out of jail.';
@@ -468,7 +449,7 @@ var Main = (function() {
 
         $jailOk.on('click', function() {
           $jailNotification.empty();
-          $jailNotification.remove(); //remove notification box
+          $jailNotification.remove();
           $jailRollButton.addClass('hide');
           switchTurns();
           resetRoll();
@@ -493,7 +474,7 @@ var Main = (function() {
       $okButton = $('<a />', { 'class': 'green', text: 'OK' });
 
       $okButton.on('click', function() {
-          $notification.remove();//remove notification box
+          $notification.remove();
           switchTurns();
           resetRoll();
         });
@@ -527,16 +508,9 @@ var Main = (function() {
         function payPlayer() {
           var propertyOwner = currentPlayer === player1 ? player2 : player1;
           var propertyValue = board[currentPlayer.location].value;
-          console.log('PAY PLAYER FUNCTION:');
-          console.log(propertyOwner.name + ' OLD: $' + propertyOwner.money);
-          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
-
           currentPlayer.money -= propertyValue;
           propertyOwner.money += propertyValue;
-
-          console.log(propertyOwner.name + ' NEW: $' + propertyOwner.money);
-          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
-          console.log('');
+          checkForWinner();
         }
       }
 
@@ -608,37 +582,23 @@ var Main = (function() {
 
         //ACTIONS
         function attack() {
-          //add $200 to jackpot, deduct $200 from currentplayer
-          console.log('ATTACK FUNCTION');
-          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
           jackpotAmount += 200;
           updateJackpotValue(); //update jackpot text on screen
           currentPlayer.money -= 200;
-          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
-          console.log('CURRENT JACKPOT: $' + jackpotAmount);
-          console.log('');
+          checkForWinner();
         }
 
         function goSpace() {
-          console.log('GO FUNCTION');
-          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
           currentPlayer.money += 200;
-          console.log(currentPlayer.name + ' NEW: $' + currentPlayer.money);
-          console.log(' ');
         }
 
         function jackpot() {
-          console.log('JACKPOT FUNCTION');
-          console.log(currentPlayer.name + ' OLD: $' + currentPlayer.money);
           currentPlayer.money += jackpotAmount;
-          console.log(currentPlayer.name + ' NEW: $: ' + currentPlayer.money);
-          console.log(' ');
           jackpotAmount = 0;//reset jackpot
           updateJackpotValue(); //update jackpot text on screen
         }
 
         goToJail = function() { //global function
-          console.log('GO TO JAIL FUNCTION');
           var className = 'player-' + currentPlayer.num;
           //remove class on current player's old space (make background default color)
           boardElements[currentPlayer.location].classList.remove(className);
@@ -656,10 +616,24 @@ var Main = (function() {
     } /* end checkCellVacancy() function */
 
     function checkForWinner() {
-      if(currentPlayer.money <= 0) {
-        var winner = (currentPlayer === player1) ? player1 : player2;
-        buildWinnerModal(winner);
+      var winnerList = [];
+      var winner = false;
+      var player1Money = player1.money;
+      var player2Money = player2.money;
+
+      if(player1Money <= 0 && player2Money <= 0) {//check for tie {
+        winnerList.push(player1);
+        winnerList.push(player2);
+        winner = true;
+      } else if(player1Money <= 0) {
+        winnerList.push(player2);
+        winner = true;
+      } else if(player2Money <= 0) {
+        winnerList.push(player1);
+        winner = true;
       }
+
+      if(winner) buildWinnerModal(winnerList);
     }
 
   // END UPDATE BOARD STATE ------------------
