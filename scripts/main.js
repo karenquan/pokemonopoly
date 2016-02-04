@@ -3,96 +3,95 @@ var Main = (function() {
   /* START MODAL ------------------
 
   */
-    function displayStartModal() { //starts game
-      var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
+      function displayStartModal() { //starts game
+        var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
 
-      $('body').append(buildStartModal());
-      activateStartButtonEvents(); //activate start button after modal is added to dom
+        $('body').append(buildStartModal());
+        activateStartButtonEvents(); //activate start button after modal is added to dom
 
-      function buildStartModal() {
-        $startModal = $('<div />', { 'class': 'start-modal'} );
-        $content = $('<div />', { 'class': 'modal-content' });
-        $players = $('<div />', { 'class': 'players' });
-        $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
-        $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
-        // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
-        $nameTextBox = $('<input />', { type: 'text' });
-        $player1 = $('<div />', { 'class': 'player-1' });
-          $player1Title = $('<h3 />', { text: 'Player 1' });
-          $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
-          // addCharacterIcons($player1, 1);
-        $player2 = $('<div />', { 'class': 'player-2' });
-          $player2Title = $('<h3 />', { text: 'Player 2' });
-          $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
-          // addCharacterIcons($player2, 2);
-        $players.append($player1).append(' ').append($player2);
-        // $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
-        $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
-        $content.append($logo).append($players).append($startButton);
-        $startModal.append($content);
-        // console.log($startModal);
+        function buildStartModal() {
+          $startModal = $('<div />', { 'class': 'modal'} );
+          $content = $('<div />', { 'class': 'modal-content' });
+          $players = $('<div />', { 'class': 'players' });
+          $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
+          $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
+          // $characterText = $('<span />', { 'class': 'character', text: 'Select Your Character: '});
+          $nameTextBox = $('<input />', { type: 'text' });
+          $player1 = $('<div />', { 'class': 'player-1' });
+            $player1Title = $('<h3 />', { text: 'Player 1' });
+            $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
+            // addCharacterIcons($player1, 1);
+          $player2 = $('<div />', { 'class': 'player-2' });
+            $player2Title = $('<h3 />', { text: 'Player 2' });
+            $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
+            // addCharacterIcons($player2, 2);
+          $players.append($player1).append(' ').append($player2);
+          // $startButton = $('<a />', { 'class': 'start-button disabled', text: 'START GAME' });
+          $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
+          $content.append($logo).append($players).append($startButton);
+          $startModal.append($content);
+          // console.log($startModal);
 
-        return $startModal;
+          return $startModal;
+        }
+
+        function addCharacterIcons(player, playerNumber) {
+          var ashId = 'ash-' + playerNumber;
+          var mistyId = 'misty-' + playerNumber;
+          var brockId = 'brock-' + playerNumber;
+          var radioName = playerNumber + ' character';
+          var $ash = $('<input />', { type: 'radio', name: 'ash', value: 'ash', id: ashId });
+          var $ashLabel = $('<label />', { 'class': ashId, 'for': ashId });
+          var $misty = $('<input />', { type: 'radio', name: 'misty', value: 'misty', id: mistyId });
+          var $mistyLabel = $('<label />', { 'class': mistyId, 'for': mistyId });
+          var $brock = $('<input />', { type: 'radio', name: 'brock', value: 'brock', id: brockId });
+          var $brockLabel = $('<label />', { 'class': brockId, 'for': brockId });
+          player.append($ash).append($ashLabel).append($misty).append($mistyLabel).append($brock).append($brockLabel);
+        }
+
+        function activateStartButtonEvents() {
+          var $player1Name = $('.player-1-name').val();
+          var $player2Name = $('.player-2-name').val();
+
+          attachStartButtonClick();
+          $startButton.attr('disabled', true);
+
+          //only allow start button to be clicked when both players have typed their name
+          $('input[type="text"]').on('keypress keyup', function() {
+            if(checkPlayerInput()) {
+              $startButton.removeClass('disabled');
+              $startButton.attr('disabled', false);
+            } else {
+              $startButton.addClass('disabled');
+              $startButton.attr('disabled', true);
+            }
+          });
+        }
+
+        function checkPlayerInput() {
+          return ($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) ? true : false;
+        }
+
+        function attachStartButtonClick () {
+          $startButton.on('click', startButtonHandler);
+        }
+
+        function removeStartButtonClick() {
+          $startButton.unbind('click');
+        }
       }
-
-      function addCharacterIcons(player, playerNumber) {
-        var ashId = 'ash-' + playerNumber;
-        var mistyId = 'misty-' + playerNumber;
-        var brockId = 'brock-' + playerNumber;
-        var radioName = playerNumber + ' character';
-        var $ash = $('<input />', { type: 'radio', name: 'ash', value: 'ash', id: ashId });
-        var $ashLabel = $('<label />', { 'class': ashId, 'for': ashId });
-        var $misty = $('<input />', { type: 'radio', name: 'misty', value: 'misty', id: mistyId });
-        var $mistyLabel = $('<label />', { 'class': mistyId, 'for': mistyId });
-        var $brock = $('<input />', { type: 'radio', name: 'brock', value: 'brock', id: brockId });
-        var $brockLabel = $('<label />', { 'class': brockId, 'for': brockId });
-        player.append($ash).append($ashLabel).append($misty).append($mistyLabel).append($brock).append($brockLabel);
-      }
-
-      function activateStartButtonEvents() {
-        var $player1Name = $('.player-1-name').val();
-        var $player2Name = $('.player-2-name').val();
-
-        attachStartButtonClick();
-        $startButton.attr('disabled', true);
-
-        //only allow start button to be clicked when both players have typed their name
-        $('input[type="text"]').on('keypress keyup', function() {
-          if(checkPlayerInput()) {
-            $startButton.removeClass('disabled');
-            $startButton.attr('disabled', false);
-          } else {
-            $startButton.addClass('disabled');
-            $startButton.attr('disabled', true);
-          }
-        });
-      }
-
-      function checkPlayerInput() {
-        return ($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) ? true : false;
-      }
-
-      function attachStartButtonClick () {
-        $startButton.on('click', startButtonHandler);
-      }
-
-      function removeStartButtonClick() {
-        $startButton.unbind('click');
-      }
-    }
 
      function startButtonHandler() {
-      //grab player names before removing modal
       player1 = new Player(1, $('.player-1-name').val());
       player2 = new Player(2, $('.player-2-name').val());
       players = [player1, player2];
       currentPlayer = player1;
-      $('.start-modal').remove();
+      $('.modal').remove();
       jackpotAmount = 0;
       turn = 0;
       movePlayer(player1, 0); //start player 1 on 'Go' space
-      movePlayer(player2, 0); //start player 1 on 'Go' space
-      buildPlayerInfoSections(); //build player info section before turn section for it to appear in the correct spot
+      movePlayer(player2, 0); //start player 2 on 'Go' space
+      buildPlayerInfoSections();
       buildTurnSection();
     }
   // END START MODAL ------------------
@@ -142,10 +141,6 @@ var Main = (function() {
         case 'go':
         case 'jail':
         case 'gotojail':
-        // case 'parking':
-          buildCornerCell(this, cellElement);
-          cellElement.classList.add(this.type.toLowerCase() + '-cell');
-          break;
         case 'parking':
           buildCornerCell(this, cellElement);
           cellElement.classList.add(this.type.toLowerCase() + '-cell');
@@ -170,8 +165,6 @@ var Main = (function() {
     lastRow.forEach(function(element) {
       boardElements.push(element);
     });
-    //console.log(board);
-    //console.log(boardElements);
     }
   // END DATA RETRIEVAL ------------------
 
@@ -229,8 +222,12 @@ var Main = (function() {
           }
       });
 
+      buildResetButton();
+    }
+
+    function buildResetButton() {
       var $reset = $('<div />', { 'class': 'reset' });
-      var $resetButton = $('<a />', { 'class': 'reset-button', text: 'START A NEW GAME' });
+      $resetButton = $('<a />', { 'class': 'reset-button', text: 'START A NEW GAME' });
       $reset.append($resetButton);
 
       $('.board-center').prepend($playerInfoSection).append($reset);
@@ -254,7 +251,6 @@ var Main = (function() {
         var $rollImage = $('<img />', { 'class': 'roll-image', src: 'images/die-roll.gif' } );
         $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
         $jailRollButton = $('<button />', { 'class': 'jail-roll-button hide', text: 'JAIL ROLL' });
-        // $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton);
         $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton).append($jailRollButton);
 
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
@@ -288,11 +284,22 @@ var Main = (function() {
       });
     }
 
+    buildWinnerModal = function(winner) { //global for testing
+      var $winnerModal = $('<div />', { 'class': 'modal' });
+      var $winnerContent = $('<div />', { 'class': 'modal-content winner' });
+      var $winnerImage = $('<img />', { src: 'images/pikachu_large.png' });
+      var $winnerTitle = $('<h1 />', { 'class': 'winner-name', text: winner.name.toUpperCase() + ' WON!', css: { 'color': winner.color } });
+      var $winnerText = $('<p />', { 'class': 'winner-text' });
+      $winnerText.append($winnerTitle).append($resetButton);
+      $winnerContent.append($winnerImage).append($winnerText);
+      $winnerModal.append($winnerContent);
+      $('body').append($winnerModal);
+    }
+
   // END BUILD DYNAMIC ELEMENTS ------------------
 
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
-     Update board center content for every turn.
-     Update cell when player is on a cell or purchases a cell.
+
   */
 
     function updateTurnSection() {
@@ -316,22 +323,19 @@ var Main = (function() {
         $('.cell-details .value').text('Value: $' + currentCell.value);
         $('.cell-details .value').addClass('show');
       } else {
-        //hide value section if not a property space
-        $('.cell-details .value').addClass('hide');
+        $('.cell-details .value').addClass('hide'); //hide value section if not a property space
       }
       $('.cell-info img').attr('src', 'images/' + currentCell.image);
     }
 
     function updatePlayerInfoSection() {
-      //update property & money for each player
-      players.forEach(function(player) {
+      players.forEach(function(player) { //update property & money for each player
         var $propertyListItem, $bullet, $image, $name, $value, $jailInfo;
         var currentPlayerInfoClass = '.player-' + player.num + '-info';
         var $propertyList = $(currentPlayerInfoClass + ' ul');
         $(currentPlayerInfoClass + ' .money').text('Money: $' + player.money);
 
-        //loop through properties (if any) and build list
-        if(player.properties.length > 0) {
+        if(player.properties.length > 0) { //loop through properties (if any) and build list
           $propertyList.empty(); //empty property list each time
           player.properties.forEach(function(property) {
             $propertyItem = $('<li />').css('color', property.color);
@@ -421,7 +425,6 @@ var Main = (function() {
     }
 
     function rollToGetOutOfJail() {
-      //need to have another roll button to have a separate click event from original roll button
       $jailRollButton.removeClass('hide'); //unhide jail roll button
     }
 
@@ -513,7 +516,6 @@ var Main = (function() {
         $('.cell-info').append($notification);
 
         function payPlayer() {
-          // var propertyOwner = board[currentPlayer.location].owner;
           var propertyOwner = currentPlayer === player1 ? player2 : player1;
           var propertyValue = board[currentPlayer.location].value;
           console.log('PAY PLAYER FUNCTION:');
@@ -562,27 +564,27 @@ var Main = (function() {
         });
 
         switch(currentCell.type.toLowerCase()) {
-            case 'go':
-              info = 'You landed on Go! Collect $200.'
-              if(roll > 2) goSpace();
-              break;
-            case 'jail':
-              info = 'You are just visiting jail.';
-              break;
-            case 'parking':
-              info = (jackpotAmount > 0) ? 'You win the jackpot of $' + jackpotAmount + '!' : 'There is no money in the jackpot.';
-              if(jackpotAmount > 0) jackpot();
-              break;
-            case 'gotojail':
-              info = 'You have trespassed on private property! You have to go to jail.';
-              goToJail();
-              break;
-            case 'attack':
-              info = 'You have been attacked! You owe $200.'
-              attack();
-              break;
-            default:
-              break;
+          case 'go':
+            info = 'You landed on Go! Collect $200.'
+            if(roll > 2) goSpace();
+            break;
+          case 'jail':
+            info = 'You are just visiting jail.';
+            break;
+          case 'parking':
+            info = (jackpotAmount > 0) ? 'You win the jackpot of $' + jackpotAmount + '!' : 'There is no money in the jackpot.';
+            if(jackpotAmount > 0) jackpot();
+            break;
+          case 'gotojail':
+            info = 'You have trespassed on private property! You have to go to jail.';
+            goToJail();
+            break;
+          case 'attack':
+            info = 'You have been attacked! You owe $200.'
+            attack();
+            break;
+          default:
+            break;
         }
 
         if(currentCell.type.toLowerCase() === 'gotojail') {
@@ -644,6 +646,13 @@ var Main = (function() {
       } /* end displayNonPropertyNotification() function  */
     } /* end checkCellVacancy() function */
 
+    function checkForWinner() {
+      if(currentPlayer.money <= 0) {
+        var winner = (currentPlayer === player1) ? player1 : player2;
+        buildWinnerModal(winner);
+      }
+    }
+
   // END UPDATE BOARD STATE ------------------
 
   function _init() {
@@ -663,6 +672,7 @@ $(document).ready(function() {
 
 */
   var $rollButton;
+  var $resetButton
   var $jailRollButton;
   var $notification;
   var $jailInfo;
@@ -676,3 +686,4 @@ $(document).ready(function() {
   var roll = 0;
   var jackpotAmount;
   var movePlayer;
+  var buildWinnerModal;

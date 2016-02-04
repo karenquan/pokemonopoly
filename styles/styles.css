@@ -272,7 +272,7 @@ CLASSES
     border-bottom: 1px solid;
     margin: 0 auto 10px auto;
     text-align: center;
-    color: #009933; }
+    color: #8abd8a; }
   .turn-info h3.jackpot-title {
     color: #000;
     margin: 0 auto;
@@ -284,10 +284,10 @@ CLASSES
     width: 100%; }
   .turn-info .roll .roll-value {
     font-size: 25px;
-    color: #009933; }
+    color: #8abd8a; }
   .turn-info .roll .roll-button, .turn-info .roll .jail-roll-button {
-    background: #009933;
-    border: 1px solid #009933;
+    background: #8abd8a;
+    border: 1px solid #8abd8a;
     color: #FFF;
     padding: 10px;
     width: 200px;
@@ -303,8 +303,8 @@ CLASSES
     width: 200px; }
     .turn-info .roll .roll-button:hover, .turn-info .roll .jail-roll-button:hover {
       cursor: pointer;
-      background: #00802b;
-      border: 1px solid #00802b; }
+      background: #6dac6d;
+      border: 1px solid #6dac6d; }
     .turn-info .roll .roll-button.disabled, .turn-info .roll .jail-roll-button.disabled {
       border: 1px solid #bfbfbf;
       background-color: #bfbfbf;
@@ -346,10 +346,10 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px 20px;
-      border: 1px solid #009933;
+      border: 1px solid #8abd8a;
       margin: 10px 0 0 0; }
       .turn-info .cell-info .notification h2 {
-        color: #009933;
+        color: #8abd8a;
         border-bottom: none;
         margin: 0; }
       .turn-info .cell-info .notification p {
@@ -369,9 +369,9 @@ CLASSES
         width: 40px;
         margin: 10px auto 0 auto; }
       .turn-info .cell-info .notification .green {
-        background-color: #009933; }
+        background-color: #8abd8a; }
         .turn-info .cell-info .notification .green:hover {
-          background-color: #00802b; }
+          background-color: #6dac6d; }
       .turn-info .cell-info .notification .red {
         background-color: #cc0000; }
         .turn-info .cell-info .notification .red:hover {
@@ -380,7 +380,7 @@ CLASSES
 /* end turn-info */
 /* ------ END MAIN CENTER CONTENT  ------ */
 /* ------ WELCOME MODAL  ------ */
-.start-modal {
+.modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -388,12 +388,12 @@ CLASSES
   left: 0;
   background-color: rgba(0, 0, 0, 0.8);
   text-align: center; }
-  .start-modal:after {
+  .modal:after {
     content: '';
     display: inline-block;
     height: 100%;
     vertical-align: middle; }
-  .start-modal .modal-content {
+  .modal .modal-content {
     width: 900px;
     border: 2px solid #ffcb05;
     box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
@@ -402,16 +402,16 @@ CLASSES
     background-color: #FFF;
     vertical-align: middle;
     display: inline-block; }
-    .start-modal .modal-content img.logo {
+    .modal .modal-content img.logo {
       width: 600px;
       display: block;
       margin: 0 auto; }
-    .start-modal .modal-content button {
+    .modal .modal-content button {
       font-family: "Slabo 27px", serif;
       color: #FFF;
       display: block;
-      background-color: #009933;
-      border: 1px solid #009933;
+      background-color: #8abd8a;
+      border: 1px solid #8abd8a;
       padding: 20px 0;
       margin: 0 auto;
       width: 300px;
@@ -419,14 +419,27 @@ CLASSES
       -webkit-transition: 0.5s;
       -moz-transition: 0.5s;
       transition: 0.5s; }
-      .start-modal .modal-content button:hover {
+      .modal .modal-content button:hover {
         cursor: pointer;
-        border: 1px solid #00802b;
-        background: #00802b; }
-      .start-modal .modal-content button.disabled {
+        border: 1px solid #6dac6d;
+        background: #6dac6d; }
+      .modal .modal-content button.disabled {
         border: 1px solid #bfbfbf;
         background-color: #bfbfbf;
         cursor: default; }
+    .modal .modal-content.winner {
+      text-align: center;
+      vertical-align: middle; }
+      .modal .modal-content.winner h1 {
+        color: #3b82c4;
+        font-size: 45px; }
+      .modal .modal-content.winner p, .modal .modal-content.winner img {
+        display: inline-block;
+        vertical-align: middle;
+        width: 49%; }
+      .modal .modal-content.winner img {
+        width: 200px;
+        vertical-align: middle; }
 
 .players {
   text-align: justify;
@@ -512,20 +525,21 @@ CLASSES
   background-color: #FFF;
   opacity: 0.9;
   padding: 0 0 20px 0; }
-  .reset .reset-button {
-    display: block;
-    color: #FFF;
-    background: #3b82c4;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
-    padding: 15px;
-    width: 200px;
-    margin: 0 auto;
-    text-align: center; }
-    .reset .reset-button:hover {
-      cursor: pointer;
-      background: #2f689d; }
+
+.reset-button {
+  display: block;
+  color: #FFF;
+  background: #a1c1cb;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  padding: 15px;
+  width: 200px;
+  margin: 0 auto;
+  text-align: center; }
+  .reset-button:hover {
+    cursor: pointer;
+    background: #7ca8b6; }
 
 /* ------ END OTHER  ------ */
 /* ----- ANIMATION ----- */

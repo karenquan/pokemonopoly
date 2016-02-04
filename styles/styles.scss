@@ -13,6 +13,7 @@ $voltorb: #e48f89;
 $charizard: #f1a563;
 $pikachu: #f4d77c;
 $bulbasaur: #8abd8a;
+$bulbasaurHover: #6dac6d;
 $squirtle: #8fc4d1;
 $haunter: #534a58;
 $hitmonlee: #c7b7a7;
@@ -27,9 +28,7 @@ $ultraball: #677280;
 $masterball: #7e308e;
 $player1: #3b82c4;
 $player2: #cc0000;
-$success: #009933;
 $attack: #cc0000;
-$successHover: #00802b;
 $attackHover: #b30000;
 
 /* -------------------------
@@ -430,7 +429,7 @@ CLASSES
     border-bottom: 1px solid;
     margin: 0 auto 10px auto;
     text-align: center;
-    color: $success;
+    color: $bulbasaur;
   }
 
   h3 {
@@ -453,12 +452,12 @@ CLASSES
 
     .roll-value {
       font-size: 25px;
-      color: $success;
+      color: $bulbasaur;
     }
 
     .roll-button, .jail-roll-button {
-      background: $success;
-      border: 1px solid $success;
+      background: $bulbasaur;
+      border: 1px solid $bulbasaur;
       color: #FFF;
       padding: 10px;
       width: 200px;
@@ -473,8 +472,8 @@ CLASSES
 
       &:hover {
         cursor: pointer;
-        background: $successHover;
-        border: 1px solid $successHover;
+        background: $bulbasaurHover;
+        border: 1px solid $bulbasaurHover;
       }
 
       &.disabled {
@@ -541,11 +540,11 @@ CLASSES
       text-align: center;
       width: 100%;
       padding: 10px 20px;
-      border: 1px solid $success;
+      border: 1px solid $bulbasaur;
       margin: 10px 0 0 0;
 
       h2 {
-        color: $success;
+        color: $bulbasaur;
         border-bottom: none;
         margin: 0;
       }
@@ -573,10 +572,10 @@ CLASSES
       }
 
       .green {
-        background-color: $success;
+        background-color: $bulbasaur;
 
         &:hover {
-          background-color: $successHover;
+          background-color: $bulbasaurHover;
         }
       }
       .red {
@@ -594,7 +593,7 @@ CLASSES
 
 /* ------ WELCOME MODAL  ------ */
 
-.start-modal {
+.modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -632,8 +631,8 @@ CLASSES
       font-family: $slabo;
       color: #FFF;
       display: block;
-      background-color: $success;
-      border: 1px solid $success;
+      background-color: $bulbasaur;
+      border: 1px solid $bulbasaur;
       padding: 20px 0;
       margin: 0 auto;
       width: 300px;
@@ -642,8 +641,8 @@ CLASSES
 
         &:hover {
           cursor: pointer;
-          border: 1px solid $successHover;
-          background: $successHover;
+          border: 1px solid $bulbasaurHover;
+          background: $bulbasaurHover;
         }
 
         &.disabled {
@@ -651,6 +650,27 @@ CLASSES
           background-color: #bfbfbf;
           cursor: default;
         }
+     }
+
+     &.winner {
+      text-align: center;
+      vertical-align: middle;
+
+      h1 {
+        color: $greatball;
+        font-size: 45px;
+      }
+
+      p, img {
+        display: inline-block;
+        vertical-align: middle;
+        width: 49%;
+      }
+
+      img {
+        width: 200px;
+        vertical-align: middle;
+      }
      }
   }
 }
@@ -787,11 +807,12 @@ CLASSES
   background-color: #FFF;
   opacity: 0.9;
   padding: 0 0 20px 0;
+}
 
-  .reset-button {
+.reset-button {
     display: block;
     color: #FFF;
-    background: $greatball;
+    background: $magnemite;
     @include transition(0.5s);
     padding: 15px;
     width: 200px;
@@ -800,10 +821,9 @@ CLASSES
 
     &:hover {
       cursor: pointer;
-      background: #2f689d;
+      background: #7ca8b6;
     }
   }
-}
 /* ------ END OTHER  ------ */
 
 /* ----- ANIMATION ----- */
