@@ -167,6 +167,12 @@ CLASSES
     position: relative;
     left: -15px; }
 
+.parking-cell > div {
+  transform: rotateZ(-45deg);
+  padding: 20px 20px 0 0; }
+.parking-cell .title {
+  font-size: 18px; }
+
 .jail-cell > div, .gotojail-cell > div {
   transform: rotateZ(45deg);
   padding: 0 0 0 20px; }
@@ -175,8 +181,7 @@ CLASSES
   margin: 0 auto; }
 .jail-cell .title, .gotojail-cell .title {
   font-size: 18px;
-  margin: 0 0 3px 0;
-  color: #cc0000; }
+  margin: 0 0 3px 0; }
 
 /* ------ END CELL TYPES  ------ */
 /* ------ MAIN CENTER CONTENT  ------ */

@@ -263,6 +263,18 @@ CLASSES
   }
 }
 
+.parking-cell {
+
+  > div {
+    transform: rotateZ(-45deg);
+    padding: 20px 20px 0 0;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
 .jail-cell, .gotojail-cell {
 
   > div {
@@ -278,7 +290,6 @@ CLASSES
   .title {
     font-size: 18px;
     margin: 0 0 3px 0;
-    color: $attack;
   }
 }
 
