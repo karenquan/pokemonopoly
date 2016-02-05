@@ -10,7 +10,7 @@ This game mimics the classic Monopoly game, but it is Pokémon-themed, and limit
 I designed the board to have a similar look and feel to the classic Monopoly board, but I added my own personal touch as well. I tried to keep it as clean and simple as I could because there is a lot of data, and I didn't want to overwhelm the players with too many colors and flashy animations.
 
 ##![pokémonopoly](images/charmander.png)Get Started
-Each player must enter their name in the text box before clicking the "Start Game" button. Once the game starts, players switch turns by clicking the "Roll" button, and following the directions in a notification box that appears after each roll.
+Each player must enter his/her name in the text box before clicking the "Start Game" button. Once the game starts, players switch turns by clicking the "Roll" button, and following the directions in a notification box that appears after each roll. A player loses when his/her money total drops below $0.
 
 ##Next Steps ![pokémonopoly](images/squirtle.png)
 - Allow more than 2 players
