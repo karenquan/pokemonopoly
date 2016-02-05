@@ -63,9 +63,7 @@ var Main = (function() {
       }
 
      function startButtonHandler() {
-      console.log(player1);
       player1 = new Player(1, $('.player-1-name').val());
-      console.log(player1);
       player2 = new Player(2, $('.player-2-name').val());
       players = [player1, player2];
       currentPlayer = player1;
