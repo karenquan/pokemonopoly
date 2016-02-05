@@ -1,5 +1,7 @@
 ![pokémonopoly](images/pokemonopoly.png)
-This game mimics the classic Monopoly game, but it is Pokémon-themed, and limited to only two players. It is currently lacking some features of Monopoly, but you can definitely still play without those missing features.
+This game mimics the classic Monopoly game, but it is Pokémon-themed, and limited to only two players. 
+
+[Github](http://karenquan.github.io/pokemonopoly/) | [Trello](https://trello.com/b/sTcU22SD/pokemonopoly)
 
 ##![pokémonopoly](images/pikachu.png)Technologies
 1. HTML
@@ -21,4 +23,3 @@ Each player must enter his/her name in the text box before clicking the "Start G
 - Increase a property's value if a player owns all properties with the same color
 - Add Chance and Community Chest cards
 - Add another die
-
