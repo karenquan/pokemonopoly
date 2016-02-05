@@ -407,7 +407,8 @@ CLASSES
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  text-align: center; }
+  text-align: center;
+  white-space: nowrap; }
   .modal:after {
     content: '';
     display: inline-block;
@@ -421,7 +422,8 @@ CLASSES
     text-align: center;
     background-color: #FFF;
     vertical-align: middle;
-    display: inline-block; }
+    display: inline-block;
+    white-space: normal; }
     .modal .modal-content img.logo {
       width: 600px;
       display: block;
