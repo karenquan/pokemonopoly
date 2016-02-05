@@ -74,6 +74,9 @@ IDs
   text-align: center;
   width: 1200px;
   margin: 0 auto;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
 
   &:after {
     content: '';
@@ -88,6 +91,10 @@ IDs
   margin: 0 auto;
   display: inline-block;
   vertical-align: middle;
+
+  > * {
+    line-height: normal;
+  }
 
   > section {
     display: inline-block;
@@ -311,7 +318,6 @@ CLASSES
     margin: 0 0 3px 0;
   }
 }
-
 /* ------ END CELL TYPES  ------ */
 
 /* ------ MAIN CENTER CONTENT  ------ */
@@ -616,7 +622,6 @@ CLASSES
 /* ------ END MAIN CENTER CONTENT  ------ */
 
 /* ------ WELCOME MODAL  ------ */
-
 .modal {
   position: fixed;
   top: 0;

@@ -63,7 +63,9 @@ var Main = (function() {
       }
 
      function startButtonHandler() {
+      console.log(player1);
       player1 = new Player(1, $('.player-1-name').val());
+      console.log(player1);
       player2 = new Player(2, $('.player-2-name').val());
       players = [player1, player2];
       currentPlayer = player1;
@@ -278,7 +280,6 @@ var Main = (function() {
       }
 
       var $winnerImage = $('<img />', { src: 'images/' + winnerImage });
-
       var $winnerTitle = $('<h1 />', { 'class': 'winner-name', text: winnerText, css: { 'color': winnerList[0].color } });
       var $winner = $('<p />', { 'class': 'winner-text' });
       $winner.append($winnerTitle).append($resetButton);
@@ -386,7 +387,7 @@ var Main = (function() {
       if(currentPlayer.money - 50 < 0) {
         infoText =  rollOptionText;
         $rollOptionButton = $('<a />', { 'class': 'jail-roll green', text: 'OK' });
-      } else { //slightly change button text if us
+      } else { //slightly change button text if user has enough money for the pay option
         infoText = rollPayOptionText;
         $rollOptionButton = $('<a />', { 'class': 'jail-roll red', text: 'ROLL' });
       }

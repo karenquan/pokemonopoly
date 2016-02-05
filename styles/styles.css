@@ -35,7 +35,10 @@ IDs
 #main {
   text-align: center;
   width: 1200px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden; }
   #main:after {
     content: '';
     display: inline-block;
@@ -47,6 +50,8 @@ IDs
   margin: 0 auto;
   display: inline-block;
   vertical-align: middle; }
+  #board > * {
+    line-height: normal; }
   #board > section {
     display: inline-block; }
   #board .player-1 {
