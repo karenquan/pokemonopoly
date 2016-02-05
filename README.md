@@ -3,7 +3,7 @@ This game mimics the classic Monopoly game, but it is Pokémon-themed, and limit
 
 ##![pokémonopoly](images/pikachu.png)Technologies
 1. HTML
-2. CSS
+2. CSS/Sass
 3. JavaScript/jQuery
 
 ##Design ![pokémonopoly](images/bulbasaur.png)
