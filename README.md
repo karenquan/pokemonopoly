@@ -1,4 +1,4 @@
-#Game Name
+#Pokémonopoly
 This game mimics the classic Monopoly game. It is currently limited to only two players. 
 
 ##Technologies

@@ -364,7 +364,7 @@ var Main = (function() {
         if(player.location > 27) {
           var extra = player.location - 27;
           player.location = extra - 1; //subtract one since array is base 0
-          player.money += 200;//add $200 to player's money for passing go
+          player.money += 200; //add $200 to player's money for passing go
         }
         boardElements[player.location].classList.add(className);
         render();
