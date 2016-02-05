@@ -26,7 +26,6 @@ var Main = (function() {
           $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
           $content.append($logo).append($players).append($startButton);
           $startModal.append($content);
-
           return $startModal;
         }
 
@@ -62,7 +61,7 @@ var Main = (function() {
         }
       }
 
-     function startButtonHandler() {
+    function startButtonHandler() {
       player1 = new Player(1, $('.player-1-name').val());
       player2 = new Player(2, $('.player-2-name').val());
       players = [player1, player2];
@@ -70,6 +69,7 @@ var Main = (function() {
       $('.modal').remove();
       jackpotAmount = 0;
       turn = 0;
+      roll = 0;
       movePlayer(player1, 0); //start player 1 on 'Go' space
       movePlayer(player2, 0); //start player 2 on 'Go' space
       buildPlayerInfoSections();
@@ -361,6 +361,7 @@ var Main = (function() {
         //update player's location & change background of new location
         player.location += numSpaces;
         if(player.location > 27) {
+          console.log('herro');
           var extra = player.location - 27;
           player.location = extra - 1; //subtract one since array is base 0
           player.money += 200; //add $200 to player's money for passing go
@@ -507,12 +508,12 @@ var Main = (function() {
             displayAddPropertyNotification();
             return;
           } else {
-            infoText = "You don't have enough money to purchase this property.";
+            infoText = 'You don\'t have enough money to purchase ' + currentCell.name + '.';
           }
         } else if (currentCell.owner === currentPlayer.name) { //check if current player is owner
-          infoText = "You already own this space.";
+          infoText = 'You already own ' + currentCell.name + '.';
         } else { //else other player owns space - pay other player
-          infoText = currentCell.owner + ' owns this space. You owe $' + currentCell.value + '.';
+          infoText = currentCell.owner + ' owns ' + currentCell.name + '. You owe $' + currentCell.value + '.';
           if(currentPlayer.money - currentCell.value < 0) {
             displayNotification = false;
             currentPlayer.money -= currentCell.value;
@@ -682,8 +683,6 @@ var Main = (function() {
             buildWinnerModal(winnerList);
           });
       }
-
-      // if(winner) buildWinnerModal(winnerList);
     }
 
   // END UPDATE BOARD STATE ------------------

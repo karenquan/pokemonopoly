@@ -248,6 +248,7 @@ CLASSES
   .player-info .player-2-info h1 {
     color: #a44f4f; }
   .player-info .jail-info {
+    font-size: 15px;
     color: #cc0000;
     margin: 0; }
   .player-info .properties ul {
