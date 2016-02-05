@@ -546,7 +546,8 @@ CLASSES
 .reset {
   background-color: #FFF;
   opacity: 0.9;
-  padding: 0 0 20px 0; }
+  padding: 20px 0;
+  font-size: 15px; }
 
 .reset-button {
   display: block;
@@ -568,7 +569,8 @@ CLASSES
 .player-turn-name {
   animation-name: spin;
   animation-duration: 3s;
-  animation-iteration-count: infinite; }
+  animation-iteration-count: infinite;
+  display: inline-block; }
 
 @keyframes spin {
   0%, 10% {
