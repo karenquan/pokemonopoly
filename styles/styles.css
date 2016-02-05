@@ -14,7 +14,8 @@ TAGS
 -------------------------- */
 body {
   font-family: "Slabo 27px", serif;
-  position: relative; }
+  position: relative;
+  text-align: center; }
 
 section, div {
   box-sizing: border-box;
@@ -31,9 +32,21 @@ p {
 /* -------------------------
 IDs
 -------------------------- */
-#board {
+#main {
+  text-align: center;
   width: 1200px;
   margin: 0 auto; }
+  #main:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle; }
+
+#board {
+  width: 1200px;
+  margin: 0 auto;
+  display: inline-block;
+  vertical-align: middle; }
   #board > section {
     display: inline-block; }
   #board .player-1 {
@@ -285,6 +298,8 @@ CLASSES
   .turn-info .roll .roll-value {
     font-size: 25px;
     color: #8abd8a; }
+  .turn-info .roll .roll-image {
+    margin: 15px 0 10px 0; }
   .turn-info .roll .roll-button, .turn-info .roll .jail-roll-button {
     background: #8abd8a;
     border: 1px solid #8abd8a;

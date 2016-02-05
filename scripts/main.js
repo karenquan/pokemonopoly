@@ -230,11 +230,10 @@ var Main = (function() {
 
       var $roll = $('<div />', { 'class': 'roll' });
         var $rollTitle = $('<h2 />', { text: 'Roll' });
-        var $rollValue = $('<span />', { 'class': 'roll-value', text: ' ' });
         var $rollImage = $('<img />', { 'class': 'roll-image', src: 'images/die-roll.gif' } );
         $rollButton = $('<button />', { 'class': 'roll-button', text: 'ROLL' });
         $jailRollButton = $('<button />', { 'class': 'jail-roll-button hide', text: 'JAIL ROLL' });
-        $roll.append($rollTitle).append($rollValue).append($rollImage).append($rollButton).append($jailRollButton);
+        $roll.append($rollTitle).append($rollImage).append($rollButton).append($jailRollButton);
 
       var $cellInfo = $('<div />', { 'class': 'cell-info' });
         var $cellTitle = $('<h2 />', { text: 'Current Space' });
@@ -441,6 +440,7 @@ var Main = (function() {
       $jailRollButton.on('click', function() { //make this global
         currentPlayer.jailRollCount += 1;
 
+        $(jailRollCountClass).removeClass('hide');
         $(jailRollCountClass).text(currentPlayer.jailRollCount);//update display of jail roll count
         roll = (currentPlayer.rollDie());
         infoText = 'You rolled a ' + roll + '. Turn: ' + currentPlayer.jailRollCount + '.';

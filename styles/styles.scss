@@ -51,6 +51,7 @@ TAGS
 body {
   font-family: $slabo;
   position: relative;
+  text-align: center;
 }
 
 section, div {
@@ -69,9 +70,24 @@ p {
 /* -------------------------
 IDs
 -------------------------- */
+#main {
+  text-align: center;
+  width: 1200px;
+  margin: 0 auto;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
 #board {
   width: 1200px;
   margin: 0 auto;
+  display: inline-block;
+  vertical-align: middle;
 
   > section {
     display: inline-block;
@@ -457,6 +473,10 @@ CLASSES
     .roll-value {
       font-size: 25px;
       color: $bulbasaur;
+    }
+
+    .roll-image {
+      margin: 15px 0 10px 0;
     }
 
     .roll-button, .jail-roll-button {
