@@ -526,6 +526,15 @@ CLASSES
         background: $attackHover;
         border: 1px solid $attackHover;
       }
+
+      &.disabled {
+
+        &:hover {
+          border: 1px solid #bfbfbf;
+          background-color: #bfbfbf;
+          cursor: default;
+        }
+      }
     }
   }
 

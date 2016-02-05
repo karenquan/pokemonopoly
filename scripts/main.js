@@ -3,63 +3,63 @@ var Main = (function() {
   /* START MODAL ------------------
 
   */
-      function displayStartModal() { //starts game
-        var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
+    function displayStartModal() { //starts game
+      var $startModal, $content, $logo, $players, $player1, $player2, $player1Title, $player2Title, $nameText, $characterText, $nameTextBox, $startButton;
 
-        $('body').append(buildStartModal());
-        activateStartButtonEvents(); //activate start button after modal is added to dom
+      $('body').append(buildStartModal());
+      activateStartButtonEvents(); //activate start button after modal is added to dom
 
-        function buildStartModal() {
-          $startModal = $('<div />', { 'class': 'modal'} );
-          $content = $('<div />', { 'class': 'modal-content' });
-          $players = $('<div />', { 'class': 'players' });
-          $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
-          $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
-          $nameTextBox = $('<input />', { type: 'text' });
-          $player1 = $('<div />', { 'class': 'player-1' });
-            $player1Title = $('<h3 />', { text: 'Player 1' });
-            $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
-          $player2 = $('<div />', { 'class': 'player-2' });
-            $player2Title = $('<h3 />', { text: 'Player 2' });
-            $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
-          $players.append($player1).append(' ').append($player2);
-          $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
-          $content.append($logo).append($players).append($startButton);
-          $startModal.append($content);
-          return $startModal;
-        }
-
-        function activateStartButtonEvents() {
-          var $player1Name = $('.player-1-name').val();
-          var $player2Name = $('.player-2-name').val();
-
-          attachStartButtonClick();
-          $startButton.attr('disabled', true);
-
-          //only allow start button to be clicked when both players have typed their name
-          $('input[type="text"]').on('keypress keyup', function() {
-            if(checkPlayerInput()) {
-              $startButton.removeClass('disabled');
-              $startButton.attr('disabled', false);
-            } else {
-              $startButton.addClass('disabled');
-              $startButton.attr('disabled', true);
-            }
-          });
-        }
-
-        function checkPlayerInput() {
-          return ($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) ? true : false;
-        }
-
-        function attachStartButtonClick () {
-          $startButton.on('click', startButtonHandler);
-        }
-
-        function removeStartButtonClick() {
-          $startButton.unbind('click');
-        }
+      function buildStartModal() {
+        $startModal = $('<div />', { 'class': 'modal'} );
+        $content = $('<div />', { 'class': 'modal-content' });
+        $players = $('<div />', { 'class': 'players' });
+        $logo = $('<img />', { 'class': 'logo', src: 'images/pokemonopoly.png', alt: 'Pokémonopoly' });
+        $nameText = $('<span />', { 'class': 'name', text: 'Name: '});
+        $nameTextBox = $('<input />', { type: 'text' });
+        $player1 = $('<div />', { 'class': 'player-1' });
+          $player1Title = $('<h3 />', { text: 'Player 1' });
+          $player1.append($player1Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-1-name'));
+        $player2 = $('<div />', { 'class': 'player-2' });
+          $player2Title = $('<h3 />', { text: 'Player 2' });
+          $player2.append($player2Title).append($nameText.clone()).append($nameTextBox.clone().addClass('player-2-name'));
+        $players.append($player1).append(' ').append($player2);
+        $startButton = $('<button />', { 'class': 'start-button disabled', text: 'START GAME' });
+        $content.append($logo).append($players).append($startButton);
+        $startModal.append($content);
+        return $startModal;
       }
+
+      function activateStartButtonEvents() {
+        var $player1Name = $('.player-1-name').val();
+        var $player2Name = $('.player-2-name').val();
+
+        attachStartButtonClick();
+        $startButton.attr('disabled', true);
+
+        //only allow start button to be clicked when both players have typed their name
+        $('input[type="text"]').on('keypress keyup', function() {
+          if(checkPlayerInput()) {
+            $startButton.removeClass('disabled');
+            $startButton.attr('disabled', false);
+          } else {
+            $startButton.addClass('disabled');
+            $startButton.attr('disabled', true);
+          }
+        });
+      }
+
+      function checkPlayerInput() {
+        return ($('.player-1-name').val().length > 0 && $('.player-2-name').val().length > 0) ? true : false;
+      }
+
+      function attachStartButtonClick () {
+        $startButton.on('click', startButtonHandler);
+      }
+
+      function removeStartButtonClick() {
+        $startButton.unbind('click');
+      }
+    }
 
     function startButtonHandler() {
       player1 = new Player(1, $('.player-1-name').val());
@@ -105,49 +105,49 @@ var Main = (function() {
       populateCells();
       displayStartModal();
     }
-
   // END GAME PLAY ------------------
 
   /* DATA RETRIEVAL ------------------
      Read cells.js file to get data to populate cells.
   */
     function populateCells() {
-    var $cell, $cellElement;
-    $cells.each(function(index) {
-      cellElement = $('.column-' + this.column + '> div')[this.index];
+      var $cell, $cellElement;
+      $cells.each(function(index) {
+        cellElement = $('.column-' + this.column + '> div')[this.index];
 
-      switch(this.type.toLowerCase()) { /* create cells based on type */
-        case 'go':
-        case 'jail':
-        case 'gotojail':
-        case 'parking':
-          buildCornerCell(this, cellElement);
-          cellElement.classList.add(this.type.toLowerCase() + '-cell');
-          break;
-        default:
-          buildPropertyCell(this, cellElement);
-          break;
+        switch(this.type.toLowerCase()) { /* create cells based on type */
+          case 'go':
+          case 'jail':
+          case 'gotojail':
+          case 'parking':
+            buildCornerCell(this, cellElement);
+            cellElement.classList.add(this.type.toLowerCase() + '-cell');
+            break;
+          default:
+            buildPropertyCell(this, cellElement);
+            break;
+        }
+        boardElements.push(cellElement);
+        board[this.boardIndex] = this; //also add cell to board array
+      });
+
+      /*
+        after all elements are pushed on boardElements array,
+        need to rearrange column 4 in boardElements array since
+        they get pushed in reverse order
+      */
+      var lastRow = [];
+      for(var i = 1; i < 7; i++) {
+        lastRow.push(boardElements.pop());
       }
-      boardElements.push(cellElement);
-      board[this.boardIndex] = this; //also add cell to board array
-    });
-
-    /*
-      after all elements are pushed on boardElements array,
-      need to rearrange column 4 in boardElements array since
-      they get pushed in reverse order
-    */
-    var lastRow = [];
-    for(var i = 1; i < 7; i++) {
-      lastRow.push(boardElements.pop());
-    }
-    lastRow.forEach(function(element) {
-      boardElements.push(element);
-    });
+      lastRow.forEach(function(element) {
+        boardElements.push(element);
+      });
     }
   // END DATA RETRIEVAL ------------------
 
   /* BUILD DYNAMIC ELEMENTS ------------------
+
   */
     function buildPropertyCell(cell, element) {
       var $cell, $name, $image, $value;
@@ -285,7 +285,6 @@ var Main = (function() {
       $winnerModal.append($winnerContent);
       $('body').append($winnerModal);
     }
-
   // END BUILD DYNAMIC ELEMENTS ------------------
 
   /* UPDATE BOARD STATE (CELLS & CENTER) ------------------
@@ -428,10 +427,7 @@ var Main = (function() {
     }
 
     function jailRollEvent() {
-      var infoText, roll;
-      var jailRollCountClass = '.player-' + currentPlayer.num + '-info .jail-turn-count';
-      var jailRollTurnClass = '.player-' + currentPlayer.num + '-info .jail-turn';
-      var jailInfoClass = '.player-' + currentPlayer.num + '-info .jail-info';
+      var infoText, roll, jailRollCountClass, jailRollTurnClass, jailInfoClass;
 
       $jailOk = $('<a />', { 'class': 'green', text: 'OK' });
 
@@ -439,6 +435,13 @@ var Main = (function() {
       $title = $('<h2 />', { 'class': 'notification-title', text: 'Note:' });
 
       $jailRollButton.on('click', function() { //make this global
+        $jailRollButton.addClass('disabled');
+        $jailRollButton.attr('disabled', true);
+
+        jailRollCountClass = '.player-' + currentPlayer.num + '-info .jail-turn-count';
+        jailRollTurnClass = '.player-' + currentPlayer.num + '-info .jail-turn';
+        jailInfoClass = '.player-' + currentPlayer.num + '-info .jail-info';
+
         currentPlayer.jailRollCount += 1;
 
         $(jailRollCountClass).removeClass('hide');
@@ -464,6 +467,8 @@ var Main = (function() {
         $('.cell-info').append($jailNotification);
 
         $jailOk.on('click', function() {
+          $jailRollButton.removeClass('disabled');
+          $jailRollButton.attr('disabled', false);
           $jailNotification.empty();
           $jailNotification.remove();
           $jailRollButton.addClass('hide');
@@ -478,7 +483,6 @@ var Main = (function() {
           $(jailInfoClass).addClass('hide')//"in jail" text
           currentPlayer.inJail = false;
         }
-
       });
     }
 
@@ -490,10 +494,10 @@ var Main = (function() {
       $okButton = $('<a />', { 'class': 'green', text: 'OK' });
 
       $okButton.on('click', function() {
-          $notification.remove();
-          switchTurns();
-          resetRoll();
-        });
+        $notification.remove();
+        switchTurns();
+        resetRoll();
+      });
 
       //check for cell vacancy on property cells
       if(currentCell.canPurchase) displayPropertyUserNotification();
@@ -533,10 +537,8 @@ var Main = (function() {
         function payPlayer() {
           var propertyOwner = currentPlayer === player1 ? player2 : player1;
           var propertyValue = board[currentPlayer.location].value;
-
-            currentPlayer.money -= propertyValue;
-            propertyOwner.money += propertyValue;
-
+          currentPlayer.money -= propertyValue;
+          propertyOwner.money += propertyValue;
         }
       }
 
@@ -610,7 +612,6 @@ var Main = (function() {
           $('.cell-info').append($notification);
         }
 
-
         //ACTIONS
         function attack() {
           jackpotAmount += 200;
@@ -647,7 +648,6 @@ var Main = (function() {
           $rollButton.addClass('disabled');
           $rollButton.attr('disabled', true);
         }
-
       } /* end displayNonPropertyNotification() function  */
     } /* end checkCellVacancy() function */
 
@@ -679,12 +679,11 @@ var Main = (function() {
         $('.cell-info').append($winnerNotification);
 
         $okButton.on('click', function() {
-            $winnerNotification.remove();
-            buildWinnerModal(winnerList);
-          });
+          $winnerNotification.remove();
+          buildWinnerModal(winnerList);
+        });
       }
     }
-
   // END UPDATE BOARD STATE ------------------
 
   function _init() {

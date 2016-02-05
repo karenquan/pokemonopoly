@@ -340,6 +340,10 @@ CLASSES
       cursor: pointer;
       background: #b30000;
       border: 1px solid #b30000; }
+    .turn-info .roll .jail-roll-button.disabled:hover {
+      border: 1px solid #bfbfbf;
+      background-color: #bfbfbf;
+      cursor: default; }
   .turn-info .cell-info {
     text-align: justify;
     color: #000; }
