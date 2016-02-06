@@ -1,7 +1,7 @@
 ![pokémonopoly](images/pokemonopoly.png)
 This game mimics the classic Monopoly game, but it is Pokémon-themed, and limited to only two players. 
 
-[Github](http://karenquan.github.io/pokemonopoly/) | [Trello](https://trello.com/b/sTcU22SD/pokemonopoly)
+[Play](http://karenquan.github.io/pokemonopoly/) | [User Stories](https://trello.com/b/sTcU22SD/pokemonopoly)
 
 ##![pokémonopoly](images/pikachu.png)Technologies
 1. HTML
